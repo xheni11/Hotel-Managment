@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web.Mvc;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using M19G1;
+﻿using System.Web.Mvc;
 using M19G1.Controllers;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace M19G1.Tests.Controllers
 {
