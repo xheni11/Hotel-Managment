@@ -109,4 +109,5 @@ namespace M19G1.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
+
 }

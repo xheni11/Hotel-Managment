@@ -16,14 +16,26 @@ namespace M19G1.Controllers
 
         public ApplicationSignInManager SignInManager
         {
-            get => _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
-            set => _signInManager = value;
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            set
+            {
+                _signInManager = value;
+            }
         }
 
         public ApplicationUserManager UserManager
         {
-            get => _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            set => _userManager = value;
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            set
+            {
+                _userManager = value;
+            }
         }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)

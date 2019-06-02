@@ -9,6 +9,7 @@ namespace M19G1.DAL.Entities
         public AspNetRole()
         {
             AspNetUsers = new HashSet<AspNetUser>();
+            UserRequests = new HashSet<UserRequest>();
         }
 
         public int Id { get; set; }
@@ -19,5 +20,7 @@ namespace M19G1.DAL.Entities
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
+
+        public virtual ICollection<UserRequest> UserRequests { get; set; }
     }
 }
