@@ -1,4 +1,5 @@
 ﻿using M19G1.DAL;
+using M19G1.DAL.Entities;
 using M19G1.IBLL;
 using System;
 using System.Collections.Generic;
@@ -16,5 +17,15 @@ namespace M19G1.BLL
             _internalUnitOfWork = unitOfWork;
         }
 
+        public List<Booking> GetOldBookings(int UserId)
+        { 
+            DateTime now = DateTime.Now;
+            return _internalUnitOfWork.BookingsRepository.Get( b => b.Valid == true && b.UserId == UserId && b.EndDate <= now).ToList();
+        }
+        public List<Booking> GetNewBookings(int UserId)
+        {
+            DateTime now = DateTime.Now;
+            return _internalUnitOfWork.BookingsRepository.Get(b => b.Valid == true && b.UserId == UserId && b.EndDate >= now).ToList();
+        }
     }
 }
