@@ -74,6 +74,12 @@
     <Compile Include="Entities\RoomCategory.cs" />
     <Compile Include="Entities\RoomFacility.cs" />
     <Compile Include="Entities\UserRequest.cs" />
+    <Compile Include="Mappings\BookingMappings.cs" />
+    <Compile Include="Mappings\DriverServiceMappings.cs" />
+    <Compile Include="Mappings\FacilityMappings.cs" />
+    <Compile Include="Mappings\RoleMappings.cs" />
+    <Compile Include="Mappings\RoomMappings.cs" />
+    <Compile Include="Mappings\UserMappings.cs" />
     <Compile Include="Migrations\201906021423497_ModelCreate.cs" />
     <Compile Include="Migrations\201906021423497_ModelCreate.Designer.cs">
       <DependentUpon>201906021423497_ModelCreate.cs</DependentUpon>
@@ -95,7 +101,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Mappings\" />
+    <ProjectReference Include="..\M19G1.Models\M19G1.Models.csproj">
+      <Project>{A37933F1-4D30-43B9-8B5F-B084FDCA2907}</Project>
+      <Name>M19G1.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
