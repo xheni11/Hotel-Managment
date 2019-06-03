@@ -12,7 +12,12 @@ namespace M19G1.DAL
     {
         public BaseRepository(M19G1Context context)
         {
-            _dbContext = context ?? throw new ArgumentNullException(nameof(context));
+            if(context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+            _dbContext = context;
+           // _dbContext = context ?? throw new ArgumentNullException(nameof(context));
             _dbSet = context.Set<TEntity>();
         }
 
