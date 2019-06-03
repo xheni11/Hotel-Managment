@@ -1,4 +1,5 @@
-﻿using M19G1.DAL.Persistence;
+﻿using M19G1.DAL.Entities;
+using M19G1.DAL.Persistence;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -7,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace M19G1.DAL
 {
-    public class BaseRepository<TEntity> : GenericRepository<TEntity> where TEntity : class, new()
+    public class BaseRepository<TEntity> : GenericRepository<TEntity> where TEntity : BaseEntity, new()
     {
         public BaseRepository(M19G1Context context)
         {

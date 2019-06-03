@@ -1,6 +1,6 @@
 namespace M19G1.DAL.Entities
 {
-    public partial class AspNetUserClaim
+    public partial class AspNetUserClaim:BaseEntity
     {
         public int Id { get; set; }
 

@@ -186,9 +186,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201905271016208_InitialCreate.cs" />
-    <Compile Include="Migrations\201905271016208_InitialCreate.Designer.cs">
-      <DependentUpon>201905271016208_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201906021859327_initial.cs" />
+    <Compile Include="Migrations\201906021859327_initial.Designer.cs">
+      <DependentUpon>201906021859327_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -302,11 +302,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201905271016208_InitialCreate.resx">
-      <DependentUpon>201905271016208_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
@@ -333,6 +328,11 @@
       <Project>{a37933f1-4d30-43b9-8b5f-b084fdca2907}</Project>
       <Name>M19G1.Models</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201906021859327_initial.resx">
+      <DependentUpon>201906021859327_initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

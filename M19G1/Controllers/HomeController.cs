@@ -1,4 +1,7 @@
-﻿using System;
+﻿using M19G1.BLL;
+using M19G1.DAL;
+using M19G1.DAL.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -15,6 +18,8 @@ namespace M19G1.Controllers
 
         public ActionResult About()
         {
+            UserService userService = new UserService(new UnitOfWork());
+            userService.CreateDummyUser();
             ViewBag.Message = "Your application description page.";
 
             return View();

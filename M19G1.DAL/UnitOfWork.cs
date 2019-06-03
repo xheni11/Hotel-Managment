@@ -49,6 +49,91 @@ namespace M19G1.DAL
             _aspNetUserLoginsRepository ?? (_aspNetUserLoginsRepository = RepositoryFactory.CreateRepository<AspNetUserLogin>(_context));
 
         #endregion
+        #region Room Repository
+
+        private BaseRepository<Room> _roomRepository;
+
+        public BaseRepository<Room> RoomRepository =>
+            _roomRepository ?? (_roomRepository = RepositoryFactory.CreateRepository<Room>(_context));
+
+        #endregion
+        #region Category Repository
+
+        private BaseRepository<RoomCategory> _categoryRoomRepository;
+
+        public BaseRepository<RoomCategory> CategoryRoomRepository =>
+            _categoryRoomRepository ?? (_categoryRoomRepository = RepositoryFactory.CreateRepository<RoomCategory>(_context));
+
+        #endregion
+        #region Facility Repository
+
+        private BaseRepository<Facility> _facilityRepository;
+
+        public BaseRepository<Facility> FacilityRepository =>
+            _facilityRepository ?? (_facilityRepository = RepositoryFactory.CreateRepository<Facility>(_context));
+
+        #endregion
+
+        #region RoomFacility Repository
+
+        private BaseRepository<RoomFacility> _roomFacilityRepository;
+
+        public BaseRepository<RoomFacility> RoomFacilityRepository =>
+            _roomFacilityRepository ?? (_roomFacilityRepository  = RepositoryFactory.CreateRepository<RoomFacility>(_context));
+
+        #endregion
+
+        #region ExtraFacility Repository
+
+        private BaseRepository<ExtraFacility> _extraFacilitiesRepository;
+
+        public BaseRepository<ExtraFacility> ExtraFacilityRepository =>
+            _extraFacilitiesRepository ?? (_extraFacilitiesRepository = RepositoryFactory.CreateRepository<ExtraFacility>(_context));
+
+        #endregion
+
+        #region Booking Repository
+
+        private BaseRepository<Booking> _bookingRepository;
+
+        public BaseRepository<Booking> BookingRepository =>
+            _bookingRepository ?? (_bookingRepository = RepositoryFactory.CreateRepository<Booking>(_context));
+
+        #endregion
+        #region BookingRoom Repository
+
+        private BaseRepository<BookingRoom> _bookingRoomRepository;
+
+        public BaseRepository<BookingRoom> BookingRoomRepository =>
+            _bookingRoomRepository ?? (_bookingRoomRepository = RepositoryFactory.CreateRepository<BookingRoom>(_context));
+
+        #endregion
+        #region AnonymousRequest Repository
+
+        private BaseRepository<AnonymousRequest> _anonymousRequestRepository;
+
+        public BaseRepository<AnonymousRequest> AnonymousRequestRepository =>
+            _anonymousRequestRepository ?? (_anonymousRequestRepository = RepositoryFactory.CreateRepository<AnonymousRequest>(_context));
+
+        #endregion
+        #region UserRequest Repository
+
+        private BaseRepository<UserRequest> _userRequestRepository;
+
+        public BaseRepository<UserRequest> UserRequestRepository =>
+            _userRequestRepository ?? (_userRequestRepository = RepositoryFactory.CreateRepository<UserRequest>(_context));
+
+        #endregion
+
+        #region Rating Repository
+
+        private BaseRepository<Rating> _ratingRepository;
+
+        public BaseRepository<Rating> RatingRepository =>
+            _ratingRepository ?? (_ratingRepository = RepositoryFactory.CreateRepository<Rating>(_context));
+
+        #endregion
+
 
         public void BeginTransaction()
         {

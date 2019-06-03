@@ -23,6 +23,7 @@ namespace M19G1.BLL
                 Gender = "M",
                 DateCreated = DateTime.Now,
                 PasswordHash = "ddd",
+                LockoutEndDateUtc=DateTime.Now,
                 Birthday = DateTime.Now,
                 Email = "ddd",
                 EmailConfirmed = false,

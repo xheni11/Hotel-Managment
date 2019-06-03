@@ -4,7 +4,7 @@ namespace M19G1.DAL.Entities
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    public partial class AspNetUser
+    public partial class AspNetUser:BaseEntity
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public AspNetUser()
@@ -12,6 +12,8 @@ namespace M19G1.DAL.Entities
             AspNetUserClaims = new HashSet<AspNetUserClaim>();
             AspNetUserLogins = new HashSet<AspNetUserLogin>();
             AspNetRoles = new HashSet<AspNetRole>();
+            Bookings = new HashSet<Booking>();
+            DriverServices = new HashSet<PersonalDriverService>();
         }
 
         public int Id { get; set; }
@@ -24,6 +26,8 @@ namespace M19G1.DAL.Entities
         public string Gender { get; set; }
 
         public DateTime? Birthday { get; set; }
+
+        public bool Enabled { get; set; }
 
         public DateTime? DateCreated { get; set; }
 
@@ -60,5 +64,12 @@ namespace M19G1.DAL.Entities
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetRole> AspNetRoles { get; set; }
+
+        public virtual ICollection<Booking> Bookings { get; set; }
+
+        public virtual ICollection<PersonalDriverService> DriverServices { get; set; }
+
+        public virtual AnonymousRequest AnonymousRequest { get; set; }
+
     }
 }
