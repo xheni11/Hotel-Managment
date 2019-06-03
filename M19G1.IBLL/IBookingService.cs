@@ -1,4 +1,5 @@
 ﻿using M19G1.DAL.Entities;
+using M19G1.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace M19G1.IBLL
 {
     public interface IBookingService
     {
-        List<Booking> GetOldBookings(int UserId);
-        List<Booking> GetNewBookings(int UserId);
+        List<BookingModel> GetOldBookings(int UserId);
+        List<BookingModel> GetNewBookings(int UserId);
     }
 }
