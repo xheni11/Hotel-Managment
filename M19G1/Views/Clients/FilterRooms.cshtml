@@ -1,0 +1,117 @@
+﻿@model M19G1.Models.FilterRoomViewModel
+
+@{
+    ViewBag.Title = "FilterRooms";
+}
+
+<h2>FilterRooms</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>FilterRoomViewModel</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.CategoryId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.CategoryId, new SelectList(Model.Categories,"Id","CatName"),"Choose Category")
+                @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Occupied, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.RadioButtonFor(model => model.Occupied,true) Yes
+                    @Html.RadioButtonFor(model => model.Occupied, false) No
+                    @Html.ValidationMessageFor(model => model.Occupied, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SelectedFacilities, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.ListBoxFor(model => model.SelectedFacilities, new SelectList(Model.Facilities,"FacilityId","FacilityName"))
+                @Html.ValidationMessageFor(model => model.SelectedFacilities, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Filter" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+@if (Model.Rooms != null)
+{
+  if (Model.Rooms.Count > 0)
+  {
+
+   <table class="table">
+    <tr>
+        <th>
+            @Html.Label("Category")
+        </th>
+        <th>
+            @Html.Label("Room Name")
+        </th>
+        <th>
+            @Html.Label("Price")
+        </th>
+        <th>
+            @Html.Label("Nr of Guests")
+        </th>
+    </tr>
+
+    @foreach (var item in Model.Rooms)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoomCategory.CatName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoomName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GuestsNr)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.Id })
+            </td>
+        </tr>
+    }
+    
+
+</table>
+    }
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

@@ -18,6 +18,7 @@ namespace M19G1.Models
         public UserModel Client { get; set; }
         public List<BookingRoomModel> BookingRooms { get; set; }
         public List<DriverServiceModel> DriverServices { get; set; }
+        public RatingModel Rating { get; set; }
         
     }
 }

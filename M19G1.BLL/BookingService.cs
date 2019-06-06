@@ -22,12 +22,14 @@ namespace M19G1.BLL
         public List<BookingModel> GetOldBookings(int UserId)
         { 
             DateTime now = DateTime.Now;
-            return _internalUnitOfWork.BookingsRepository.Get(b => b.Valid == true && b.UserId == UserId && b.EndDate <= now).Select(b => BookingMappings.MapBookingToBookingModel(b)).ToList();
+            return _internalUnitOfWork.BookingsRepository.Get(b => b.Valid == true && b.UserId == UserId && b.EndDate <= now)
+                .Select(b => BookingMappings.MapBookingToBookingModel(b)).ToList();
         }
         public List<BookingModel> GetNewBookings(int UserId)
         {
             DateTime now = DateTime.Now;
-            return _internalUnitOfWork.BookingsRepository.Get(b => b.Valid == true && b.UserId == UserId && b.EndDate >= now).Select(b => BookingMappings.MapBookingToBookingModel(b)).ToList();
+            return _internalUnitOfWork.BookingsRepository.Get(b => b.Valid == true && b.UserId == UserId && b.EndDate >= now)
+                .Select(b => BookingMappings.MapBookingToBookingModel(b)).ToList();
         }
 
 

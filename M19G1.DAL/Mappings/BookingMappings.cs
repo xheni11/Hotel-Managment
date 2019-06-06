@@ -22,6 +22,7 @@ namespace M19G1.DAL.Mappings
                 CheckOut = booking.CheckOut,
                 Client = UserMappings.MapAspNetUserToUserModel(booking.Client),
                 ClientId = booking.UserId,
+                Rating = booking.Rating != null ? MapRatingToRatingModel(booking.Rating) : null,
                 BookingRooms = booking.BookingRooms.Select(br => MapBookingRoomToBookingRoomModel(br)).ToList(),
                 DriverServices = booking.DriverServices.Select(ds => DriverServiceMappings.MapDriverServiceToDriverServiceModel(ds)).ToList()
             };
