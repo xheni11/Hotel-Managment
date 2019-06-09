@@ -17,7 +17,7 @@ namespace M19G1.DAL.Mappings
                 FacilityId = facility.Id,
                 Available = facility.Available,
                 Description = facility.Description,
-                FacilityName = facility.Description,
+                FacilityName = facility.Name,
                 ExtraFacilites = facility.ExtraFacilities.Select(ef => MapExtraFacilityToEFModel(ef)).ToList(),
                 RoomFacilties = facility.RoomFacilities.Select(rf => MapRoomFacilityToRFModel(rf)).ToList()
             };            

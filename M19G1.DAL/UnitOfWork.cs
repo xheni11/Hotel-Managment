@@ -74,7 +74,16 @@ namespace M19G1.DAL
 
         public BaseRepository<RoomCategory> RoomCategoryRepository =>
             _roomCategoryRepository ?? (_roomCategoryRepository = RepositoryFactory.CreateRepository<RoomCategory>(_context));
-        
+
+        #endregion
+
+        #region
+
+        private BaseRepository<Room> _roomRepository;
+
+        public BaseRepository<Room> RoomRepository =>
+            _roomRepository ?? (_roomRepository = RepositoryFactory.CreateRepository<Room>(_context));
+
         #endregion
 
         public void BeginTransaction()

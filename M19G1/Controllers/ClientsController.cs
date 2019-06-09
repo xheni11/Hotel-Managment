@@ -13,11 +13,14 @@ namespace M19G1.Controllers
         private readonly IBookingService _bookingService;
         private readonly IFacilityService _facilityService;
         private readonly IRoomCategoryService _roomCategoryService;
-        public ClientsController(IBookingService bookingService,IFacilityService facilityService, IRoomCategoryService roomCategoryService)
+        private readonly IRoomService _roomService;
+        public ClientsController(IBookingService bookingService,IFacilityService facilityService, 
+            IRoomCategoryService roomCategoryService, IRoomService roomService)
         {
             _bookingService = bookingService;
             _facilityService = facilityService;
             _roomCategoryService = roomCategoryService;
+            _roomService = roomService;
 
         }
         // GET: Admin
@@ -44,6 +47,33 @@ namespace M19G1.Controllers
             model.Categories = RoomCategories;
 
             return View(model);
+        }
+        [HttpPost]
+        public ActionResult FilterRooms(FilterRoomViewModel filterModel)
+        {
+            if(ModelState.IsValid)
+            {
+                FilterRoomModel roomsFilter = MapFilterRoomViewModelToFRModel(filterModel);
+                List<RoomModel> filteredRooms = _roomService.FilterRooms(roomsFilter);
+                filterModel.Rooms = filteredRooms;
+            }
+            List<FacilityModel> Facilities = _facilityService.GetFacilites();
+            List<RoomCategoryModel> RoomCategories = _roomCategoryService.GetRoomCategories();
+            filterModel.Categories = RoomCategories;
+            filterModel.Facilities = Facilities;
+            return View(filterModel);
+        }
+
+        public FilterRoomModel MapFilterRoomViewModelToFRModel(FilterRoomViewModel model)
+        {
+            return new FilterRoomModel
+            {
+                CategoryId = model.CategoryId ?? 0,
+                RoomName = model.Name,
+                LessThanPrice = model.Price ?? 0,
+                Occupied = model.Occupied,
+                SelectedFacilities = model.SelectedFacilities
+            };
         }
 
         public BookingElementViewModel MapBookingModelToViewModel(BookingModel booking)

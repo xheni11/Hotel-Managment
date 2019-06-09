@@ -17,7 +17,7 @@ namespace M19G1.DAL.Entities
         public bool Enabled { get; set; }
         public bool Occupied { get; set; }
         public string Description { get; set; }
-        public RoomCategory Category { get; set; }
+        public virtual RoomCategory Category { get; set; }
         public int CategoryId { get; set; }
         public virtual ICollection<BookingRoom> BookingRooms { get; set; }
         public virtual ICollection<RoomFacility> RoomFacilities { get; set; }

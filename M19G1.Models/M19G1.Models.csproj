@@ -55,6 +55,7 @@
     <Compile Include="DriverServiceModel.cs" />
     <Compile Include="ExtraFacilityModel.cs" />
     <Compile Include="FacilityModel.cs" />
+    <Compile Include="FilterRoomModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RatingModel.cs" />
     <Compile Include="RoleModel.cs" />

@@ -51,6 +51,7 @@
     <Compile Include="IBookingService.cs" />
     <Compile Include="IFacilityService.cs" />
     <Compile Include="IRoomCategoryService.cs" />
+    <Compile Include="IRoomService.cs" />
     <Compile Include="IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

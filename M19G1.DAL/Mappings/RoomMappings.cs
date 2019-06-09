@@ -33,8 +33,9 @@ namespace M19G1.DAL.Mappings
             {
                 Id = RoomCat.Id,
                 CatName = RoomCat.Name,
-                Description = RoomCat.Description,
-                Rooms = RoomCat.Rooms.Select(r => MapRoomToRoomModel(r)).ToList()
+                Description = RoomCat.Description
+                //Shkakton stack overflow sepse krijohet cikel cat-rooms-cat-..
+                //Rooms = RoomCat.Rooms.Select(r => MapRoomToRoomModel(r)).ToList()
             };
         }
     }

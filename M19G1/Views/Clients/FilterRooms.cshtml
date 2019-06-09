@@ -4,20 +4,20 @@
     ViewBag.Title = "FilterRooms";
 }
 
-<h2>FilterRooms</h2>
+<h2>Filter Rooms</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>FilterRoomViewModel</h4>
+        <h4>Filter Parameters</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.CategoryId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.CategoryId, new SelectList(Model.Categories,"Id","CatName"),"Choose Category")
+                @Html.DropDownListFor(model => model.CategoryId, new SelectList(Model.Categories, "Id", "CatName"), "Choose Category")
                 @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -42,7 +42,7 @@
             @Html.LabelFor(model => model.Occupied, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <div class="checkbox">
-                    @Html.RadioButtonFor(model => model.Occupied,true) Yes
+                    @Html.RadioButtonFor(model => model.Occupied, true) Yes
                     @Html.RadioButtonFor(model => model.Occupied, false) No
                     @Html.ValidationMessageFor(model => model.Occupied, "", new { @class = "text-danger" })
                 </div>
@@ -52,7 +52,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.SelectedFacilities, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.ListBoxFor(model => model.SelectedFacilities, new SelectList(Model.Facilities,"FacilityId","FacilityName"))
+                @Html.ListBoxFor(model => model.SelectedFacilities, new MultiSelectList(Model.Facilities, "FacilityId", "FacilityName"))
                 @Html.ValidationMessageFor(model => model.SelectedFacilities, "", new { @class = "text-danger" })
             </div>
         </div>
