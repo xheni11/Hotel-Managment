@@ -22,14 +22,53 @@ namespace M19G1.BLL
         public List<BookingModel> GetOldBookings(int UserId)
         { 
             DateTime now = DateTime.Now;
-            return _internalUnitOfWork.BookingsRepository.Get(b => b.Valid == true && b.UserId == UserId && b.EndDate <= now)
-                .Select(b => BookingMappings.MapBookingToBookingModel(b)).ToList();
+            List<BookingModel> oldBookings = _internalUnitOfWork.BookingsRepository.Get(b => b.Valid == true && b.UserId == UserId && b.CheckOutTime <= now)
+                .Select(b => BookingMappings.MapBookingToBookingModel(b,null)).ToList();
+            return oldBookings;
+            
         }
-        public List<BookingModel> GetNewBookings(int UserId)
+        public List<BookingModel> GetActiveBookings(int UserId)
         {
             DateTime now = DateTime.Now;
-            return _internalUnitOfWork.BookingsRepository.Get(b => b.Valid == true && b.UserId == UserId && b.EndDate >= now)
-                .Select(b => BookingMappings.MapBookingToBookingModel(b)).ToList();
+            List<BookingModel> activeBookings = _internalUnitOfWork.BookingsRepository.Get(b => b.Valid == true && b.UserId == UserId && b.CheckOutTime == null && b.EndDate >= now)
+                .Select(b => BookingMappings.MapBookingToBookingModel(b,null)).ToList();
+            foreach(var booking in activeBookings)
+            {
+                booking.Cancelable = isCancelable(booking);
+            }
+            return activeBookings;
+        }
+
+        private bool isCancelable(BookingModel booking)
+        {
+            if (booking.BookTime <= booking.Start.AddHours(-24))
+            {
+                // booking i kryer te pakten 24 ore para fillimit
+                if (DateTime.Now <= booking.BookTime.AddHours(4))
+                {
+                    //jemi brenda afatit 4 ore per ta bere cancel
+                    return true;
+                }
+                else
+                    return false;
+            }
+            else
+                return false;
+        }
+
+        public bool CancelBooking(int bookingId)
+        {
+            Booking booking = _internalUnitOfWork.BookingsRepository.GetByID(bookingId);
+            BookingModel bookingModel = BookingMappings.MapBookingToBookingModel(booking,null);
+            if (!isCancelable(bookingModel))
+                return false;
+            else
+            {
+                booking.Valid = false;
+                _internalUnitOfWork.BookingsRepository.Update(booking);
+                _internalUnitOfWork.Save();
+                return true;
+            }
         }
 
 

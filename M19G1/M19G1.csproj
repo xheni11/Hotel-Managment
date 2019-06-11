@@ -199,6 +199,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AddFacilityViewModel.cs" />
     <Compile Include="Models\BookingViewModels.cs" />
     <Compile Include="Models\FilterRoomViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -305,6 +306,7 @@
     <Content Include="Views\Dummy\Index.cshtml" />
     <Content Include="Views\Clients\OldBookings.cshtml" />
     <Content Include="Views\Clients\FilterRooms.cshtml" />
+    <Content Include="Views\Clients\ActiveBookings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

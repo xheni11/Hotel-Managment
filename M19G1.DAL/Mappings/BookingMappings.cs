@@ -10,47 +10,83 @@ namespace M19G1.DAL.Mappings
 {
     public static class BookingMappings
     {
-        public static BookingModel MapBookingToBookingModel(Booking booking )
+        public static BookingModel MapBookingToBookingModel(Booking booking,UserModel @user)
         {
-            return new BookingModel
+            var @return =  new BookingModel
             {
                 Id = booking.Id,
+                BookTime = booking.BookingTime,
                 Start = booking.StartDate,
                 End = booking.EndDate,
                 Valid = booking.Valid,
-                CheckIn = booking.CheckIn,
-                CheckOut = booking.CheckOut,
-                Client = UserMappings.MapAspNetUserToUserModel(booking.Client),
-                ClientId = booking.UserId,
-                Rating = booking.Rating != null ? MapRatingToRatingModel(booking.Rating) : null,
-                BookingRooms = booking.BookingRooms.Select(br => MapBookingRoomToBookingRoomModel(br)).ToList(),
-                DriverServices = booking.DriverServices.Select(ds => DriverServiceMappings.MapDriverServiceToDriverServiceModel(ds)).ToList()
+                CheckIn = booking.CheckInTime,
+                CheckOut = booking.CheckOutTime,
+                ClientId = booking.UserId
             };
+            @return.Client = @user;
+            @return.Rating = booking.Rating != null ? MapRatingToRatingModel(booking.Rating, @return) : null;
+            @return.BookingRooms = booking.BookingRooms.Select(br => MapBookingRoomToBookingRoomModel(br, @return)).ToList();
+            @return.DriverServices = booking.DriverServices.Select(ds => DriverServiceMappings.MapDriverServiceToDriverServiceModel(ds, @return, null)).ToList();
+            return @return;
+        }
+
+        public static Booking MapBookingModelToBooking(BookingModel model)
+        {
+            var @return = new Booking
+            {
+                Id = model.Id,
+                BookingTime = model.BookTime,
+                StartDate = model.Start,
+                EndDate = model.End,
+                Valid = model.Valid,
+                CheckInTime = model.CheckIn,
+                CheckOutTime = model.CheckOut,
+                UserId = model.ClientId
+   
+                
+            };
+            @return.Rating = model.Rating != null ? MapRatingModelToRating(model.Rating, @return) : null;
+            return @return;
 
         }
-        public static BookingRoomModel MapBookingRoomToBookingRoomModel(BookingRoom bookingRoom)
+
+        public static BookingRoomModel MapBookingRoomToBookingRoomModel(BookingRoom bookingRoom, BookingModel @ref)
         {
             return new BookingRoomModel
             {
                 Id = bookingRoom.Id,
                 BookingId = bookingRoom.BookingId,
-                BookingModel = MapBookingToBookingModel(bookingRoom.Booking),
+                BookingModel = @ref,
                 RoomId = bookingRoom.RoomId,
                 Room = RoomMappings.MapRoomToRoomModel(bookingRoom.Room),
                 ExtraFacilities = bookingRoom.ExtraFacilities.Select(ef => FacilityMappings.MapExtraFacilityToEFModel(ef)).ToList()
             };
 
         }
-        public static RatingModel MapRatingToRatingModel(Rating rating)
+        public static RatingModel MapRatingToRatingModel(Rating rating, BookingModel @ref)
         {
             return new RatingModel
             {
                 Id = rating.Id,
                 BookingId = rating.Booking.Id,
-                Booking = MapBookingToBookingModel(rating.Booking),
+                Booking = @ref ,
                 DateCreated = rating.DateCreated ?? DateTime.Now,
-                RateValue = rating.Rate
+                RateValue = rating.Rate,
+                Description = rating.Description
 
+            };
+
+        }
+
+        public static Rating MapRatingModelToRating(RatingModel model, Booking @ref)
+        {
+            return new Rating
+            {
+                Id = model.Id,
+                DateCreated = model.DateCreated,
+                Description = model.Description,
+                Rate = model.RateValue,
+                Booking = @ref
             };
 
         }

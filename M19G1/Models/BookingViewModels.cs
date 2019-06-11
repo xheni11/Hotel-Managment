@@ -14,5 +14,7 @@ namespace M19G1.Models
         public string RoomList { get; set; }
         [Display(Name = "Rating")]
         public double rate { get; set; }
+
+        public bool Cancelable { get; set; }
     }
 }

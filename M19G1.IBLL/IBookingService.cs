@@ -11,6 +11,7 @@ namespace M19G1.IBLL
     public interface IBookingService
     {
         List<BookingModel> GetOldBookings(int UserId);
-        List<BookingModel> GetNewBookings(int UserId);
+        List<BookingModel> GetActiveBookings(int UserId);
+        bool CancelBooking(int BookingId);
     }
 }

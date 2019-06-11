@@ -33,9 +33,28 @@ namespace M19G1.Controllers
         public ActionResult OldBookings()
         {
             List<BookingModel> oldBookings = _bookingService.GetOldBookings(CurrentUser.Id);
-            return View(oldBookings.Select(b => MapBookingModelToViewModel(b)).ToList());
+            List<BookingElementViewModel> oldBookingsElements = oldBookings.Select(b => MapBookingModelToViewModel(b)).ToList();
+            return View(oldBookingsElements);
         }
 
+        [HttpGet]
+        public ActionResult ActiveBookings()
+        {
+            List<BookingModel> activeBookings = _bookingService.GetActiveBookings(CurrentUser.Id);
+            List<BookingElementViewModel> activeBookingsElements = activeBookings.Select(b => MapBookingModelToViewModel(b)).ToList();
+            return View(activeBookingsElements);
+        }
+
+        [HttpGet]
+        public ActionResult CancelBooking(int bookingId)
+        {
+            bool canceled = _bookingService.CancelBooking(bookingId);
+            if (canceled)
+                ViewBag.Result = "Booking successfully canceled !";
+            else
+                ViewBag.Result = "Booking could not be canceled !";
+            return ActiveBookings();
+        }
 
         [HttpGet]
         public ActionResult FilterRooms()
@@ -83,7 +102,9 @@ namespace M19G1.Controllers
                 Id = booking.Id,
                 StartDate = booking.Start,
                 EndDate = booking.End,
-                rate = booking.Rating == null ? -1.0 : booking.Rating.RateValue
+                rate = booking.Rating == null ? -1.0 : booking.Rating.RateValue,
+                Cancelable = booking.Cancelable
+                
             };
 
             BookingViewModel.RoomList = "";

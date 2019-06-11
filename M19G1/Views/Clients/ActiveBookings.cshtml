@@ -1,13 +1,10 @@
 ﻿@model IEnumerable<M19G1.Models.BookingElementViewModel>
 
-@{
-    ViewBag.Title = "OldBookings";
-}
-
-<h2>OldBookings</h2>
-
 <p>
     @Html.ActionLink("Create New", "Create")
+</p>
+<p>
+    <h3>@ViewBag.Result</h3>
 </p>
 <table class="table">
     <tr>
@@ -41,8 +38,13 @@
             @Html.DisplayFor(modelItem => item.rate)
         </td>
         <td>
-            @Html.ActionLink("Book again", "BookAgain", new { id = item.Id }) |
+            @Html.ActionLink("Add Service", "AddService", new { id = item.Id }) |
             @Html.ActionLink("Details", "Details", new { id = item.Id })
+            @if (item.Cancelable)
+            {
+                @Html.ActionLink("  Cancel", "CancelBooking", new { id = item.Id })
+            }
+           
         </td>
     </tr>
 }
