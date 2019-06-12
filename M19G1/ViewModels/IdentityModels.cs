@@ -61,20 +61,7 @@ namespace M19G1.Models
             : base("DefaultConnection")
         {
         }
-        ////public virtual DbSet<Room> Rooms { get; set; }
 
-
-        //public virtual DbSet<Room> Rooms { get; set; }
-        ////public virtual DbSet<RoomFacility> RoomFacilities { get; set; }
-        ////public virtual DbSet<Facility> Facilities { get; set; }
-        ////public virtual DbSet<ExtraFacilities> ExtraFacilities { get; set; }
-        ////public virtual DbSet<Booking> Bookings { get; set; }
-        ////public virtual DbSet<BookingRoom> BookingRooms { get; set; }
-        //public virtual DbSet<CategoryRoom> CategoryRooms { get; set; }
-        ////public virtual DbSet<Rating> Ratings { get; set; }
-        ////public virtual DbSet<TaxiService> TaxiServices { get; set; }
-        ////public virtual DbSet<AnonymousRequest> AnonymousRequests { get; set; }
-        ////public virtual DbSet<UserRequest> UserRequests { get; set; }
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();

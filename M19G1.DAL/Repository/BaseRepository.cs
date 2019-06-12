@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace M19G1.DAL
 {
@@ -33,6 +34,11 @@ namespace M19G1.DAL
             query = includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
 
             return orderBy != null ? orderBy(query).ToList() : query.ToList();
+        }
+
+        public  IEnumerable<TEntity> GetAll()
+        {
+            return _dbSet.Where(entity => entity.Deleted==false).ToList();
         }
 
         public override TEntity GetByID(object id)

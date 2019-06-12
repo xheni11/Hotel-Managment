@@ -49,21 +49,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IBookingService.cs" />
+    <Compile Include="IRoleService.cs" />
     <Compile Include="IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\M19G1.DAL\M19G1.DAL.csproj">
-      <Project>{4CA3E9FF-FB94-4442-9717-26DD543D2A25}</Project>
-      <Name>M19G1.DAL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\M19G1.Models\M19G1.Models.csproj">
-      <Project>{a37933f1-4d30-43b9-8b5f-b084fdca2907}</Project>
-      <Name>M19G1.Models</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\M19G1.Models\M19G1.Models.csproj">
+      <Project>{A37933F1-4D30-43B9-8B5F-B084FDCA2907}</Project>
+      <Name>M19G1.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

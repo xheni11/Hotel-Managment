@@ -1,5 +1,6 @@
 ﻿using M19G1.DAL.Entities;
 using M19G1.DAL.Persistence;
+using M19G1.DAL.Repository;
 using System;
 using System.Data;
 using System.Data.Entity;
@@ -16,19 +17,19 @@ namespace M19G1.DAL
 
         #region AspNetRoles Repository
 
-        private BaseRepository<AspNetRole> _aspNetRolesRepository;
+        private RoleRepository _aspNetRolesRepository;
 
-        public BaseRepository<AspNetRole> AspNetRolesRepository =>
-            _aspNetRolesRepository ?? (_aspNetRolesRepository = RepositoryFactory.CreateRepository<AspNetRole>(_context));
+        public RoleRepository AspNetRolesRepository =>
+            _aspNetRolesRepository ?? (_aspNetRolesRepository = new RoleRepository (_context));
 
         #endregion
 
         #region AspNetUsers Repository
 
-        private BaseRepository<AspNetUser> _aspNetUsersRepository;
+        private UserRepository _aspNetUsersRepository;
 
-        public BaseRepository<AspNetUser> AspNetUsersRepository =>
-            _aspNetUsersRepository ?? (_aspNetUsersRepository = RepositoryFactory.CreateRepository<AspNetUser>(_context));
+        public UserRepository AspNetUsersRepository =>
+           _aspNetUsersRepository ?? ( _aspNetUsersRepository = new UserRepository(_context));
 
         #endregion
 

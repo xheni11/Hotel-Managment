@@ -16,6 +16,7 @@ namespace M19G1.Common.Logging
             catch (Exception e)
             {
                 Logger.Error(e.Message, e);
+                throw;
             }
         }
     }

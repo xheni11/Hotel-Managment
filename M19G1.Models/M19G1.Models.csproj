@@ -61,8 +61,10 @@
     <Compile Include="RoomCategoryModel.cs" />
     <Compile Include="RoomFacilityModel.cs" />
     <Compile Include="RoomModel.cs" />
-    <Compile Include="UserModel.cs" />
+    <Compile Include="User\UserCreateModel.cs" />
+    <Compile Include="User\UserModel.cs" />
     <Compile Include="UserRequestModel.cs" />
+    <Compile Include="User\UserUpdateModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

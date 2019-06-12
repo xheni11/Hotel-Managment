@@ -10,8 +10,8 @@ namespace M19G1.Models
     {
         public int Id { get; set; }
         public string RoleName { get; set; }
-        public List<UserModel> Users { get; set; }
-        public List<UserRequestModel> UserRequests { get; set; }
+        //public List<UserModel> Users { get; set; }
+        //public List<UserRequestModel> UserRequests { get; set; }
 
     }
 }

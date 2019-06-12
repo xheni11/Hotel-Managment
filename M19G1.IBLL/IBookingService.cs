@@ -1,5 +1,4 @@
-﻿using M19G1.DAL.Entities;
-using M19G1.Models;
+﻿using M19G1.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
