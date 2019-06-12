@@ -10,9 +10,9 @@ namespace M19G1.DAL.Mappings
 {
     public static class RoomMappings
     {
-        public static RoomModel MapRoomToRoomModel(Room room)
+        public static RoomModel MapRoomToRoomModel(Room room,RoomCategoryModel CatModel)
         {
-            return new RoomModel
+            var roomModel = new RoomModel
             {
                 Id = room.Id,
                 Active = room.Enabled,
@@ -21,22 +21,26 @@ namespace M19G1.DAL.Mappings
                 Price = room.Price,
                 RoomName = room.Name,
                 CategoryId = room.CategoryId,
-                RoomCategory = MapRoomCategoryToRCModel(room.Category),
-                RoomDescription = room.Description,
-                BookingRooms = room.BookingRooms.Select(b => BookingMappings.MapBookingRoomToBookingRoomModel(b)).ToList(),
-                RoomFacilities = room.RoomFacilities.Select(rf => FacilityMappings.MapRoomFacilityToRFModel(rf)).ToList()
+                RoomCategory = CatModel,
+                RoomDescription = room.Description
             };
+            roomModel.BookingRooms = room.BookingRooms.Select(b => BookingMappings.MapBookingRoomToBookingRoomModel(b, null, null)).ToList();
+            roomModel.RoomFacilities = room.RoomFacilities.Select(rf => FacilityMappings.
+            MapRoomFacilityToRFModel(rf, roomModel, FacilityMappings.MapFacilityToFacilityModel(rf.Facility))).ToList();
+            return roomModel;
         }
+
         public static RoomCategoryModel MapRoomCategoryToRCModel(RoomCategory RoomCat)
         {
-            return new RoomCategoryModel
+            var Cat = new RoomCategoryModel
             {
                 Id = RoomCat.Id,
                 CatName = RoomCat.Name,
                 Description = RoomCat.Description
-                //Shkakton stack overflow sepse krijohet cikel cat-rooms-cat-..
-                //Rooms = RoomCat.Rooms.Select(r => MapRoomToRoomModel(r)).ToList()
+               
             };
+            Cat.Rooms = RoomCat.Rooms.Select(r => MapRoomToRoomModel(r, Cat)).ToList();
+            return Cat;
         }
     }
 }

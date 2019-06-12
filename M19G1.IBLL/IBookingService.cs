@@ -13,5 +13,6 @@ namespace M19G1.IBLL
         List<BookingModel> GetOldBookings(int UserId);
         List<BookingModel> GetActiveBookings(int UserId);
         bool CancelBooking(int BookingId);
+        BookingModel GetBookingById(int bookingId);
     }
 }

@@ -68,7 +68,8 @@ namespace M19G1.BLL
             }
                                             
 
-            List<RoomModel> rooms = _internalUnitOfWork.RoomRepository.Get(expr).Select(m => RoomMappings.MapRoomToRoomModel(m)).ToList();
+            List<RoomModel> rooms = _internalUnitOfWork.RoomRepository.Get(expr).Select(m => 
+                 RoomMappings.MapRoomToRoomModel(m,RoomMappings.MapRoomCategoryToRCModel(m.Category))).ToList();
             List<RoomModel> filteredRooms = new List<RoomModel>();
 
             if (model.SelectedFacilities != null)

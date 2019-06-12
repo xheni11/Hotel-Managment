@@ -1,4 +1,6 @@
-﻿using M19G1.IBLL;
+﻿
+using M19G1.IBLL;
+using M19G1.Mappings;
 using M19G1.Models;
 using System;
 using System.Collections.Generic;
@@ -33,27 +35,27 @@ namespace M19G1.Controllers
         public ActionResult OldBookings()
         {
             List<BookingModel> oldBookings = _bookingService.GetOldBookings(CurrentUser.Id);
-            List<BookingElementViewModel> oldBookingsElements = oldBookings.Select(b => MapBookingModelToViewModel(b)).ToList();
+            List<BookingElementViewModel> oldBookingsElements = oldBookings.Select(b => BookingMappings.MapBookingModelToViewModel(b)).ToList();
             return View(oldBookingsElements);
         }
 
         [HttpGet]
         public ActionResult ActiveBookings()
         {
-            List<BookingModel> activeBookings = _bookingService.GetActiveBookings(CurrentUser.Id);
-            List<BookingElementViewModel> activeBookingsElements = activeBookings.Select(b => MapBookingModelToViewModel(b)).ToList();
+            List<BookingModel> activeBookings = _bookingService.GetActiveBookings(6);
+            List<BookingElementViewModel> activeBookingsElements = activeBookings.Select(b => BookingMappings.MapBookingModelToViewModel(b)).ToList();
             return View(activeBookingsElements);
         }
 
         [HttpGet]
-        public ActionResult CancelBooking(int bookingId)
+        public ActionResult CancelBooking(int id)
         {
-            bool canceled = _bookingService.CancelBooking(bookingId);
+            bool canceled = _bookingService.CancelBooking(id);
             if (canceled)
-                ViewBag.Result = "Booking successfully canceled !";
+                TempData["Result"] = "Booking successfully canceled !";
             else
-                ViewBag.Result = "Booking could not be canceled !";
-            return ActiveBookings();
+                TempData["Result"] = "Booking could not be canceled !";
+            return RedirectToAction("ActiveBookings");
         }
 
         [HttpGet]
@@ -72,7 +74,7 @@ namespace M19G1.Controllers
         {
             if(ModelState.IsValid)
             {
-                FilterRoomModel roomsFilter = MapFilterRoomViewModelToFRModel(filterModel);
+                FilterRoomModel roomsFilter = RoomMappings.MapFilterRoomViewModelToFRModel(filterModel);
                 List<RoomModel> filteredRooms = _roomService.FilterRooms(roomsFilter);
                 filterModel.Rooms = filteredRooms;
             }
@@ -83,37 +85,24 @@ namespace M19G1.Controllers
             return View(filterModel);
         }
 
-        public FilterRoomModel MapFilterRoomViewModelToFRModel(FilterRoomViewModel model)
+        [HttpGet]
+        public ActionResult AddService(int id)
         {
-            return new FilterRoomModel
-            {
-                CategoryId = model.CategoryId ?? 0,
-                RoomName = model.Name,
-                LessThanPrice = model.Price ?? 0,
-                Occupied = model.Occupied,
-                SelectedFacilities = model.SelectedFacilities
-            };
+            BookingModel bookingModel = _bookingService.GetBookingById(id);
+            List<FacilityModel> Facilities = _facilityService.GetFacilites();
+
+            BookingViewModel bookingViewModel = BookingMappings.MapBookingModelToBookingViewModel(bookingModel);
+            AddFacilityViewModel model = new AddFacilityViewModel();
+            model.Booking = bookingViewModel;
+            model.Facilities = Facilities;
+
+            return View(model);
         }
 
-        public BookingElementViewModel MapBookingModelToViewModel(BookingModel booking)
-        {
-            BookingElementViewModel BookingViewModel = new BookingElementViewModel
-            {
-                Id = booking.Id,
-                StartDate = booking.Start,
-                EndDate = booking.End,
-                rate = booking.Rating == null ? -1.0 : booking.Rating.RateValue,
-                Cancelable = booking.Cancelable
-                
-            };
+        
 
-            BookingViewModel.RoomList = "";
-            foreach(var BookingRoom in booking.BookingRooms)
-            {
-                BookingViewModel.RoomList += BookingRoom.Room.RoomName + " ; ";
-            }
+        
 
-            return BookingViewModel;
-        }
+        
     }
 }

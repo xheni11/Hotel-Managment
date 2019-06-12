@@ -24,8 +24,10 @@ namespace M19G1.DAL.Mappings
                 ClientId = booking.UserId
             };
             @return.Client = @user;
+            
             @return.Rating = booking.Rating != null ? MapRatingToRatingModel(booking.Rating, @return) : null;
-            @return.BookingRooms = booking.BookingRooms.Select(br => MapBookingRoomToBookingRoomModel(br, @return)).ToList();
+            @return.BookingRooms = booking.BookingRooms.Select(br => MapBookingRoomToBookingRoomModel(br, @return,
+                RoomMappings.MapRoomToRoomModel(br.Room, RoomMappings.MapRoomCategoryToRCModel(br.Room.Category)))).ToList();
             @return.DriverServices = booking.DriverServices.Select(ds => DriverServiceMappings.MapDriverServiceToDriverServiceModel(ds, @return, null)).ToList();
             return @return;
         }
@@ -50,18 +52,19 @@ namespace M19G1.DAL.Mappings
 
         }
 
-        public static BookingRoomModel MapBookingRoomToBookingRoomModel(BookingRoom bookingRoom, BookingModel @ref)
+        public static BookingRoomModel MapBookingRoomToBookingRoomModel(BookingRoom bookingRoom, BookingModel @ref, RoomModel room)
         {
-            return new BookingRoomModel
+            var BookingRoom =  new BookingRoomModel
             {
                 Id = bookingRoom.Id,
                 BookingId = bookingRoom.BookingId,
                 BookingModel = @ref,
                 RoomId = bookingRoom.RoomId,
-                Room = RoomMappings.MapRoomToRoomModel(bookingRoom.Room),
-                ExtraFacilities = bookingRoom.ExtraFacilities.Select(ef => FacilityMappings.MapExtraFacilityToEFModel(ef)).ToList()
+                Room = room
             };
-
+            BookingRoom.ExtraFacilities = bookingRoom.ExtraFacilities.Select(ef => FacilityMappings.MapExtraFacilityToEFModel(ef, 
+                BookingRoom,FacilityMappings.MapFacilityToFacilityModel(ef.Facility))).ToList();
+            return BookingRoom;
         }
         public static RatingModel MapRatingToRatingModel(Rating rating, BookingModel @ref)
         {

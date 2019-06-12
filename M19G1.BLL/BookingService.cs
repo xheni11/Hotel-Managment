@@ -71,6 +71,11 @@ namespace M19G1.BLL
             }
         }
 
-
+        public BookingModel GetBookingById(int bookingId)
+        {
+            Booking booking = _internalUnitOfWork.BookingsRepository.GetByID(bookingId);
+            BookingModel bookingModel = BookingMappings.MapBookingToBookingModel(booking, null);
+            return bookingModel;
+        }
     }
 }
