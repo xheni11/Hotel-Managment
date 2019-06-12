@@ -9,6 +9,7 @@ namespace M19G1.IBLL
 {
     public interface IFacilityService
     {
-        List<FacilityModel> GetFacilites(); 
+        List<FacilityModel> GetFacilites();
+        bool AddExtraFacility(ExtraFacilityModel model);
     }
 }

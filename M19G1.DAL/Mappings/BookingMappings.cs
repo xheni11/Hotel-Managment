@@ -27,9 +27,10 @@ namespace M19G1.DAL.Mappings
             
             @return.Rating = booking.Rating != null ? MapRatingToRatingModel(booking.Rating, @return) : null;
             @return.BookingRooms = booking.BookingRooms.Select(br => MapBookingRoomToBookingRoomModel(br, @return,
-                RoomMappings.MapRoomToRoomModel(br.Room, RoomMappings.MapRoomCategoryToRCModel(br.Room.Category)))).ToList();
-            @return.DriverServices = booking.DriverServices.Select(ds => DriverServiceMappings.MapDriverServiceToDriverServiceModel(ds, @return, null)).ToList();
+                RoomMappings.MapRoomToRoomModel(br.Room, null))).ToList();
+            @return.DriverServices = booking.DriverServices?.Select(ds => DriverServiceMappings.MapDriverServiceToDriverServiceModel(ds, @return, null)).ToList();
             return @return;
+            //RoomMappings.MapRoomCategoryToRCModel(br.Room.Category)
         }
 
         public static Booking MapBookingModelToBooking(BookingModel model)

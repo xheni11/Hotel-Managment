@@ -51,5 +51,20 @@ namespace M19G1.DAL.Mappings
             };
 
         }
+
+        public static ExtraFacility MapExtraFacilityModelToExtraFacility(ExtraFacilityModel model, BookingRoom broom, Facility facility)
+        {
+            return new ExtraFacility
+            {
+                Id = model.Id,
+                Quantity = model.EFQuantity,
+                Price = model.Price,
+                FacilityId = model.FacilityId,
+                BookingRoomId = model.BookingRoomId,
+                Facility = facility,
+                BookingRoom = broom
+            };
+
+        }
     }
 }

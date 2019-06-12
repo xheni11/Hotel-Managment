@@ -86,6 +86,22 @@ namespace M19G1.DAL
 
         #endregion
 
+        #region
+
+        private BaseRepository<BookingRoom> _bookingRoomRepository;
+
+        public BaseRepository<BookingRoom> BookingRoomRepository =>
+            _bookingRoomRepository ?? (_bookingRoomRepository = RepositoryFactory.CreateRepository<BookingRoom>(_context));
+        #endregion
+
+        #region
+
+        private BaseRepository<ExtraFacility> _extraFacilityRepository;
+
+        public BaseRepository<ExtraFacility> ExtraFacilityRepository =>
+            _extraFacilityRepository ?? (_extraFacilityRepository = RepositoryFactory.CreateRepository<ExtraFacility>(_context));
+        #endregion
+
         public void BeginTransaction()
         {
             _transaction = _context.Database.BeginTransaction(IsolationLevel.ReadCommitted);

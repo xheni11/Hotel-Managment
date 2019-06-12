@@ -195,6 +195,7 @@
     </Compile>
     <Compile Include="Mappings\BookingMappings.cs" />
     <Compile Include="Mappings\DriverServiceMappings.cs" />
+    <Compile Include="Mappings\FacilityMappings.cs" />
     <Compile Include="Mappings\RoomMappings.cs" />
     <Compile Include="Migrations\201905271016208_InitialCreate.cs" />
     <Compile Include="Migrations\201905271016208_InitialCreate.Designer.cs">
@@ -202,8 +203,10 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AddDriverServiceViewModel.cs" />
     <Compile Include="Models\AddFacilityViewModel.cs" />
     <Compile Include="Models\BookingViewModels.cs" />
+    <Compile Include="Models\CustomDateAttribute.cs" />
     <Compile Include="Models\DriverServiceViewModel.cs" />
     <Compile Include="Models\FilterRoomViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -312,6 +315,7 @@
     <Content Include="Views\Clients\OldBookings.cshtml" />
     <Content Include="Views\Clients\FilterRooms.cshtml" />
     <Content Include="Views\Clients\ActiveBookings.cshtml" />
+    <Content Include="Views\Clients\AddFacility.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

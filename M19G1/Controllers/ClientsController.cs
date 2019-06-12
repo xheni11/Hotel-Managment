@@ -43,7 +43,7 @@ namespace M19G1.Controllers
         public ActionResult ActiveBookings()
         {
             List<BookingModel> activeBookings = _bookingService.GetActiveBookings(6);
-            List<BookingElementViewModel> activeBookingsElements = activeBookings.Select(b => BookingMappings.MapBookingModelToViewModel(b)).ToList();
+            List<BookingElementViewModel> activeBookingsElements = activeBookings?.Select(b => BookingMappings.MapBookingModelToViewModel(b)).ToList();
             return View(activeBookingsElements);
         }
 
@@ -86,7 +86,7 @@ namespace M19G1.Controllers
         }
 
         [HttpGet]
-        public ActionResult AddService(int id)
+        public ActionResult AddFacility(int id)
         {
             BookingModel bookingModel = _bookingService.GetBookingById(id);
             List<FacilityModel> Facilities = _facilityService.GetFacilites();
@@ -99,6 +99,36 @@ namespace M19G1.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public ActionResult AddFacility(AddFacilityViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                ExtraFacilityModel efModel = FacilityMappings.MapFacilityViewModelToEFacilityModel(model);
+                if (_facilityService.AddExtraFacility(efModel))
+                    ViewBag.Result = "Facility successfully added !";
+                else
+                    ViewBag.Result = "Facility could not be added !";
+            }
+            BookingModel bookingModel = _bookingService.GetBookingById(model.Booking.Id);
+            List<FacilityModel> Facilities = _facilityService.GetFacilites();
+            BookingViewModel bookingViewModel = BookingMappings.MapBookingModelToBookingViewModel(bookingModel);
+            model.Booking = bookingViewModel;
+            model.Facilities = Facilities;
+            return View(model);
+            
+        }
+
+        [HttpGet]
+        public ActionResult AddService(int id)
+        {
+            BookingModel bookingModel = _bookingService.GetBookingById(id);
+            BookingViewModel bookingViewModel = BookingMappings.MapBookingModelToBookingViewModel(bookingModel);
+            AddDriverServiceViewModel model = new AddDriverServiceViewModel();
+            model.Booking = bookingViewModel;
+
+            return View(model);
+        }
         
 
         
