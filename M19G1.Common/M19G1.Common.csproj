@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="Logging\Interceptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PasswordGenerator\PasswordGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

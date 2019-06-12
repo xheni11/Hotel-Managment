@@ -1,4 +1,5 @@
 ﻿
+using M19G1.Common.RandomPassword;
 using M19G1.DAL;
 using M19G1.DAL.Entities;
 using M19G1.DAL.Mapping.User;
@@ -9,7 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-
+using M19G1;
 namespace M19G1.BLL
 {
     public class UserService : IUserService 
@@ -106,6 +107,15 @@ namespace M19G1.BLL
                 return true;
             else
                 return false;
+        }
+        public void GenerateNewPassword(int idUser)
+        {
+            AspNetUser user = _internalUnitOfWork.AspNetUsersRepository.GetByID(idUser);
+            PasswordGenerator newPassword = new PasswordGenerator();
+             //user.PasswordHash=
+            _internalUnitOfWork.AspNetUsersRepository.Update(user);
+            _internalUnitOfWork.Save();
+
         }
     }
 

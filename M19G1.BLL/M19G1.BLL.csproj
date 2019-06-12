@@ -56,6 +56,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\M19G1.Common\M19G1.Common.csproj">
+      <Project>{6FDD8EAC-0B34-4F44-92CB-3D505B404657}</Project>
+      <Name>M19G1.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\M19G1.DAL\M19G1.DAL.csproj">
       <Project>{4CA3E9FF-FB94-4442-9717-26DD543D2A25}</Project>
       <Name>M19G1.DAL</Name>

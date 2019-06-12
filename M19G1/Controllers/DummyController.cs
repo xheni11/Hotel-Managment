@@ -14,7 +14,7 @@ namespace M19G1.Controllers
 
         public ActionResult Index()
         {
-            _userService.CreateDummyUserWithError();
+          
             return View();
         }
     }
