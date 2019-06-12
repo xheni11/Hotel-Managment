@@ -32,7 +32,7 @@ namespace M19G1.DAL.Mapping.User
 
         public static AspNetUser ToEntity(UserModel userModel, AspNetUser userToUpdate)
         {
-            //userToUpdate.Id = userModel.Id;
+
             userToUpdate.FirstName = userModel.FirstName;
             userToUpdate.LastName = userModel.LastName;
             userToUpdate.UserName = userModel.Username;

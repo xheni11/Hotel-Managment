@@ -1,6 +1,4 @@
 ﻿
-
-
 using M19G1.DAL;
 using M19G1.DAL.Entities;
 using M19G1.DAL.Mapping.User;
@@ -29,34 +27,40 @@ namespace M19G1.BLL
 
         public void CreateUser(UserModel userModel)
         {
-            AspNetUser user = new AspNetUser
+            if (IsUserValid(userModel))
             {
-                Id = userModel.Id,
-                CreatedBy = 1,
-                CreatedOn = DateTime.Now,
-                Birthday = userModel.Birthday,
-                Deleted = false,
-                DateCreated = DateTime.Now,
-                Email = userModel.Email,
-                Enabled = true,
-                FirstName = userModel.FirstName,
-                LastName = userModel.LastName,
-                UserName = userModel.Username,
-                Gender = userModel.Gender,
-                PhoneNumber = userModel.PhoneNr
-            };
-            _internalUnitOfWork.AspNetUsersRepository.Insert(user);
-            _internalUnitOfWork.Save();
+                AspNetUser user = new AspNetUser
+                {
+                    Id = userModel.Id,
+                    CreatedBy = 1,
+                    CreatedOn = DateTime.Now,
+                    Birthday = userModel.Birthday,
+                    Deleted = false,
+                    DateCreated = DateTime.Now,
+                    Email = userModel.Email,
+                    Enabled = true,
+                    FirstName = userModel.FirstName,
+                    LastName = userModel.LastName,
+                    UserName = userModel.Username,
+                    Gender = userModel.Gender,
+                    PhoneNumber = userModel.PhoneNr
+                };
+                _internalUnitOfWork.AspNetUsersRepository.Insert(user);
+                _internalUnitOfWork.Save();
+            }
         }
         public void UpdateUser(UserModel userModel)
         {
-            AspNetUser userToUpdate= _usersRepository.GetByID(userModel.Id);
-            userToUpdate= UserModelMapping.ToEntity(userModel, userToUpdate);
-            List<AspNetRole> roles = new List<AspNetRole>();
-            roles.Add(_roleRepository.GetRoleByName(userModel.RoleName));
-            userToUpdate.AspNetRoles = roles;
-            _internalUnitOfWork.AspNetUsersRepository.Update(userToUpdate);
-            _internalUnitOfWork.Save();
+            if (IsUserValid(userModel))
+            {
+                AspNetUser userToUpdate = _usersRepository.GetByID(userModel.Id);
+                userToUpdate = UserModelMapping.ToEntity(userModel, userToUpdate);
+                List<AspNetRole> roles = new List<AspNetRole>();
+                roles.Add(_roleRepository.GetRoleByName(userModel.RoleName));
+                userToUpdate.AspNetRoles = roles;
+                _internalUnitOfWork.AspNetUsersRepository.Update(userToUpdate);
+                _internalUnitOfWork.Save();
+            }
         }
 
         public void DeleteUser(int idUser)
@@ -90,6 +94,18 @@ namespace M19G1.BLL
         public UserModel GetUserById(int id)
         {
             return UserModelMapping.ToModel( _usersRepository.GetByID(id));
+        }
+        public  bool IsUserValid(UserModel user)
+        {
+            foreach (UserModel userModel in GetAllUsers())
+            {
+                if (user.Username.Equals(userModel.Username))
+                    return false;
+            }
+            if (user.FirstName != null && user.LastName != null && user.Username != null && user.Email != null && user.RoleName != null && user.FirstName.Length < 30 && user.LastName.Length < 30 && user.Username.Length < 30)
+                return true;
+            else
+                return false;
         }
     }
 

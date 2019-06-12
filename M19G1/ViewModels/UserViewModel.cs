@@ -14,9 +14,9 @@ namespace M19G1.Models
         ErrorMessage = "Firstname Should be minimum 3 characters and a maximum of 30 characters")]
         [DataType(DataType.Text)]
         public string FirstName { get; set; }
-        [Required(ErrorMessage = "Firstname is required")]
+        [Required(ErrorMessage = "Lastname is required")]
         [StringLength(30, MinimumLength = 3,
-        ErrorMessage = "Firstname Should be minimum 3 characters and a maximum of 30 characters")]
+        ErrorMessage = "Lastname Should be minimum 3 characters and a maximum of 30 characters")]
         [DataType(DataType.Text)]
         public string LastName { get; set; }
         public bool Active { get; set; }
