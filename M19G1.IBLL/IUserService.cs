@@ -7,14 +7,11 @@ namespace M19G1.IBLL
 {
     public interface IUserService
     {
-        void CreateDummyUser();
-        void CreateDummyUserWithError();
-
-        List<UserModel> GetAllUsers();
-
-        UserModel GetLoginUser(string username, string password);
-
+        void CreateUser(UserModel userModel);
         void UpdateUserActivity(int userId);
+        void DeleteUser(int idUser);
+        UserModel GetLoginUser(string username, string password);
+        List<UserModel> GetAllUsers();        
         List<UserModel> GetUsersOrderBy(string sortField, string search,int idCurrentUser);
         UserModel GetUserById(int id);
     }

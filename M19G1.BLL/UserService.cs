@@ -27,25 +27,6 @@ namespace M19G1.BLL
             _roleRepository = _internalUnitOfWork.AspNetRolesRepository;
         }
 
-        public void CreateDummyUser()
-        {
-            AspNetUser dummy = new AspNetUser
-            {
-                FirstName = "d",
-                LastName = "d",
-                Gender = "M",
-                DateCreated = DateTime.Now,
-                PasswordHash = "ddd",
-                LockoutEndDateUtc = DateTime.Now,
-                Birthday = DateTime.Now,
-                Email = "ddd",
-                EmailConfirmed = false,
-                PhoneNumber = "x",
-                UserName = "xx"
-            };
-            _internalUnitOfWork.AspNetUsersRepository.Insert(dummy);
-            _internalUnitOfWork.Save();
-        }
         public void CreateUser(UserModel userModel)
         {
             AspNetUser user = new AspNetUser
@@ -86,26 +67,6 @@ namespace M19G1.BLL
             _internalUnitOfWork.Save();
         }
 
-        public void CreateDummyUserWithError()
-        {
-            AspNetUser dummy = new AspNetUser
-            {
-                FirstName = "ds",
-                LastName = "ds",
-                Gender = "Ms",
-                DateCreated = DateTime.Now,
-                PasswordHash = "ddds",
-                Birthday = DateTime.Now,
-                Email = "ddds",
-                EmailConfirmed = false,
-                PhoneNumber = "xss",
-                UserName = "xsssx"
-            };
-            _internalUnitOfWork.AspNetUsersRepository.Insert(dummy);
-            _internalUnitOfWork.Save();
-        }
-
-
         public UserModel GetLoginUser(string username, string password)
         {
             return UserModelMapping.ToModel(_usersRepository.GetUserByUsernameAndPassword(username,password));
@@ -116,16 +77,11 @@ namespace M19G1.BLL
             return UserModelMapping.ToModel(_usersRepository.GetAll());
         }
 
-        
-
         public List<UserModel> GetUsersOrderBy(string sortField, string search, int currentUserId)
         {
             return UserModelMapping.ToModel(_usersRepository.OrderBy(_usersRepository.GetAll(), sortField,search,currentUserId));
         }
-        //public List<UserModel> GetUsersSearchBy(string search)
-        //{
-        //    return UserModelMapping.ToModel(_usersRepository.SearchBy(_usersRepository.GetAll(), search));
-        //}
+
         public void UpdateUserActivity(int userId)
         {
             _usersRepository.UpdateUserActivity(userId);

@@ -1,32 +1,13 @@
 ﻿@model M19G1.Models.UserViewModel
 @{
-                /**/
-
-                ViewBag.Title = "Home Page";
+                /**/ ViewBag.Title = "User Page";
 }
-
-@*<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
-
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>*@
-@*<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>*@
 <script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
 <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 <script src="~/Scripts/bootstrap.js" type="text/javascript"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment-with-locales.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet" />
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
-<script src="https://rawgit.com/tempusdominus/bootstrap-4/master/build/js/tempusdominus-bootstrap-4.js"></script>
-<link href="https://rawgit.com/tempusdominus/bootstrap-4/master/build/css/tempusdominus-bootstrap-4.css" rel="stylesheet" />
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-
-
-
-
 <script src="~/Scripts/" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="~/Scripts/DataTables/datatables.css">
-
 <script type="text/javascript" charset="utf8" src="~/Scripts/DataTables/datatables.js"></script>
 <script th:src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js}"></script>
 <script th:src="//cdn.datatables.net/plug-ins/1.10.11/sorting/datetime-moment.js}"></script>
@@ -60,22 +41,10 @@
         "filter": true, // this is for disable filter (search box)
         "orderMulti": false, // for disable multiple column at once
         "pageLength": 5,
-        //"pagingType": "full_numbers",
-        //"paging": true,
-        "draw": 1,
-        "recordsTotal":8,
-        "recordsFiltered": 8,
-
-
         "ajax": {
-            "url": "/Home/ListUsers",
+            "url": "/User/ListUsers",
             "type": "POST",
             "datatype": "json",
- 
-            //"datasrc":"",
-            
-
-
         },
 
         "columnDefs":
@@ -116,7 +85,6 @@
             { "data": "Username", "name": "Username", "autoWidth": true },
             { "data": "RoleName", "name": "RoleName", "autoWidth": true },
             {
-               // data: null, render: function (data, type, full, meta) { return '<a class="btn btn-info" onclick="Open(1)">Open Modal</a>'; }
                 data: null, render: function (data, type, full, meta) {
                     return '<a class="btn btn-info" onclick="LoadUser('+full.Id+')">Edit</a>';
                 }
@@ -130,25 +98,16 @@
         ]
 
     });
-    //setInterval(function () {
-    //    usersTable.ajax.reload(null, false); // user paging is not reset on reload
-    //}, 100);
-    @* <a class="btn btn-info" data-toggle="modal" class="modalLink" data-target="#myModal" data-id=@Model.Id  href = "/Home/LoadUser/id=@Model.Id" > Edit</a >*@
+  
     function convertJsonDateToShortDate(data) {
         const dateValue = new Date(parseInt(data.substr(6)));
         return dateValue.toLocaleDateString();
     }
+
     function DeleteUser() {
         var id = $('#Id').val();
-            //Id: $('#Id').val(),
-
         $.ajax({
-            //url: "/Home/DeleteUser",
-            //data: JSON.stringify(id),
-        //$.ajax({
-        //    //url: "/Home/DeleteUser",
-        //    //data: JSON.stringify(id),
-            url: "/Home/DeleteUser/" + id,
+            url: "/User/DeleteUser/" + id,
             type: "GET",
             contentType: "application/json;charset=UTF-8",
             dataType: "json",
@@ -160,14 +119,11 @@
                 alert(response.responseText);
             }
         });
-      // usersTable.ajax.reload();
-        //setInterval(function () {
-        //    usersTable.ajax.reload(null, false); // user paging is not reset on reload
-        //}, 1000);
     }
+
     function PopUpDelete(id) {
         $.ajax({
-            url: "/Home/LoadUser/" + id,
+            url: "/User/LoadUser/" + id,
             type: "GET",
             contentType: "application/json;charset=UTF-8",
             dataType: "json",
@@ -181,12 +137,10 @@
         });
         return false;
     }
-    //$('#modalDelete').on('shown.bs.modal', function () {
-    //    $('#myInput').trigger('focus')
-    //})
+
     function LoadUser(id) {
         $.ajax({
-            url: "/Home/LoadUser/" + id,
+            url: "/User/LoadUser/" + id,
             type: "GET",
             contentType: "application/json;charset=UTF-8",
             dataType: "json",
@@ -203,7 +157,7 @@
                 else {
                     $("#Male").prop("checked", true);
                 }
-                $('#Birthday').val(convertJsonDateToShortDate(response.Birthday));
+                $('#BirthdayText').val(convertJsonDateToShortDate(response.Birthday));
                 $('#RoleName').val(response.RoleName);
                 $('#Update').show();
                 $('#Add').hide();
@@ -218,19 +172,11 @@
     }
     function AddPopUp(id) {
         $.ajax({
-            url: "/Home/LoadUser/" + id,
+            url: "/User/LoadUser/" + id,
             type: "GET",
             contentType: "application/json;charset=UTF-8",
             dataType: "json",
             success: function (response) {
-                //$('#Id').val(response.Id);
-                //$('#FirstName').val(response.FirstName);
-                //$('#LastName').val(response.LastName);
-                //$('#Email').val(response.Email);
-                //$('#Username').val(response.Username);
-                //$('#Gender').val(response.Gender);
-                //$('#Birthday').val(convertJsonDateToShortDate(response.Birthday));
-                //$('#RoleName').val(response.RoleName);
                 $("#Update").hide();
                 $("#Add").show();
                 $('#myModalLabel').text("Add User");
@@ -243,6 +189,7 @@
         });
         return false;
     }
+
     function AddUser() {
         var userObj = {
             Id: $('#Id').val(),
@@ -254,7 +201,7 @@
             Birthday: $('#Birthday').val(),
         };
         $.ajax({
-            url: "/Home/AddUser",
+            url: "/User/AddUser",
             data: JSON.stringify(userObj),
             type: "POST",
             contentType: "application/json;charset=utf-8",
@@ -320,7 +267,7 @@
 
         };
         $.ajax({
-            url: "/Home/UpdateUser",
+            url: "/User/UpdateUser",
             data: JSON.stringify(userObj),
             type: "POST",
             contentType: "application/json;charset=utf-8",
@@ -332,15 +279,8 @@
                 error: function (errormessage) {
                     alert(errormessage.responseText);
                 }
-
         });
-
     };
- 
-    //$(document).ready(function () {
-    //    $("#Birthday").datetimepicker();
-
-    //});
 
 </script>
 
@@ -349,14 +289,12 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                @*<button type="button" class="close" data-dissmiss="modal"><span aria-hidden="true">×</span></button>*@
                 <button type="button" class="close" data-dismiss="modal">×</button>
                 <h4 class="modal-title" id="myModalLabel">Add User</h4>
             </div>
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        @*<label for="Id">ID</label>*@
                         <input type="text" class="form-control" id="Id" placeholder="Id" hidden="hidden" disabled="disabled" />
                     </div>
                     <div class="form-group">

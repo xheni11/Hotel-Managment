@@ -3,8 +3,10 @@ using M19G1.DAL;
 using M19G1.DAL.Entities;
 using M19G1.MappingViewModel;
 using M19G1.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -20,12 +22,12 @@ namespace M19G1.Controllers
         public ActionResult Index()
         {
             List<UserModel> users = _userService.GetAllUsers();
-            SelectList selectListRoles = new SelectList(_roleService.GetAllRoles().Select(s=>s.RoleName));
-            
+            MultiSelectList selectListRoles = new MultiSelectList(_roleService.GetAllRoles().Select(s=>s.RoleName));
+
             ViewData["RoleName"] = selectListRoles;
             return View();
         }
-        public ActionResult ListUsers()
+        public JsonResult ListUsers()
         {
             List<UserModel> users = _userService.GetAllUsers();
             //total number of rows count     
@@ -34,22 +36,27 @@ namespace M19G1.Controllers
             var length = Request.Form.GetValues("length").FirstOrDefault();
             int pageSize = length != null ? Convert.ToInt32(length) : 0;
             int skip = start != null ? Convert.ToInt32(start) : 0;
-            var draw = Request.Form.GetValues("draw").FirstOrDefault();
-
-            //Returning Json Data    
+            var draw = Request.Form.GetValues("draw").FirstOrDefault();  
+         
 
             var sortColumn=Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
             var sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
             var searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
-            if ( !string.IsNullOrEmpty(sortColumn)|| !string.IsNullOrEmpty(searchValue))
+            if (!string.IsNullOrEmpty(sortColumn) || !string.IsNullOrEmpty(searchValue))
             {
-                users = _userService.GetUsersOrderBy(sortColumn,searchValue,0); //_controller.CurrentUser.Id kur te bej login
+                users = _userService.GetUsersOrderBy(sortColumn, searchValue, 0); //_controller.CurrentUser.Id kur te bej login
             }
             recordsTotal = users.Count();
+            
             //Paging     
-            var data = users.Skip(skip).Take(pageSize).ToList();
-            //return Json(users, JsonRequestBehavior.AllowGet);
-            return Json(new {  recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data,draw=draw },JsonRequestBehavior.AllowGet);
+            var data = users.Skip(skip).Take(pageSize).ToArray();
+
+            //data.data = users.ToArray();
+            //dataTable.recordsTotal = users.Count;
+            //dataTable.recordsFiltered = users.Count();
+           return Json(data, JsonRequestBehavior.AllowGet);
+            
+           //return Json(new {  recordsFiltered = recordsTotal, recordsTotal = recordsTotal, draw=draw, data = data },JsonRequestBehavior.AllowGet);
 
         }
         public ActionResult AddUser(UserViewModel user)
