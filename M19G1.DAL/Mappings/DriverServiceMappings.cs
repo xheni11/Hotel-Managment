@@ -27,5 +27,17 @@ namespace M19G1.DAL.Mappings
 
             };
         }
+
+        public static PersonalDriverService MapDriverServiceModelToPersonalDriverService(DriverServiceModel model)
+        {
+            return new PersonalDriverService
+            {
+                BookingId = model.BookingId,
+                Location = model.Location,
+                PickUpTime = model.StartTime,
+                Destination = model.Destination
+            };
+
+        }
     }
 }

@@ -316,6 +316,7 @@
     <Content Include="Views\Clients\FilterRooms.cshtml" />
     <Content Include="Views\Clients\ActiveBookings.cshtml" />
     <Content Include="Views\Clients\AddFacility.cshtml" />
+    <Content Include="Views\Clients\AddService.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

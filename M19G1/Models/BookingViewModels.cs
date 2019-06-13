@@ -22,10 +22,13 @@ namespace M19G1.Models
     public class BookingViewModel
     {
         public int Id { get; set; }
+        [Display(Name ="Start Date")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime StartDate { get; set; }
+        [Display(Name = "End Date")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime EndDate { get; set; }
+        [Display(Name ="Driver Services")]
         public List<DriverServiceViewModel> DriverServices { get; set; }
         public List<RoomViewModel> Rooms { get; set; }
 

@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IBookingService.cs" />
+    <Compile Include="IDriverService.cs" />
     <Compile Include="IFacilityService.cs" />
     <Compile Include="IRoomCategoryService.cs" />
     <Compile Include="IRoomService.cs" />

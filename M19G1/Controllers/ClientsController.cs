@@ -16,13 +16,15 @@ namespace M19G1.Controllers
         private readonly IFacilityService _facilityService;
         private readonly IRoomCategoryService _roomCategoryService;
         private readonly IRoomService _roomService;
+        private readonly IDriverService _driverService;
         public ClientsController(IBookingService bookingService,IFacilityService facilityService, 
-            IRoomCategoryService roomCategoryService, IRoomService roomService)
+            IRoomCategoryService roomCategoryService, IRoomService roomService, IDriverService driverService)
         {
             _bookingService = bookingService;
             _facilityService = facilityService;
             _roomCategoryService = roomCategoryService;
             _roomService = roomService;
+            _driverService = driverService;
 
         }
         // GET: Admin
@@ -130,6 +132,27 @@ namespace M19G1.Controllers
             return View(model);
         }
         
+        [HttpPost]
+        public ActionResult AddService(AddDriverServiceViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                bool success = _driverService.AddDriverService(DriverServiceMappings.MapAddDSViewModelToDriverServiceModel(model));
+                if (success)
+                {
+                    ViewBag.Result = "Driver service successfully added !";
+                }
+                else
+                {
+                    ViewBag.Result = "Driver service could not be added !";
+                }
+            }
+            BookingModel bookingModel = _bookingService.GetBookingById(model.Booking.Id);
+            BookingViewModel bookingViewModel = BookingMappings.MapBookingModelToBookingViewModel(bookingModel);
+            AddDriverServiceViewModel returnModel = new AddDriverServiceViewModel();
+            returnModel.Booking = bookingViewModel;
+            return View(returnModel);
+        }
 
         
 

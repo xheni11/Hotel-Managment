@@ -18,5 +18,17 @@ namespace M19G1.Mappings
                 Location = model.Location
             };
         }
+
+        public static DriverServiceModel MapAddDSViewModelToDriverServiceModel(AddDriverServiceViewModel model)
+        {
+            return new DriverServiceModel
+            {
+                 BookingId = model.Booking.Id,
+                 Location = model.Location,
+                 StartTime = model.PickUpTime,
+                 Destination = model.Destination            
+            };
+
+        }
     }
 }

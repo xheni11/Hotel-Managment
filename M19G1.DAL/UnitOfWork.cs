@@ -102,6 +102,14 @@ namespace M19G1.DAL
             _extraFacilityRepository ?? (_extraFacilityRepository = RepositoryFactory.CreateRepository<ExtraFacility>(_context));
         #endregion
 
+        #region
+
+        private BaseRepository<PersonalDriverService> _driverServiceRepository;
+
+        public BaseRepository<PersonalDriverService> DriverServiceRepository =>
+            _driverServiceRepository ?? (_driverServiceRepository = RepositoryFactory.CreateRepository<PersonalDriverService>(_context));
+        #endregion
+
         public void BeginTransaction()
         {
             _transaction = _context.Database.BeginTransaction(IsolationLevel.ReadCommitted);

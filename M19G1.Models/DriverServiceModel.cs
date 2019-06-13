@@ -16,7 +16,7 @@ namespace M19G1.Models
         public BookingModel Booking { get; set; }
         public int BookingId { get; set; }
         public UserModel Driver { get; set; }
-        public int DriverId { get; set; }
-        public TimeSpan TotalTime { get; set; }
+        public int? DriverId { get; set; }
+        public TimeSpan? TotalTime { get; set; }
     }
 }

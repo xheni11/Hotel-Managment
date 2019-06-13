@@ -31,7 +31,7 @@ namespace M19G1.BLL
         {
             DateTime now = DateTime.Now;
             List<BookingModel> activeBookings = _internalUnitOfWork.BookingsRepository.Get(b => b.Valid == true && b.UserId == UserId && b.CheckOutTime == null && b.EndDate >= now)
-                .Select(b => BookingMappings.MapBookingToBookingModel(b,null)).ToList();
+                .Select(m => BookingMappings.MapBookingToBookingModel(m,null)).ToList();
             foreach(var booking in activeBookings)
             {
                 booking.Cancelable = isCancelable(booking);
