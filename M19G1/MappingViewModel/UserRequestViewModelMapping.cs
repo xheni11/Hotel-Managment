@@ -1,4 +1,5 @@
 ﻿using M19G1.Models;
+using M19G1.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,27 +7,39 @@ using System.Web;
 
 namespace M19G1.MappingViewModel
 {
-    public static class UserViewModelMapping
+    public class UserRequestViewModelMapping
     {
-        public static UserViewModel ToViewModel(UserModel userModel)
+        public static UserRequestViewModel ToViewModel(UserRequestModel userModel)
         {
-            return new UserViewModel
+            return new UserRequestViewModel
             {
                 Id = userModel.Id,
                 FirstName = userModel.FirstName,
                 LastName = userModel.LastName,
-                Active = userModel.Active,
                 Email = userModel.Email,
                 RoleName = userModel.RoleName,
                 Username = userModel.Username,
-                Birthday=(DateTime)userModel.Birthday,
-                Gender=userModel.Gender
+                Birthday = (DateTime)userModel.Birthday,
+                Gender = userModel.Gender
             };
         }
-
-        public static UserModel ToModel(UserViewModel user)
+        public static UserRequestModel ToCreateViewModel(UserRequestViewModel user)
         {
-            return new UserModel
+            return new UserRequestModel
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Birthday = (DateTime)user.Birthday,
+                RoleName = user.RoleName,
+                Username = user.Username,
+                Gender = user.Gender
+
+            };
+        }
+        public static UserRequestModel ToModel(UserRequestViewModel user)
+        {
+            return new UserRequestModel
             {
                 Id = user.Id,
                 FirstName = user.FirstName,
@@ -35,27 +48,12 @@ namespace M19G1.MappingViewModel
                 Birthday = (DateTime)user.Birthday,
                 RoleName = user.RoleName,
                 Username = user.Username,
-                Active = user.Active,
-                Gender=user.Gender
-                
-                
-            };
-        }
-        public static UserModel ToCreateUserModel(UserViewModel user)
-        {
-            return new UserModel
-            {
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email,
-                Birthday = (DateTime)user.Birthday,
-                RoleName = user.RoleName,
-                Username = user.Username,
-                Active = user.Active,
                 Gender = user.Gender
+
+
             };
         }
-        public static List<UserViewModel> ToViewModel(IEnumerable<UserModel> user)
+        public static List<UserRequestViewModel> ToViewModel(IEnumerable<UserRequestModel> user)
         {
             return user.Select(ToViewModel).ToList();
         }

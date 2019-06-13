@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="IBookingService.cs" />
     <Compile Include="IRoleService.cs" />
+    <Compile Include="IUserRequestService.cs" />
     <Compile Include="IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

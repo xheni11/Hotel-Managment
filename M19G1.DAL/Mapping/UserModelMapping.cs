@@ -26,9 +26,10 @@ namespace M19G1.DAL.Mapping.User
                 LockoutEndDateUtc = user.LockoutEndDateUtc,
                 PhoneNr = user.PhoneNumber,
                 Username = user.UserName,
-                RoleName= user.AspNetRoles.FirstOrDefault().Name
+                //RoleName= user.AspNetRoles.FirstOrDefault().Name
             };
         }
+
 
         public static AspNetUser ToEntity(UserModel userModel, AspNetUser userToUpdate)
         {
@@ -42,6 +43,44 @@ namespace M19G1.DAL.Mapping.User
             userToUpdate.PhoneNumber = userModel.PhoneNr;
 
             return userToUpdate;
+        }
+        public static AspNetUser ToEntityToCreate(UserModel userModel,string hashedPassword)
+        {
+            return new AspNetUser
+            {
+                CreatedBy = 1,
+                CreatedOn = DateTime.Now,
+                Birthday = userModel.Birthday,
+                Deleted = false,
+                DateCreated = DateTime.Now,
+                Email = userModel.Email,
+                Enabled = true,
+                FirstName = userModel.FirstName,
+                LastName = userModel.LastName,
+                UserName = userModel.Username,
+                Gender = userModel.Gender,
+                PhoneNumber = userModel.PhoneNr,
+                PasswordHash = hashedPassword
+            };
+        }
+        public static AspNetUser ToEntityToCreate(UserRequestModel userModel, string hashedPassword)
+        {
+            return new AspNetUser
+            {
+                CreatedBy = 1,
+                CreatedOn = DateTime.Now,
+                Birthday = userModel.Birthday,
+                Deleted = false,
+                DateCreated = DateTime.Now,
+                Email = userModel.Email,
+                Enabled = true,
+                FirstName = userModel.FirstName,
+                LastName = userModel.LastName,
+                UserName = userModel.Username,
+                Gender = userModel.Gender,
+                PhoneNumber = userModel.PhoneNumber,
+                PasswordHash = hashedPassword
+            };
         }
         public static List<UserModel> ToModel(IEnumerable<AspNetUser> user)
         {

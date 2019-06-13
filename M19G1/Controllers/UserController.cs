@@ -17,6 +17,8 @@ namespace M19G1.Controllers
     {
         private UserService _userService = new UserService(new UnitOfWork());
         private RoleService _roleService = new RoleService(new UnitOfWork());
+        PasswordHasher passwordHasher = new PasswordHasher();
+        PasswordGenerator passwordGenerator = new PasswordGenerator();
         private BaseController _controller = new BaseController();
         [HttpGet]
         public ActionResult Index()
@@ -28,8 +30,6 @@ namespace M19G1.Controllers
         }
         public ActionResult GeneratorPassword(int id)
         {
-            PasswordHasher passwordHasher = new PasswordHasher();
-            PasswordGenerator passwordGenerator = new PasswordGenerator();
             string hashedPassword= passwordHasher.HashPassword(passwordGenerator.RandomPassword());
             _userService.GenerateNewPassword(id, hashedPassword);
             return Json("Index", JsonRequestBehavior.AllowGet);
@@ -62,13 +62,8 @@ namespace M19G1.Controllers
         [HttpPost]
         public ActionResult AddUser(UserViewModel user)
         {
-            UserModel userToAdd = new UserModel();
-            userToAdd.FirstName = user.FirstName;
-            userToAdd.LastName = user.LastName;
-            userToAdd.Username = user.Username;
-            userToAdd.Birthday = user.Birthday;
-            userToAdd.Gender = user.Gender;
-            _userService.CreateUser(userToAdd);
+            string hashedPassword = passwordHasher.HashPassword(passwordGenerator.RandomPassword());
+            _userService.CreateUser(UserViewModelMapping.ToCreateUserModel(user),hashedPassword);
             return Json("Index", JsonRequestBehavior.AllowGet);
         }
 

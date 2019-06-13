@@ -1,6 +1,7 @@
 ﻿using M19G1.DAL;
 using M19G1.DAL.Mapping.Role;
 using M19G1.DAL.Repository;
+using M19G1.IBLL;
 using M19G1.Models;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace M19G1.BLL
 {
-   public class RoleService
+   public class RoleService:IRoleService
     {
         private readonly UnitOfWork _internalUnitOfWork;
         private readonly RoleRepository _roleRepository;

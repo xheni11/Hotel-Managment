@@ -26,29 +26,22 @@ namespace M19G1.BLL
             _roleRepository = _internalUnitOfWork.AspNetRolesRepository;
         }
 
-        public void CreateUser(UserModel userModel)
+        public void CreateUser(UserModel userModel, string hashedPassword)
         {
             if (IsUserValid(userModel))
             {
-                AspNetUser user = new AspNetUser
-                {
-                    Id = userModel.Id,
-                    CreatedBy = 1,
-                    CreatedOn = DateTime.Now,
-                    Birthday = userModel.Birthday,
-                    Deleted = false,
-                    DateCreated = DateTime.Now,
-                    Email = userModel.Email,
-                    Enabled = true,
-                    FirstName = userModel.FirstName,
-                    LastName = userModel.LastName,
-                    UserName = userModel.Username,
-                    Gender = userModel.Gender,
-                    PhoneNumber = userModel.PhoneNr
-                };
-                _internalUnitOfWork.AspNetUsersRepository.Insert(user);
+                _internalUnitOfWork.AspNetUsersRepository.Insert(UserModelMapping.ToEntityToCreate(userModel, hashedPassword));
                 _internalUnitOfWork.Save();
             }
+        }
+        public void CreateUser(UserRequestModel userRequest,string hashedPassword)
+        {
+            if (IsUserValid(userRequest))
+            {               
+                _internalUnitOfWork.AspNetUsersRepository.Insert(UserModelMapping.ToEntityToCreate(userRequest, hashedPassword));
+                _internalUnitOfWork.Save();
+            }
+            
         }
         public void UpdateUser(UserModel userModel)
         {
@@ -67,8 +60,7 @@ namespace M19G1.BLL
         public void DeleteUser(int idUser)
         {
             AspNetUser user = _internalUnitOfWork.AspNetUsersRepository.GetByID(idUser);
-            user.Deleted = true;
-            _internalUnitOfWork.AspNetUsersRepository.Update(user);
+            _internalUnitOfWork.AspNetUsersRepository.SoftDelete(user);
             _internalUnitOfWork.Save();
         }
 
@@ -97,6 +89,18 @@ namespace M19G1.BLL
             return UserModelMapping.ToModel( _usersRepository.GetByID(id));
         }
         public  bool IsUserValid(UserModel user)
+        {
+            foreach (UserModel userModel in GetAllUsers())
+            {
+                if (user.Username.Equals(userModel.Username))
+                    return false;
+            }
+            if (user.FirstName != null && user.LastName != null && user.Username != null && user.Email != null && user.RoleName != null && user.FirstName.Length < 30 && user.LastName.Length < 30 && user.Username.Length < 30)
+                return true;
+            else
+                return false;
+        }
+        public bool IsUserValid(UserRequestModel user)
         {
             foreach (UserModel userModel in GetAllUsers())
             {

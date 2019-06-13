@@ -57,6 +57,7 @@ namespace M19G1.DAL
             Delete(entity);
         }
 
+
         public override void Delete(TEntity entityToDelete)
         {
             if (_dbContext.Entry(entityToDelete).State == EntityState.Detached)
@@ -70,6 +71,13 @@ namespace M19G1.DAL
         {
             _dbSet.Attach(entityToUpdate);
             _dbContext.Entry(entityToUpdate).State = EntityState.Modified;
+        }
+
+        public override void SoftDelete(TEntity entityToDelete)
+        {
+            entityToDelete.Deleted = true;
+            _dbSet.Attach(entityToDelete);
+            _dbContext.Entry(entityToDelete).State = EntityState.Modified;
         }
     }
 }

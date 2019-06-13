@@ -24,6 +24,8 @@ namespace M19G1.DAL
 
         public abstract void Delete(TEntity entityToDelete);
 
+        public abstract void SoftDelete(TEntity entityToDelete);
+
         public abstract void Update(TEntity entityToUpdate);
     }
 }

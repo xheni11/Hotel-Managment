@@ -7,7 +7,7 @@ namespace M19G1.IBLL
 {
     public interface IUserService
     {
-        void CreateUser(UserModel userModel);
+        void CreateUser(UserModel userModel,string hash);
         void UpdateUserActivity(int userId);
         void DeleteUser(int idUser);
         UserModel GetLoginUser(string username, string password);
@@ -16,5 +16,7 @@ namespace M19G1.IBLL
         UserModel GetUserById(int id);
         bool IsUserValid(UserModel user);
         void GenerateNewPassword(int idUser, string hashedPassword);
+        void CreateUser(UserRequestModel userRequest,string hash);
+        bool IsUserValid(UserRequestModel user);
     }
 }

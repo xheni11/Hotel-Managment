@@ -119,10 +119,10 @@ namespace M19G1.DAL
         #endregion
         #region UserRequest Repository
 
-        private BaseRepository<UserRequest> _userRequestRepository;
+        private UserRequestRepository _userRequestRepository;
 
-        public BaseRepository<UserRequest> UserRequestRepository =>
-            _userRequestRepository ?? (_userRequestRepository = RepositoryFactory.CreateRepository<UserRequest>(_context));
+        public UserRequestRepository UserRequestRepository =>
+            _userRequestRepository ?? (_userRequestRepository = new UserRequestRepository(_context));
 
         #endregion
 

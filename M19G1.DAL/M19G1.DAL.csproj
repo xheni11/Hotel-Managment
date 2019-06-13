@@ -50,8 +50,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Mapping\Role\RoleModelMapping.cs" />
-    <Compile Include="Mapping\User\UserModelMapping.cs" />
+    <Compile Include="Mapping\RoleModelMapping.cs" />
+    <Compile Include="Mapping\UserModelMapping.cs" />
+    <Compile Include="Mapping\UserRequestModelMapping.cs" />
     <Compile Include="Repository\BaseRepository.cs" />
     <Compile Include="Entities\AnonymousRequest.cs" />
     <Compile Include="Entities\AspNetRole.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="Repository\RepositoryFactory.cs" />
     <Compile Include="Repository\RoleRepository.cs" />
     <Compile Include="Repository\UserRepository.cs" />
+    <Compile Include="Repository\UserRequestRepository.cs" />
     <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -100,5 +102,6 @@
       <DependentUpon>201906021917091_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

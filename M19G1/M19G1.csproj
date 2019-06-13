@@ -191,10 +191,12 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\UserRequestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="MappingViewModel\LoginViewModelToModel.cs" />
+    <Compile Include="MappingViewModel\UserRequestViewModelMapping.cs" />
     <Compile Include="MappingViewModel\UserViewModelMapping.cs" />
     <Compile Include="Migrations\201906021859327_initial.cs" />
     <Compile Include="Migrations\201906021859327_initial.Designer.cs">
@@ -207,6 +209,7 @@
     <Compile Include="ViewModels\AdminViewModels.cs" />
     <Compile Include="ViewModels\IdentityModels.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
+    <Compile Include="ViewModels\UserRequestViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -357,8 +360,8 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Dummy\Index.cshtml" />
-    <Content Include="Views\Admin\UsersView.cshtml" />
-    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\UserRequest\Requests.cshtml" />
+    <Content Include="Views\UserRequest\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
