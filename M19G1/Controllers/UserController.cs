@@ -1,7 +1,10 @@
 ﻿using M19G1.BLL;
+using M19G1.Common.RandomPassword;
 using M19G1.DAL;
 using M19G1.MappingViewModel;
 using M19G1.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +25,14 @@ namespace M19G1.Controllers
             MultiSelectList selectListRoles = new MultiSelectList(_roleService.GetAllRoles().Select(s => s.RoleName));
             ViewData["RoleName"] = selectListRoles;
             return View();
+        }
+        public ActionResult GeneratorPassword(int id)
+        {
+            PasswordHasher passwordHasher = new PasswordHasher();
+            PasswordGenerator passwordGenerator = new PasswordGenerator();
+            string hashedPassword= passwordHasher.HashPassword(passwordGenerator.RandomPassword());
+            _userService.GenerateNewPassword(id, hashedPassword);
+            return Json("Index", JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

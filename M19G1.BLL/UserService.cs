@@ -108,11 +108,10 @@ namespace M19G1.BLL
             else
                 return false;
         }
-        public void GenerateNewPassword(int idUser)
+        public void GenerateNewPassword(int idUser,string hashedPassword)
         {
             AspNetUser user = _internalUnitOfWork.AspNetUsersRepository.GetByID(idUser);
-            PasswordGenerator newPassword = new PasswordGenerator();
-             //user.PasswordHash=
+            user.PasswordHash = hashedPassword;
             _internalUnitOfWork.AspNetUsersRepository.Update(user);
             _internalUnitOfWork.Save();
 
