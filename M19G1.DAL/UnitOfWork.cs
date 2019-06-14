@@ -110,6 +110,15 @@ namespace M19G1.DAL
             _driverServiceRepository ?? (_driverServiceRepository = RepositoryFactory.CreateRepository<PersonalDriverService>(_context));
         #endregion
 
+        #region
+
+        private BaseRepository<Rating> _ratingRepository;
+
+        public BaseRepository<Rating> RatingRepository =>
+            _ratingRepository ?? (_ratingRepository = RepositoryFactory.CreateRepository<Rating>(_context));
+
+        #endregion
+
         public void BeginTransaction()
         {
             _transaction = _context.Database.BeginTransaction(IsolationLevel.ReadCommitted);

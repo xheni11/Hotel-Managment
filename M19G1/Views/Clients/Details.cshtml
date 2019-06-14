@@ -1,0 +1,121 @@
+﻿@model M19G1.Models.BookingDetailsViewModel
+
+@using (Html.BeginForm("AddRating", "Clients"))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.bookingModel.Id)
+    <div class="form-horizontal">
+        <h4>Booking Details </h4>
+        <hr />
+        <dl class="dl-horizontal"></dl>
+    </div>
+    <h4>@ViewBag.Result</h4>
+    <div class="form-group">
+        @Html.LabelFor(model => model.bookingModel.StartDate, htmlAttributes: new { @class = "control-label col-md-1.5" })
+        <text> :   </text>
+        @Html.DisplayFor(model => model.bookingModel.StartDate)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.bookingModel.EndDate, htmlAttributes: new { @class = "control-label col-md-1.5" })
+        <text> :   </text>
+        @Html.DisplayFor(model => model.bookingModel.EndDate)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.bookingModel.CheckInTime, htmlAttributes: new { @class = "control-label col-md-1.5" })
+        <text> :   </text>
+        @if (Model.bookingModel.CheckInTime == null)
+        {
+            <text> Not checked in ! </text>
+        }
+        else
+        {
+            @Html.DisplayFor(model => model.bookingModel.CheckInTime)
+        }
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.bookingModel.CheckOutTime, htmlAttributes: new { @class = "control-label col-md-1.5" })
+        <text> :   </text>
+        @if (Model.bookingModel.CheckOutTime == null)
+        {
+            <text> Not checked out ! </text>
+        }
+        else
+        {
+            @Html.DisplayFor(model => model.bookingModel.CheckOutTime)
+        }
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.bookingModel.Rooms, htmlAttributes: new { @class = "control-label col-md-1" })
+        <text> : </text>
+        @foreach (var room in Model.bookingModel.Rooms)
+        {
+
+            <div>
+                @Html.DisplayFor(item => room.Name) <text> with </text>
+                @Html.DisplayFor(item => room.GuestsNr) <text> guests. </text>
+            </div>
+        }
+    </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.bookingModel.DriverServices, htmlAttributes: new { @class = "control-label col-md-1.5" })
+            <text> : </text>
+            @if (Model.bookingModel.DriverServices.Count() != 0)
+            {
+                foreach (var ds in Model.bookingModel.DriverServices)
+                {
+                    <div>
+                        <text>
+                            Location :
+                        </text>
+                        @Html.DisplayFor(item => ds.Location) <text> at time  </text>
+                        @Html.DisplayFor(item => ds.PickUpTime)
+                    </div>
+                }
+            }
+            else
+            {
+               <text> There are no driver services </text>
+            }
+        </div>
+    if (Model.ratingModel != null)
+    {
+        <div class="form-group">
+            @Html.LabelFor(model => model.ratingModel.Rate, htmlAttributes: new { @class = "control-label col-md-1.5" })
+            <text> :  </text>
+            @Html.DisplayFor(model => model.ratingModel.Rate)
+        </div>
+        if (Model.ratingModel.Description != null)
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.ratingModel.Description, htmlAttributes: new { @class = "control-label col-md-1.5" })
+                <text> :  </text>
+                @Html.DisplayFor(model => model.ratingModel.Description)
+            </div>
+        }
+
+    }
+    else
+    {
+        <div class="form-group">
+            @Html.LabelFor(model => model.ratingModel.Rate, htmlAttributes: new { @class = "control-label col-md-1.5" })
+            <text> :  </text>
+            @Html.EditorFor(model => model.ratingModel.Rate, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ratingModel.Rate, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.ratingModel.Description, htmlAttributes: new { @class = "control-label col-md-1.5" })
+            <text> :  </text>
+            @Html.TextAreaFor(model => model.ratingModel.Description, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ratingModel.Description, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Add Rating" class="btn btn-default" />
+            </div>
+        </div>
+    }
+    <p>
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

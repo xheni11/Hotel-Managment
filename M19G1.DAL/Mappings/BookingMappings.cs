@@ -85,7 +85,6 @@ namespace M19G1.DAL.Mappings
         {
             return new Rating
             {
-                Id = model.Id,
                 DateCreated = model.DateCreated,
                 Description = model.Description,
                 Rate = model.RateValue,

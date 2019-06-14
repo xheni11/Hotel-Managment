@@ -36,8 +36,10 @@ namespace M19G1.Mappings
                 Id = model.Id,
                 StartDate = model.Start,
                 EndDate = model.End,
-                Rooms = model.BookingRooms.Select(br => RoomMappings.MapRoomModelToRVModel(br.Room)).ToList(),
-                DriverServices = model.DriverServices.Select(ds =>
+                CheckInTime = model.CheckIn,
+                CheckOutTime = model.CheckOut,
+                Rooms = model.BookingRooms?.Select(br => RoomMappings.MapRoomModelToRVModel(br.Room)).ToList(),
+                DriverServices = model.DriverServices?.Select(ds =>
                                     DriverServiceMappings.MapDriverServiceModelToDSViewModel(ds)).ToList()
 
             };

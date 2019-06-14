@@ -17,14 +17,17 @@ namespace M19G1.Controllers
         private readonly IRoomCategoryService _roomCategoryService;
         private readonly IRoomService _roomService;
         private readonly IDriverService _driverService;
+        private readonly IRatingService _ratingService;
         public ClientsController(IBookingService bookingService,IFacilityService facilityService, 
-            IRoomCategoryService roomCategoryService, IRoomService roomService, IDriverService driverService)
+            IRoomCategoryService roomCategoryService, IRoomService roomService, IDriverService driverService,
+            IRatingService ratingService)
         {
             _bookingService = bookingService;
             _facilityService = facilityService;
             _roomCategoryService = roomCategoryService;
             _roomService = roomService;
             _driverService = driverService;
+            _ratingService = ratingService;
 
         }
         // GET: Admin
@@ -154,8 +157,31 @@ namespace M19G1.Controllers
             return View(returnModel);
         }
 
-        
+        [HttpGet]
+        public ActionResult Details(int id)
+        {
+            BookingModel bookingModel = _bookingService.GetBookingById(id);
+            BookingViewModel bookingViewModel = BookingMappings.MapBookingModelToBookingViewModel(bookingModel);
+            BookingDetailsViewModel model = new BookingDetailsViewModel();
+            model.bookingModel = bookingViewModel;
+            model.ratingModel = bookingModel.Rating != null ? RatingMappings.MapRatingToRatingViewModel(bookingModel.Rating) : null;
+            return View(model);
+        }
 
-        
+        [HttpPost]
+        public ActionResult AddRating(BookingDetailsViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                RatingViewModel ratingModel = model.ratingModel;
+                int bookingId = model.bookingModel.Id;
+                ratingModel.BookingId = bookingId;
+                RatingModel RatingModel = RatingMappings.MapRatingViewModelToRatingModel(ratingModel);
+                _ratingService.AddBookingRating(RatingModel);
+            }
+
+            return RedirectToAction("Details", new { id = model.bookingModel.Id });
+        }
+
     }
 }
