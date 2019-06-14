@@ -13,6 +13,6 @@ namespace M19G1.IBLL
         void ConfirmedAnonymous(int idAnonymous);
         List<AnonymousRequestModel> GetAllRequests();
         AnonymousRequestModel GetRequestById(int id);
-        int GetUserId(int id);
+        
     }
 }

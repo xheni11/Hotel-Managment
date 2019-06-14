@@ -44,9 +44,6 @@ namespace M19G1.BLL
         {
             return AnonymousRequestMapping.ToModel(_anonymousRepository.GetByID(id));
         }
-        public int GetUserId(int id)
-        {
-            return (_anonymousRepository.GetByID(id)).UserId;
-        }
+
     }
 }

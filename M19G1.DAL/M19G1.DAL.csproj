@@ -62,6 +62,10 @@
     <Compile Include="Migrations\201906141903085_PkAnonymous.Designer.cs">
       <DependentUpon>201906141903085_PkAnonymous.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906142314235_fkAnonymous.cs" />
+    <Compile Include="Migrations\201906142314235_fkAnonymous.Designer.cs">
+      <DependentUpon>201906142314235_fkAnonymous.cs</DependentUpon>
+    </Compile>
     <Compile Include="Repository\AnonymousRequestRepository.cs" />
     <Compile Include="Repository\BaseRepository.cs" />
     <Compile Include="Entities\AnonymousRequest.cs" />
@@ -116,6 +120,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906141903085_PkAnonymous.resx">
       <DependentUpon>201906141903085_PkAnonymous.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906142314235_fkAnonymous.resx">
+      <DependentUpon>201906142314235_fkAnonymous.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

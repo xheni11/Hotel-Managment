@@ -49,7 +49,7 @@ namespace M19G1.Controllers
         [HttpGet]
         public ActionResult DeleteAnonymous(int id)
         {
-            _userService.MakeUserAnonymous(_anonymousRequestService.GetUserId(id));
+            _userService.MakeUserAnonymous(id);
             _anonymousRequestService.ConfirmedAnonymous(id);
             return Json("Index", JsonRequestBehavior.AllowGet);
         }

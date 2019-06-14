@@ -122,19 +122,12 @@ namespace M19G1.DAL.Persistence
 
             modelBuilder.Entity<AspNetUser>()
                 .HasOptional(u => u.AnonymousRequest)
-                .WithRequired(ur => ur.User);
+                .WithRequired(ur => ur.User)
+                ;
 
             modelBuilder.Entity<Booking>()
                 .HasOptional(b => b.Rating)
                 .WithRequired(r => r.Booking);
-            modelBuilder.Entity<AnonymousRequest>()
-                .HasKey(ar => ar.Id);
-
-
-
-
-
-
         }
     }
 }

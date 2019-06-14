@@ -31,7 +31,7 @@ namespace M19G1.DAL.Mapping
             return new AnonymousRequest
             {
                 Confirmed = false,
-                UserId=idUser
+                //UserId=idUser
             };
         }
         public static List<AnonymousRequestModel> ToModel(IEnumerable<AnonymousRequest> user)

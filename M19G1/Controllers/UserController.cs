@@ -23,7 +23,7 @@ namespace M19G1.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            List<UserModel> users = _userService.GetAllUsers();
+            List<UserViewModel> users = UserViewModelMapping.ToViewModel(_userService.GetAllUsers());
             MultiSelectList selectListRoles = new MultiSelectList(_roleService.GetAllRoles().Select(s => s.RoleName));
             ViewData["RoleName"] = selectListRoles;
             return View();
@@ -38,7 +38,7 @@ namespace M19G1.Controllers
         [HttpPost]
         public JsonResult ListUsers()
         {
-            List<UserModel> users = _userService.GetAllUsers();    
+            List<UserViewModel> users =UserViewModelMapping.ToViewModel( _userService.GetAllUsers());    
             int recordsTotal;
             var start = Request.Form.GetValues("start").FirstOrDefault();
             var length = Request.Form.GetValues("length").FirstOrDefault();
@@ -50,7 +50,7 @@ namespace M19G1.Controllers
             var searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
             if (!string.IsNullOrEmpty(sortColumn) || !string.IsNullOrEmpty(searchValue))
             {
-                users = _userService.GetUsersOrderBy(sortColumn, searchValue, 0); //_controller.CurrentUser.Id kur te bej login
+                users = UserViewModelMapping.ToViewModel(_userService.GetUsersOrderBy(sortColumn, searchValue, 0)); //_controller.CurrentUser.Id kur te bej login
             }
             recordsTotal = users.Count();   
             var data = users.Skip(skip).Take(pageSize).ToArray();
