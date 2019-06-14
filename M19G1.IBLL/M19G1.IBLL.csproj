@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IAnonymousRequestService.cs" />
     <Compile Include="IBookingService.cs" />
     <Compile Include="IRoleService.cs" />
     <Compile Include="IUserRequestService.cs" />

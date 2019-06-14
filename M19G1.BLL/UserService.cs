@@ -119,6 +119,14 @@ namespace M19G1.BLL
             _internalUnitOfWork.Save();
 
         }
+        public void MakeUserAnonymous(int id)
+        {
+            AspNetUser userToUpdate = _usersRepository.GetByID(id);
+            userToUpdate = UserModelMapping.ToEntityToAnonymous( userToUpdate);
+            _internalUnitOfWork.AspNetUsersRepository.Update(userToUpdate);
+            _internalUnitOfWork.Save();
+
+        }
     }
 
   

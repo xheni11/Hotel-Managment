@@ -44,6 +44,20 @@ namespace M19G1.DAL.Mapping.User
 
             return userToUpdate;
         }
+        public static AspNetUser ToEntityToAnonymous( AspNetUser userToUpdate)
+        {
+            string anonym = "xxxxx";
+            userToUpdate.FirstName =anonym;
+            userToUpdate.LastName = anonym;
+            userToUpdate.UserName = anonym;
+            userToUpdate.Birthday = DateTime.Now;
+            userToUpdate.Gender ="x";
+            userToUpdate.Email = anonym;
+            userToUpdate.PhoneNumber= anonym;
+            userToUpdate.PasswordHash = anonym;
+
+            return userToUpdate;
+        }
         public static AspNetUser ToEntityToCreate(UserModel userModel,string hashedPassword)
         {
             return new AspNetUser

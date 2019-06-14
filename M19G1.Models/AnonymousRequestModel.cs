@@ -9,9 +9,11 @@ namespace M19G1.Models
     public class AnonymousRequestModel
     {
         public int Id { get; set; }
-        public DateTime? DateCreated { get; set; }
         public bool Confirmed { get; set; }
-        public UserModel User { get; set; }
-        public int UserId { get; set; }
+        public string Username { get; set; }
+        public string FirstName { get; set; }
+        public string Lastname { get; set; }
+        public string Email { get; set; }
+        public string Gender { get; set; }
     }
 }

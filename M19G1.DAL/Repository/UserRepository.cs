@@ -43,14 +43,7 @@ namespace M19G1.DAL.Repository
                 return entities.Where(u =>u.Id!=currentUserId && u.FirstName.Equals(searchValue)).OrderBy(e => propertyInfo.GetValue(e, null));
             }
         }
-        //public IEnumerable<AspNetUser> SearchBy(IEnumerable<AspNetUser> entities, string searchValue)
-        //{
-        //    return entities.Where(e => e.FirstName.Equals(searchValue));
-        //}
-        //public void GetUsersExceptCurrent()
-        //{
-        //    _dbSet.Where(user=>user.Id!= CustomUserLogin.)
-        //}
+
 
     }
 }

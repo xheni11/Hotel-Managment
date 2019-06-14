@@ -18,5 +18,6 @@ namespace M19G1.IBLL
         void GenerateNewPassword(int idUser, string hashedPassword);
         void CreateUser(UserRequestModel userRequest,string hash);
         bool IsUserValid(UserRequestModel user);
+        void MakeUserAnonymous(int id)
     }
 }
