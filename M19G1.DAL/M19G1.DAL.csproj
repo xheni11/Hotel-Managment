@@ -53,6 +53,10 @@
     <Compile Include="Mapping\RoleModelMapping.cs" />
     <Compile Include="Mapping\UserModelMapping.cs" />
     <Compile Include="Mapping\UserRequestModelMapping.cs" />
+    <Compile Include="Migrations\201906141413226_anonymousRequestFK.cs" />
+    <Compile Include="Migrations\201906141413226_anonymousRequestFK.Designer.cs">
+      <DependentUpon>201906141413226_anonymousRequestFK.cs</DependentUpon>
+    </Compile>
     <Compile Include="Repository\BaseRepository.cs" />
     <Compile Include="Entities\AnonymousRequest.cs" />
     <Compile Include="Entities\AspNetRole.cs" />
@@ -100,6 +104,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201906021917091_Initial.resx">
       <DependentUpon>201906021917091_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906141413226_anonymousRequestFK.resx">
+      <DependentUpon>201906141413226_anonymousRequestFK.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

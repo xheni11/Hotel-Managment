@@ -41,7 +41,6 @@ namespace M19G1.BLL
                 _internalUnitOfWork.AspNetUsersRepository.Insert(UserModelMapping.ToEntityToCreate(userRequest, hashedPassword));
                 _internalUnitOfWork.Save();
             }
-            
         }
         public void UpdateUser(UserModel userModel)
         {
@@ -92,7 +91,7 @@ namespace M19G1.BLL
         {
             foreach (UserModel userModel in GetAllUsers())
             {
-                if (user.Username.Equals(userModel.Username))
+                if (user.Username.Equals(userModel.Username)&& user.Email.Equals(userModel.Email))
                     return false;
             }
             if (user.FirstName != null && user.LastName != null && user.Username != null && user.Email != null && user.RoleName != null && user.FirstName.Length < 30 && user.LastName.Length < 30 && user.Username.Length < 30)
@@ -104,7 +103,7 @@ namespace M19G1.BLL
         {
             foreach (UserModel userModel in GetAllUsers())
             {
-                if (user.Username.Equals(userModel.Username))
+                if (user.Username.Equals(userModel.Username)&& user.Email.Equals(userModel.Email))
                     return false;
             }
             if (user.FirstName != null && user.LastName != null && user.Username != null && user.Email != null && user.RoleName != null && user.FirstName.Length < 30 && user.LastName.Length < 30 && user.Username.Length < 30)

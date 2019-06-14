@@ -35,6 +35,7 @@ namespace M19G1.BLL
         public void DeleteRequest(int id)
         {
             _usersRequestRepository.Delete(id);
+            _internalUnitOfWork.Save();
 
         }
         public UserRequestModel GetRequestById(int id)
