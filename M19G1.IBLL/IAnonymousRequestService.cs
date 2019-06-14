@@ -1,4 +1,5 @@
-﻿using System;
+﻿using M19G1.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,5 +11,8 @@ namespace M19G1.IBLL
     {
         void CreateAnonymousRequest(int idUser);
         void ConfirmedAnonymous(int idAnonymous);
+        List<AnonymousRequestModel> GetAllRequests();
+        AnonymousRequestModel GetRequestById(int id);
+        int GetUserId(int id);
     }
 }

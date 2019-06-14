@@ -14,6 +14,11 @@ namespace M19G1.BLL
 {
     public class AnonymousRequestService: IAnonymousRequestService
     {
+        public AnonymousRequestService(UnitOfWork unitOfWork)
+        {
+            _internalUnitOfWork = unitOfWork;
+            _anonymousRepository = _internalUnitOfWork.AnonymousRequestRepository;
+        }
         private readonly UnitOfWork _internalUnitOfWork;
         private readonly AnonymousRequestRepository _anonymousRepository;
         public void CreateAnonymousRequest(int idUser)
@@ -29,6 +34,19 @@ namespace M19G1.BLL
             _internalUnitOfWork.AnonymousRequestRepository.Update(request);
             _internalUnitOfWork.Save();
 
+        }
+
+        public List<AnonymousRequestModel> GetAllRequests()
+        {
+            return AnonymousRequestMapping.ToModel(_anonymousRepository.GetAll().Where(a=>a.Confirmed==false));
+        }
+        public AnonymousRequestModel GetRequestById(int id)
+        {
+            return AnonymousRequestMapping.ToModel(_anonymousRepository.GetByID(id));
+        }
+        public int GetUserId(int id)
+        {
+            return (_anonymousRepository.GetByID(id)).UserId;
         }
     }
 }

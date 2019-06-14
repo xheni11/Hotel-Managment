@@ -20,7 +20,7 @@ namespace M19G1.DAL.Mapping
                 Confirmed=user.Confirmed,
                 Username=user.User.UserName,
                 FirstName=user.User.FirstName,
-                Lastname=user.User.LastName,
+                LastName=user.User.LastName,
                 Email=user.User.Email,
                 Gender=user.User.Gender
                 

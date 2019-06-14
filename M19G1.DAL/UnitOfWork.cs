@@ -111,10 +111,10 @@ namespace M19G1.DAL
         #endregion
         #region AnonymousRequest Repository
 
-        private BaseRepository<AnonymousRequest> _anonymousRequestRepository;
+        private AnonymousRequestRepository _anonymousRequestRepository;
 
-        public BaseRepository<AnonymousRequest> AnonymousRequestRepository =>
-            _anonymousRequestRepository ?? (_anonymousRequestRepository = RepositoryFactory.CreateRepository<AnonymousRequest>(_context));
+        public AnonymousRequestRepository AnonymousRequestRepository =>
+            _anonymousRequestRepository ?? (_anonymousRequestRepository =new AnonymousRequestRepository(_context));
 
         #endregion
         #region UserRequest Repository

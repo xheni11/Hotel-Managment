@@ -127,6 +127,8 @@ namespace M19G1.DAL.Persistence
             modelBuilder.Entity<Booking>()
                 .HasOptional(b => b.Rating)
                 .WithRequired(r => r.Booking);
+            modelBuilder.Entity<AnonymousRequest>()
+                .HasKey(ar => ar.Id);
 
 
 

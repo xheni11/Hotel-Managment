@@ -16,7 +16,7 @@ namespace M19G1
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "UserRequest", action = "Requests", id = UrlParameter.Optional }
+                defaults: new { controller = "AnonymousRequest", action = "AnonymousRequests", id = UrlParameter.Optional }
             );
         }
     }
