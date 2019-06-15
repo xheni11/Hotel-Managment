@@ -196,10 +196,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="MappingViewModel\AnonymousRequestViewModelMapping.cs" />
-    <Compile Include="MappingViewModel\LoginViewModelToModel.cs" />
-    <Compile Include="MappingViewModel\UserRequestViewModelMapping.cs" />
-    <Compile Include="MappingViewModel\UserViewModelMapping.cs" />
+    <Compile Include="Mapping\AnonymousRequestViewModelMapping.cs" />
+    <Compile Include="Mapping\LoginViewModelToModel.cs" />
+    <Compile Include="Mapping\UserRequestViewModelMapping.cs" />
+    <Compile Include="Mapping\UserViewModelMapping.cs" />
     <Compile Include="Migrations\201906021859327_initial.cs" />
     <Compile Include="Migrations\201906021859327_initial.Designer.cs">
       <DependentUpon>201906021859327_initial.cs</DependentUpon>
@@ -211,6 +211,7 @@
     <Compile Include="ViewModels\AdminViewModels.cs" />
     <Compile Include="ViewModels\AnonymousRequestViewModel.cs" />
     <Compile Include="ViewModels\IdentityModels.cs" />
+    <Compile Include="ViewModels\LogViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
     <Compile Include="ViewModels\UserRequestViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />

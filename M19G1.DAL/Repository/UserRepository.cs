@@ -43,7 +43,16 @@ namespace M19G1.DAL.Repository
                 return entities.Where(u =>u.Id!=currentUserId && u.FirstName.Equals(searchValue)).OrderBy(e => propertyInfo.GetValue(e, null));
             }
         }
+        public IEnumerable<AspNetUser> GetUserByUsername(string username)
+        {
+            return _dbSet.Where(u => u.UserName.Equals(username));
 
+        }
+        public IEnumerable<AspNetUser> GetUserByEmail(string email)
+        {
+            return _dbSet.Where(u => u.Email.Equals(email));
+
+        }
 
     }
 }

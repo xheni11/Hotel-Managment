@@ -28,7 +28,7 @@ namespace M19G1.BLL
 
         public void CreateUser(UserModel userModel, string hashedPassword)
         {
-            if (IsUserValid(userModel))
+            if (!UsernameExists(userModel.Username)&&!EmailExists(userModel.Email))
             {
                 _internalUnitOfWork.AspNetUsersRepository.Insert(UserModelMapping.ToEntityToCreate(userModel, hashedPassword));
                 _internalUnitOfWork.Save();
@@ -36,7 +36,7 @@ namespace M19G1.BLL
         }
         public void CreateUser(UserRequestModel userRequest,string hashedPassword)
         {
-            if (IsUserValid(userRequest))
+            if (!UsernameExists(userRequest.Username) && !EmailExists(userRequest.Email))
             {               
                 _internalUnitOfWork.AspNetUsersRepository.Insert(UserModelMapping.ToEntityToCreate(userRequest, hashedPassword));
                 _internalUnitOfWork.Save();
@@ -44,7 +44,7 @@ namespace M19G1.BLL
         }
         public void UpdateUser(UserModel userModel)
         {
-            if (IsUserValid(userModel))
+            if (!UsernameExists(userModel.Username) && !EmailExists(userModel.Email))
             {
                 AspNetUser userToUpdate = _usersRepository.GetByID(userModel.Id);
                 userToUpdate = UserModelMapping.ToEntity(userModel, userToUpdate);
@@ -87,29 +87,14 @@ namespace M19G1.BLL
         {
             return UserModelMapping.ToModel( _usersRepository.GetByID(id));
         }
-        public  bool IsUserValid(UserModel user)
+       
+        public bool UsernameExists(string username)
         {
-            foreach (UserModel userModel in GetAllUsers())
-            {
-                if (user.Username.Equals(userModel.Username)&& user.Email.Equals(userModel.Email))
-                    return false;
-            }
-            if (user.FirstName != null && user.LastName != null && user.Username != null && user.Email != null && user.RoleName != null && user.FirstName.Length < 30 && user.LastName.Length < 30 && user.Username.Length < 30)
-                return true;
-            else
-                return false;
+            return _usersRepository.GetUserByUsername(username).Any();
         }
-        public bool IsUserValid(UserRequestModel user)
+        public bool EmailExists(string email)
         {
-            foreach (UserModel userModel in GetAllUsers())
-            {
-                if (user.Username.Equals(userModel.Username)&& user.Email.Equals(userModel.Email))
-                    return false;
-            }
-            if (user.FirstName != null && user.LastName != null && user.Username != null && user.Email != null && user.RoleName != null && user.FirstName.Length < 30 && user.LastName.Length < 30 && user.Username.Length < 30)
-                return true;
-            else
-                return false;
+            return _usersRepository.GetUserByEmail(email).Any();
         }
         public void GenerateNewPassword(int idUser,string hashedPassword)
         {

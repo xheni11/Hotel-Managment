@@ -14,10 +14,10 @@ namespace M19G1.IBLL
         List<UserModel> GetAllUsers();        
         List<UserModel> GetUsersOrderBy(string sortField, string search,int idCurrentUser);
         UserModel GetUserById(int id);
-        bool IsUserValid(UserModel user);
         void GenerateNewPassword(int idUser, string hashedPassword);
         void CreateUser(UserRequestModel userRequest,string hash);
-        bool IsUserValid(UserRequestModel user);
         void MakeUserAnonymous(int id);
+        bool UsernameExists(string username);
+        bool EmailExists(string email);
     }
 }
