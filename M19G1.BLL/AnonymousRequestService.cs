@@ -14,22 +14,25 @@ namespace M19G1.BLL
 {
     public class AnonymousRequestService: IAnonymousRequestService
     {
+        
+        private readonly UnitOfWork _internalUnitOfWork;
+        private readonly AnonymousRequestRepository _anonymousRepository;
+
         public AnonymousRequestService(UnitOfWork unitOfWork)
         {
             _internalUnitOfWork = unitOfWork;
             _anonymousRepository = _internalUnitOfWork.AnonymousRequestRepository;
         }
-        private readonly UnitOfWork _internalUnitOfWork;
-        private readonly AnonymousRequestRepository _anonymousRepository;
+
         public void CreateAnonymousRequest(int idUser)
         {
-                _internalUnitOfWork.AnonymousRequestRepository.Insert(AnonymousRequestMapping.ToEntityToCreate(idUser));
+                _anonymousRepository.Insert(AnonymousRequestModelMapping.ToEntityToCreate(idUser));
                 _internalUnitOfWork.Save();
 
         }
         public void ConfirmedAnonymous(int idAnonymous)
         {
-            AnonymousRequest request=_internalUnitOfWork.AnonymousRequestRepository.GetByID(idAnonymous);
+            AnonymousRequest request= _anonymousRepository.GetByID(idAnonymous);
             request.Confirmed = true;
             _internalUnitOfWork.AnonymousRequestRepository.Update(request);
             _internalUnitOfWork.Save();
@@ -38,11 +41,11 @@ namespace M19G1.BLL
 
         public List<AnonymousRequestModel> GetAllRequests()
         {
-            return AnonymousRequestMapping.ToModel(_anonymousRepository.GetAll().Where(a=>a.Confirmed==false));
+            return AnonymousRequestModelMapping.ToModel(_anonymousRepository.GetAll().Where(a=>a.Confirmed==false));
         }
         public AnonymousRequestModel GetRequestById(int id)
         {
-            return AnonymousRequestMapping.ToModel(_anonymousRepository.GetByID(id));
+            return AnonymousRequestModelMapping.ToModel(_anonymousRepository.GetByID(id));
         }
 
     }

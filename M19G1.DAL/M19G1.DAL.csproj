@@ -50,7 +50,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Mapping\AnonymousRequestMapping.cs" />
+    <Compile Include="Mapping\AnonymousRequestModelMapping.cs" />
+    <Compile Include="Mapping\LogModelMapping.cs" />
     <Compile Include="Mapping\RoleModelMapping.cs" />
     <Compile Include="Mapping\UserModelMapping.cs" />
     <Compile Include="Mapping\UserRequestModelMapping.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Migrations\201906142314235_fkAnonymous.Designer.cs">
       <DependentUpon>201906142314235_fkAnonymous.cs</DependentUpon>
     </Compile>
+    <Compile Include="Repository\LogRepository.cs" />
     <Compile Include="Repository\AnonymousRequestRepository.cs" />
     <Compile Include="Repository\BaseRepository.cs" />
     <Compile Include="Entities\AnonymousRequest.cs" />

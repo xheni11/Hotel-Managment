@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace M19G1.DAL.Mapping
 {
-    public class AnonymousRequestMapping
+    public class AnonymousRequestModelMapping
     {
                
         public static AnonymousRequestModel ToModel(AnonymousRequest user)

@@ -117,6 +117,14 @@ namespace M19G1.DAL
             _anonymousRequestRepository ?? (_anonymousRequestRepository =new AnonymousRequestRepository(_context));
 
         #endregion
+        #region LogRepository Repository
+
+        private LogRepository _logRepository;
+
+        public LogRepository LogRepository =>
+            _logRepository ?? (_logRepository = new LogRepository(_context));
+
+        #endregion
         #region UserRequest Repository
 
         private UserRequestRepository _userRequestRepository;
