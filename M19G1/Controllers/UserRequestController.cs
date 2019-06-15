@@ -21,13 +21,13 @@ namespace M19G1.Controllers
         [HttpGet]
         public ActionResult Requests()
         {
-            List<UserRequestModel> users = _userRequestService.GetAllRequests();
+            List<UserRequestViewModel> users = UserRequestViewModelMapping.ToViewModel(_userRequestService.GetAllRequests());
             return View();
         }
         [HttpPost]
         public JsonResult ListRequests()
         {
-            List<UserRequestModel> users = _userRequestService.GetAllRequests();
+            List<UserRequestViewModel> users = UserRequestViewModelMapping.ToViewModel( _userRequestService.GetAllRequests());
             int recordsTotal;
             var start = Request.Form.GetValues("start").FirstOrDefault();
             var length = Request.Form.GetValues("length").FirstOrDefault();
@@ -39,7 +39,7 @@ namespace M19G1.Controllers
             var searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
             if (!string.IsNullOrEmpty(sortColumn) || !string.IsNullOrEmpty(searchValue))
             {
-                users = _userRequestService.GetUsersOrderBy(sortColumn, searchValue); //_controller.CurrentUser.Id kur te bej login
+                users = UserRequestViewModelMapping.ToViewModel(_userRequestService.GetUsersOrderBy(sortColumn, searchValue)); //_controller.CurrentUser.Id kur te bej login
             }
             recordsTotal = users.Count();
             var data = users.Skip(skip).Take(pageSize).ToArray();

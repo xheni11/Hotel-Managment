@@ -1,6 +1,6 @@
 ﻿using M19G1.BLL;
 using M19G1.DAL;
-using M19G1.MappingViewModel;
+using M19G1.Mapping;
 using M19G1.Models;
 using M19G1.ViewModels;
 using System;
@@ -11,20 +11,20 @@ using System.Web.Mvc;
 
 namespace M19G1.Controllers
 {
-    public class AnonymousRequestController:Controller
+    public class LogController : Controller
     {
-        private AnonymousRequestService _anonymousRequestService = new AnonymousRequestService(new UnitOfWork());
-        private UserService _userService = new UserService(new UnitOfWork());
+        private LogService _logService = new LogService(new UnitOfWork());
+
         [HttpGet]
-        public ActionResult AnonymousRequests()
+        public ActionResult Logs()
         {
-            List<AnonymousRequestViewModel> users = AnonymousRequestViewModelMapping.ToViewModel( _anonymousRequestService.GetAllRequests());
+            List<LogViewModel> users =LogViewModelMapping.ToViewModel( _logService.GetAllLogs());
             return View();
         }
         [HttpPost]
-        public JsonResult ListRequests()
+        public JsonResult ListLogs()
         {
-            List<AnonymousRequestViewModel> users = AnonymousRequestViewModelMapping.ToViewModel(_anonymousRequestService.GetAllRequests());
+            List<LogViewModel> users = LogViewModelMapping.ToViewModel(_logService.GetAllLogs());
             int recordsTotal;
             var start = Request.Form.GetValues("start").FirstOrDefault();
             var length = Request.Form.GetValues("length").FirstOrDefault();
@@ -44,16 +44,9 @@ namespace M19G1.Controllers
 
         }
         [HttpGet]
-        public ActionResult LoadRequest(int id)
+        public ActionResult LoadLog(int id)
         {
-            return Json(_anonymousRequestService.GetRequestById(id), JsonRequestBehavior.AllowGet);
-        }
-        [HttpGet]
-        public ActionResult DeleteAnonymous(int id)
-        {
-            _userService.MakeUserAnonymous(id);
-            _anonymousRequestService.ConfirmedAnonymous(id);
-            return Json("Index", JsonRequestBehavior.AllowGet);
+            return Json(_logService.GetLogById(id), JsonRequestBehavior.AllowGet);
         }
     }
 }
