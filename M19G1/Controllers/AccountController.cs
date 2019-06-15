@@ -12,6 +12,7 @@ namespace M19G1.Controllers
     [Authorize]
     public class AccountController : BaseController
     {
+        
         public AccountController()
         {
         }
@@ -39,6 +40,7 @@ namespace M19G1.Controllers
             {
                 return View(model);
             }
+
             
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: true);
             switch (result)

@@ -17,13 +17,14 @@ namespace M19G1.Controllers
     {
         private UserService _userService = new UserService(new UnitOfWork());
         private RoleService _roleService = new RoleService(new UnitOfWork());
-        PasswordHasher passwordHasher = new PasswordHasher();
-        PasswordGenerator passwordGenerator = new PasswordGenerator();
+        private PasswordHasher passwordHasher = new PasswordHasher();
+        private PasswordGenerator passwordGenerator = new PasswordGenerator();
         private BaseController _controller = new BaseController();
+        private EmailService _emailService = new EmailService();
         [HttpGet]
         public ActionResult Index()
         {
-            List<UserViewModel> users = UserViewModelMapping.ToViewModel(_userService.GetAllUsers());
+            List<UserViewModel> users = UserViewModelMapping.ToViewModel(_userService.GetNotAnonymous());
             MultiSelectList selectListRoles = new MultiSelectList(_roleService.GetAllRoles().Select(s => s.RoleName));
             ViewData["RoleName"] = selectListRoles;
             return View();
@@ -32,13 +33,20 @@ namespace M19G1.Controllers
         {
             string hashedPassword= passwordHasher.HashPassword(passwordGenerator.RandomPassword());
             _userService.GenerateNewPassword(id, hashedPassword);
+            IdentityMessage identityMessage = new IdentityMessage
+            {
+                Destination = "canajrediana@gmail.com",//vendos currentuser.email kur te besh login
+                Body = "New password for hotel app",
+                Subject = "Your new password for hotel app: " + passwordGenerator.RandomPassword()
+            };
+            _emailService.SendAsync(identityMessage);
             return Json("Index", JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public JsonResult ListUsers()
         {
-            List<UserViewModel> users =UserViewModelMapping.ToViewModel( _userService.GetAllUsers());    
+            List<UserViewModel> users =UserViewModelMapping.ToViewModel( _userService.GetNotAnonymous());    
             int recordsTotal;
             var start = Request.Form.GetValues("start").FirstOrDefault();
             var length = Request.Form.GetValues("length").FirstOrDefault();
@@ -64,6 +72,13 @@ namespace M19G1.Controllers
         {
             string hashedPassword = passwordHasher.HashPassword(passwordGenerator.RandomPassword());
             _userService.CreateUser(UserViewModelMapping.ToCreateUserModel(user),hashedPassword);
+            IdentityMessage identityMessage = new IdentityMessage
+            {
+                Destination = user.Email,
+                Body = "Credentials of hotel app account",
+                Subject = "Username: "+user.Username+"\n Password: " + passwordGenerator.RandomPassword()
+            };
+            _emailService.SendAsync(identityMessage);
             return Json("Index", JsonRequestBehavior.AllowGet);
         }
 
@@ -71,7 +86,23 @@ namespace M19G1.Controllers
         public ActionResult UpdateUser(UserViewModel user)
         {
             _userService.UpdateUser(UserViewModelMapping.ToModel(user));
-
+            if (_userService.GetUserById(user.Id).Email!=user.Email)
+            {
+                IdentityMessage identityMessage = new IdentityMessage
+                {
+                    Destination = _userService.GetUserById(user.Id).Email,
+                    Body = "Email of hotel app changed",
+                    Subject = "Your email of hotel app has been changed. New email is : " + user.Email
+                };
+                _emailService.SendAsync(identityMessage);
+                IdentityMessage identityMessage2 = new IdentityMessage
+                {
+                    Destination = user.Email,
+                    Body = "Email of hotel app changed",
+                    Subject = "Your email of hotel app has been changed. Your old email was : " + _userService.GetUserById(user.Id).Email
+                };
+                _emailService.SendAsync(identityMessage);
+            }
             return Json("Index", JsonRequestBehavior.AllowGet);
         }
 

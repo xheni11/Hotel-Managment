@@ -19,5 +19,6 @@ namespace M19G1.IBLL
         void MakeUserAnonymous(int id);
         bool UsernameExists(string username);
         bool EmailExists(string email);
+        IEnumerable<UserModel> GetNotAnonymous();
     }
 }

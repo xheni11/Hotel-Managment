@@ -6,6 +6,7 @@ using Microsoft.Owin.Security;
 using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Web.Helpers;
 
 namespace M19G1
 {
@@ -13,7 +14,14 @@ namespace M19G1
     {
         public Task SendAsync(IdentityMessage message)
         {
-            // Plug in your email service here to send an email.
+            WebMail.SmtpServer = "smtp.gmail.com"; 
+            WebMail.SmtpPort = 587;
+            WebMail.SmtpUseDefaultCredentials = true;  
+            WebMail.EnableSsl = true;
+            WebMail.UserName = "canajxheni111@gmail.com";
+            WebMail.Password = "";
+            WebMail.From = "hotelapp@gmail.com";
+            WebMail.Send(to: message.Destination, subject: message.Subject, body: message.Body, cc: "", bcc:"", isBodyHtml: true);
             return Task.FromResult(0);
         }
     }
