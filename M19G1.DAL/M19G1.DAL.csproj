@@ -92,6 +92,10 @@
     <Compile Include="Migrations\201906101052523_Booking_CheckinCheckout.Designer.cs">
       <DependentUpon>201906101052523_Booking_CheckinCheckout.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906171045487_NullableDriverId.cs" />
+    <Compile Include="Migrations\201906171045487_NullableDriverId.Designer.cs">
+      <DependentUpon>201906171045487_NullableDriverId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Persistence\M19G1Context.cs" />
     <Compile Include="GenericRepository.cs" />
@@ -112,6 +116,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906101052523_Booking_CheckinCheckout.resx">
       <DependentUpon>201906101052523_Booking_CheckinCheckout.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906171045487_NullableDriverId.resx">
+      <DependentUpon>201906171045487_NullableDriverId.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

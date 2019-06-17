@@ -22,7 +22,7 @@ namespace M19G1.DAL.Mappings
                 TotalTime = driverService.VoyageTime,
                 BookingId = driverService.BookingId,
                 Booking = @booking,
-                DriverId = driverService.DriverId,
+                DriverId = driverService.DriverID,
                 Driver = @user
 
             };

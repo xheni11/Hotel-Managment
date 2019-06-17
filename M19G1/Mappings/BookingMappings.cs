@@ -44,5 +44,53 @@ namespace M19G1.Mappings
 
             };
         }
+
+        public static BookingModel MapCreateBookingVModelToBookingModel(CreateBookingViewModel model)
+        {
+            var BookingModel = new BookingModel
+            {
+                BookTime = DateTime.Now,
+                Start = model.StartDate,
+                End = model.EndDate
+            };
+            if(model.InitialLocation != null || model.FinalLocation != null)
+            {
+                List<DriverServiceModel> dsModels = new List<DriverServiceModel>();
+                if(model.InitialLocation != null)
+                {
+                    dsModels.Add(
+                        new DriverServiceModel
+                        {
+                            Location = model.InitialLocation,
+                            Destination = "Hotel",
+                            StartTime = model.StartDate                            
+                        }
+                        );
+                }
+                if(model.FinalLocation != null)
+                {
+                    dsModels.Add(
+                        new DriverServiceModel
+                        {
+                            Location = "Hotel",
+                            Destination = model.FinalLocation,
+                            StartTime = model.EndDate
+                        }
+                       );
+                }
+                BookingModel.DriverServices = dsModels;
+            }
+            return BookingModel;
+        }
+
+        public static ChooseRoomModel MapChooseRoomViewModelToChooseRoomModel(ChooseRoomViewModel model)
+        {
+            return new ChooseRoomModel
+            {
+                bookingId = model.booking.Id,
+                roomId = model.RoomId,
+                facilityIds = model.facilityIds
+            };
+        }
     }
 }

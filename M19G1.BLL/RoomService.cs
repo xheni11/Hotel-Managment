@@ -37,10 +37,10 @@ namespace M19G1.BLL
 
         public List<RoomModel> FilterRooms(FilterRoomModel model)
         {
-            
+
 
             Expression<Func<Room, bool>> expr1 = r => r.Occupied == model.Occupied && r.Enabled == true;
-            Expression<Func<Room,bool>> expr = expr1;
+            Expression<Func<Room, bool>> expr = expr1;
             if (model.CategoryId != 0)
             {
                 Expression<Func<Room, bool>> expr2 = r => r.CategoryId == model.CategoryId;
@@ -48,9 +48,9 @@ namespace M19G1.BLL
                 new SwapVisitor(expr.Parameters[0], expr2.Parameters[0]).Visit(expr.Body),
                 expr2.Body), expr2.Parameters);
 
-                
+
             }
-            if(model.RoomName != null)
+            if (model.RoomName != null)
             {
                 Expression<Func<Room, bool>> expr3 = r => r.Name == model.RoomName;
 
@@ -66,27 +66,27 @@ namespace M19G1.BLL
             new SwapVisitor(expr.Parameters[0], expr4.Parameters[0]).Visit(expr.Body),
             expr4.Body), expr4.Parameters);
             }
-                                            
 
-            List<RoomModel> rooms = _internalUnitOfWork.RoomRepository.Get(expr).Select(m => 
-                 RoomMappings.MapRoomToRoomModel(m,RoomMappings.MapRoomCategoryToRCModel(m.Category))).ToList();
+
+            List<RoomModel> rooms = _internalUnitOfWork.RoomRepository.Get(expr).Select(m =>
+                 RoomMappings.MapRoomToRoomModel(m, RoomMappings.MapRoomCategoryToRCModel(m.Category))).ToList();
             List<RoomModel> filteredRooms = new List<RoomModel>();
 
             if (model.SelectedFacilities != null)
             {
                 bool addFlag = true;
-                foreach( var room in rooms)
+                foreach (var room in rooms)
                 {
                     addFlag = true;
-                    foreach(int id in model.SelectedFacilities)
+                    foreach (int id in model.SelectedFacilities)
                     {
                         if (room.RoomFacilities.Where(rf => rf.FacilityId == id).Count() == 0)
                         {
                             addFlag = false;
                             break;
-                        }                           
+                        }
                     }
-                    if(addFlag)
+                    if (addFlag)
                         filteredRooms.Add(room);
                 }
             }
@@ -95,6 +95,43 @@ namespace M19G1.BLL
                 filteredRooms = rooms;
             }
             return filteredRooms;
+        }
+
+        public List<RoomModel> GetFreeRoomsForBooking(int bookingId)
+        {
+            List<int> NotAllowedRooms = new List<int>();
+            Booking booking = _internalUnitOfWork.BookingsRepository.GetByID(bookingId);
+            List<int> bookingRooms = booking.BookingRooms?.Select(br => br.Room.Id).ToList();
+            if (bookingRooms != null)
+                NotAllowedRooms.AddRange(bookingRooms);
+            List<Booking> bookingsWithIntersect = _internalUnitOfWork.BookingsRepository.Get(b => b.Valid &&
+            ((b.StartDate < booking.StartDate && b.EndDate < booking.StartDate) || (b.StartDate > booking.EndDate && b.EndDate > booking.EndDate))).ToList();
+
+            if(bookingRooms != null)
+            {
+                if(bookingRooms.Count != 0)
+                {
+                    foreach(var book in bookingsWithIntersect)
+                    {
+                        if(book.BookingRooms != null)
+                        {
+                            NotAllowedRooms.AddRange(book.BookingRooms.Select(br => br.RoomId).ToList());
+                        }
+                    }
+                }
+            }
+            NotAllowedRooms = NotAllowedRooms.Distinct().ToList();
+            List<RoomModel> allowedRooms = _internalUnitOfWork.RoomRepository.Get(r => !NotAllowedRooms.Contains(r.Id))
+                .Select(r => RoomMappings.MapRoomToRoomModel(r, null)).ToList();
+            if (allowedRooms == null)
+                return new List<RoomModel>();
+            else
+                return allowedRooms;
+        }
+        private bool Intersect(DateTime start1, DateTime end1, DateTime start2, DateTime end2)
+        {
+            bool notIntersect = (start1 < start2 && end1 < start2) || (start1 > end2 && end1 > end2);
+            return !notIntersect;
         }
     }
 }

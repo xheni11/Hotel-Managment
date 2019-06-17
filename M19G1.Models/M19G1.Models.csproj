@@ -52,6 +52,7 @@
     <Compile Include="AnonymousRequestModel.cs" />
     <Compile Include="BookingModel.cs" />
     <Compile Include="BookingRoomModel.cs" />
+    <Compile Include="ChooseRoomModel.cs" />
     <Compile Include="DriverServiceModel.cs" />
     <Compile Include="ExtraFacilityModel.cs" />
     <Compile Include="FacilityModel.cs" />

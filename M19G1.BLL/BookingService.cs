@@ -77,5 +77,53 @@ namespace M19G1.BLL
             BookingModel bookingModel = BookingMappings.MapBookingToBookingModel(booking, null);
             return bookingModel;
         }
+
+        public int CreateNewBooking(BookingModel model)
+        {
+            model.Valid = false; // ende nuk kemi shtuar dhomat
+            Booking booking = BookingMappings.MapBookingModelToBooking(model);
+            _internalUnitOfWork.BookingsRepository.Insert(booking);
+            _internalUnitOfWork.Save();
+            int id = booking.Id;
+            return id;
+        }
+
+        public bool AddRoomForBooking(ChooseRoomModel model)
+        {
+            if(_internalUnitOfWork.RoomRepository.GetByID(model.roomId).Occupied == false)
+            {
+                BookingRoom bookingRoom = BookingMappings.MapChooseRoomModelToBookingRoom(model);
+                _internalUnitOfWork.BookingRoomRepository.Insert(bookingRoom);
+                _internalUnitOfWork.Save();
+                int bookingRoomId = bookingRoom.Id;
+                foreach(int facId in model.facilityIds)
+                {
+                    _internalUnitOfWork.ExtraFacilityRepository.Insert(
+                        new ExtraFacility()
+                        {
+                            BookingRoomId = bookingRoomId,
+                            FacilityId = facId,
+                            Price = 0.0M,
+                            Quantity = 1
+                        });
+                    _internalUnitOfWork.Save();
+                }
+                return true;
+            }
+            return false;
+        }
+
+        public bool FinishBooking(int bookingId)
+        {
+            Booking booking = _internalUnitOfWork.BookingsRepository.GetByID(bookingId);
+            if(booking != null)
+            {
+                booking.Valid = true;
+                _internalUnitOfWork.BookingsRepository.Update(booking);
+                _internalUnitOfWork.Save();
+                return true;
+            }
+            return false;
+        }
     }
 }

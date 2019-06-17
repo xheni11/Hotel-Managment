@@ -39,7 +39,7 @@ namespace M19G1.Controllers
         [HttpGet]
         public ActionResult OldBookings()
         {
-            List<BookingModel> oldBookings = _bookingService.GetOldBookings(CurrentUser.Id);
+            List<BookingModel> oldBookings = _bookingService.GetOldBookings(6);//CurrentUser.Id
             List<BookingElementViewModel> oldBookingsElements = oldBookings.Select(b => BookingMappings.MapBookingModelToViewModel(b)).ToList();
             return View(oldBookingsElements);
         }
@@ -47,7 +47,7 @@ namespace M19G1.Controllers
         [HttpGet]
         public ActionResult ActiveBookings()
         {
-            List<BookingModel> activeBookings = _bookingService.GetActiveBookings(6);
+            List<BookingModel> activeBookings = _bookingService.GetActiveBookings(6);//CurrentUser.Id
             List<BookingElementViewModel> activeBookingsElements = activeBookings?.Select(b => BookingMappings.MapBookingModelToViewModel(b)).ToList();
             return View(activeBookingsElements);
         }
@@ -183,5 +183,75 @@ namespace M19G1.Controllers
             return RedirectToAction("Details", new { id = model.bookingModel.Id });
         }
 
+        [HttpGet]
+        public ActionResult CreateBooking()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateBooking(CreateBookingViewModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                if (model.EndDate < model.StartDate)
+                    ViewBag.Result = "End date should be equal or greater than start date !";
+                else
+                {
+                    BookingModel bookingModel = BookingMappings.MapCreateBookingVModelToBookingModel(model);
+                    bookingModel.ClientId = 6; //CurrentUser.Id
+                    int id = _bookingService.CreateNewBooking(bookingModel);
+                    return RedirectToAction("ChooseRooms", new { bookingId = id });
+                }
+            }
+            return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult ChooseRooms(int bookingId)
+        {
+            BookingModel booking = _bookingService.GetBookingById(bookingId);
+            List<RoomModel> freeRooms = _roomService.GetFreeRoomsForBooking(bookingId);
+            List<FacilityModel> roomFacilites = _facilityService.GetFacilites();
+            ChooseRoomViewModel model = new ChooseRoomViewModel();
+            model.rooms = freeRooms;
+            model.booking = booking;
+            model.facilities = roomFacilites;
+            return View(model);
+
+        }
+
+        [HttpPost]
+        public ActionResult ChooseRooms(ChooseRoomViewModel model)
+        {
+            
+            if(ModelState.IsValid)
+            {
+                ChooseRoomModel ChooseModel = BookingMappings.MapChooseRoomViewModelToChooseRoomModel(model);
+                if(_bookingService.AddRoomForBooking(ChooseModel))
+                {
+                    ViewBag.Result = "Room successfully added !";
+                }
+                else
+                {
+                    ViewBag.Result = "Room could not be added !";
+                }
+            }
+            var returnModel = new ChooseRoomViewModel();
+            BookingModel booking = _bookingService.GetBookingById(model.booking.Id);
+            List<RoomModel> freeRooms = _roomService.GetFreeRoomsForBooking(model.booking.Id);
+            List<FacilityModel> roomFacilites = _facilityService.GetFacilites();
+            returnModel.rooms = freeRooms;
+            returnModel.booking = booking;
+            returnModel.facilities = roomFacilites;
+            return View(returnModel);
+        }
+
+        [HttpPost]
+        public ActionResult FinishBooking(int id)
+        {
+            _bookingService.FinishBooking(id);
+            return RedirectToAction("ActiveBookings");
+        }
     }
 }

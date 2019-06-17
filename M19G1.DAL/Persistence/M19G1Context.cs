@@ -112,7 +112,7 @@ namespace M19G1.DAL.Persistence
             modelBuilder.Entity<AspNetUser>()
                 .HasMany(u => u.DriverServices)
                 .WithRequired(ds => ds.Driver)
-                .HasForeignKey(ds => ds.DriverId)
+                .HasForeignKey(ds => ds.DriverID)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<AspNetRole>()

@@ -10,7 +10,7 @@ namespace M19G1.DAL.Mappings
 {
     public static class FacilityMappings
     {
-        public static FacilityModel MapFacilityToFacilityModel(Facility facility)
+        public static FacilityModel MapFacilityToFacilityModel(Facility facility, bool mapNestedObject = false)
         {
             var facModel = new FacilityModel
             {
@@ -19,8 +19,11 @@ namespace M19G1.DAL.Mappings
                 Description = facility.Description,
                 FacilityName = facility.Name,
             };
-            facModel.RoomFacilities = facility.RoomFacilities?.Select(rf => MapRoomFacilityToRFModel(rf, null, facModel)).ToList();
-            facModel.ExtraFacilites = facility.ExtraFacilities?.Select(ef => MapExtraFacilityToEFModel(ef, null, facModel)).ToList();
+            if(mapNestedObject)
+            {
+                facModel.RoomFacilities = facility.RoomFacilities?.Select(rf => MapRoomFacilityToRFModel(rf, null, facModel)).ToList();
+                facModel.ExtraFacilites = facility.ExtraFacilities?.Select(ef => MapExtraFacilityToEFModel(ef, null, facModel)).ToList();
+            }           
             return facModel;     
         }
         public static RoomFacilityModel MapRoomFacilityToRFModel(RoomFacility roomFacility,RoomModel Rmodel, FacilityModel Fmodel)

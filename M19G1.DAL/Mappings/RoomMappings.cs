@@ -10,7 +10,7 @@ namespace M19G1.DAL.Mappings
 {
     public static class RoomMappings
     {
-        public static RoomModel MapRoomToRoomModel(Room room,RoomCategoryModel CatModel)
+        public static RoomModel MapRoomToRoomModel(Room room,RoomCategoryModel CatModel, bool mapNestedObject = false)
         {
             var roomModel = new RoomModel
             {
@@ -24,9 +24,12 @@ namespace M19G1.DAL.Mappings
                 RoomCategory = CatModel,
                 RoomDescription = room.Description
             };
-            roomModel.BookingRooms = room.BookingRooms.Select(b => BookingMappings.MapBookingRoomToBookingRoomModel(b, null, null)).ToList();
-            roomModel.RoomFacilities = room.RoomFacilities.Select(rf => FacilityMappings.
-            MapRoomFacilityToRFModel(rf, roomModel, FacilityMappings.MapFacilityToFacilityModel(rf.Facility))).ToList();
+            if (mapNestedObject) {
+                roomModel.BookingRooms = room.BookingRooms.Select(b => BookingMappings.MapBookingRoomToBookingRoomModel(b, null, roomModel)).ToList();
+                roomModel.RoomFacilities = room.RoomFacilities.Select(rf => FacilityMappings.
+                MapRoomFacilityToRFModel(rf, roomModel, FacilityMappings.MapFacilityToFacilityModel(rf.Facility))).ToList();
+            }
+            
             return roomModel;
         }
 

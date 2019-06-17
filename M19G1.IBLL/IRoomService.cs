@@ -10,5 +10,7 @@ namespace M19G1.IBLL
     public interface IRoomService
     {
         List<RoomModel> FilterRooms(FilterRoomModel model);
+        List<RoomModel> GetFreeRoomsForBooking(int bookingId);
+        
     }
 }
