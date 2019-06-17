@@ -49,7 +49,7 @@ namespace M19G1.BLL
                 AspNetUser userToUpdate = _usersRepository.GetByID(userModel.Id);
                 userToUpdate = UserModelMapping.ToEntity(userModel, userToUpdate);
                 List<AspNetRole> roles = new List<AspNetRole>();
-                roles.Add(_roleRepository.GetRoleByName(userModel.RoleName));
+                roles=(_roleRepository.GetRoleByName(userModel.RoleName));
                 userToUpdate.AspNetRoles = roles;
                 _internalUnitOfWork.AspNetUsersRepository.Update(userToUpdate);
                 _internalUnitOfWork.Save();

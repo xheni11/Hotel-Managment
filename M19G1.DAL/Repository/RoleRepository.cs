@@ -14,10 +14,10 @@ namespace M19G1.DAL.Repository
         {
 
         }
-        public AspNetRole GetRoleByName(string roleName)
+        public List<AspNetRole> GetRoleByName(List<string> roleName)
 
         {
-            return _dbSet.Where(entity => entity.Name.Equals(roleName) && entity.Deleted==false).FirstOrDefault();
+            return _dbSet.Where(entity => entity.Name.Equals(roleName) && entity.Deleted==false).ToList();
         }
 
     }

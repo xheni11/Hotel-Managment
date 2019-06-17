@@ -29,6 +29,7 @@ namespace M19G1.Controllers
             ViewData["RoleName"] = selectListRoles;
             return View();
         }
+        [HttpGet]
         public ActionResult GeneratorPassword(int id)
         {
             string hashedPassword= passwordHasher.HashPassword(passwordGenerator.RandomPassword());
@@ -40,6 +41,11 @@ namespace M19G1.Controllers
                 Subject = "Your new password for hotel app: " + passwordGenerator.RandomPassword()
             };
             _emailService.SendAsync(identityMessage);
+            return Json("Index", JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult UpdateUserActivity(int id)
+        {
+            _userService.UpdateUserActivity(id);
             return Json("Index", JsonRequestBehavior.AllowGet);
         }
 

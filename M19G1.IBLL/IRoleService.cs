@@ -10,6 +10,6 @@ namespace M19G1.IBLL
     public interface IRoleService
     {
         List<RoleModel> GetAllRoles();
-        RoleModel GetRoleByName(string roleName);
+        List<RoleModel> GetRoleByName(List<string> roleName);
     }
 }

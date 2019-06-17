@@ -26,7 +26,7 @@ namespace M19G1.DAL.Mapping.User
                 LockoutEndDateUtc = user.LockoutEndDateUtc,
                 PhoneNr = user.PhoneNumber,
                 Username = user.UserName,
-                //RoleName= user.AspNetRoles.FirstOrDefault().Name
+                RoleName = user.AspNetRoles.Select(u=>u.Name).ToList()
             };
         }
 
@@ -41,7 +41,7 @@ namespace M19G1.DAL.Mapping.User
             userToUpdate.Gender = userModel.Gender;
             userToUpdate.Email = userModel.Email;        
             userToUpdate.PhoneNumber = userModel.PhoneNr;
-
+            //userToUpdate.AspNetRoles=userModel.RoleName
             return userToUpdate;
         }
         public static AspNetUser ToEntityToAnonymous( AspNetUser userToUpdate)

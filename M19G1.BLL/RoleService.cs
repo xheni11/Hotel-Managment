@@ -25,7 +25,7 @@ namespace M19G1.BLL
         {
             return RoleModelMapping.ToModel(_roleRepository.GetAll());
         }
-        public RoleModel GetRoleByName(string roleName)
+        public List<RoleModel> GetRoleByName(List<string> roleName)
         {
             return RoleModelMapping.ToModel(_roleRepository.GetRoleByName(roleName));
         }
