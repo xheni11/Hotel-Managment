@@ -333,6 +333,24 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\lou-multi-select-57fb8d3\css\multi-select.css" />
+    <Content Include="Scripts\lou-multi-select-57fb8d3\css\multi-select.dev.css" />
+    <Content Include="Scripts\lou-multi-select-57fb8d3\css\multi-select.dist.css" />
+    <Content Include="Scripts\lou-multi-select-57fb8d3\Gruntfile.js" />
+    <Content Include="Scripts\lou-multi-select-57fb8d3\img\switch.png" />
+    <Content Include="Scripts\lou-multi-select-57fb8d3\js\jquery.multi-select.js" />
+    <Content Include="Scripts\lou-multi-select-57fb8d3\LICENSE.txt" />
+    <Content Include="Scripts\lou-multi-select-57fb8d3\samples\callbacks.html" />
+    <Content Include="Scripts\lou-multi-select-57fb8d3\samples\index.html" />
+    <Content Include="Scripts\lou-multi-select-57fb8d3\samples\Pre-selected-options.html" />
+    <Content Include="Scripts\lou-multi-select-57fb8d3\test\lib\jasmine-1.2.0\jasmine-html.js" />
+    <Content Include="Scripts\lou-multi-select-57fb8d3\test\lib\jasmine-1.2.0\jasmine.css" />
+    <Content Include="Scripts\lou-multi-select-57fb8d3\test\lib\jasmine-1.2.0\jasmine.js" />
+    <Content Include="Scripts\lou-multi-select-57fb8d3\test\lib\jasmine-jquery.js" />
+    <Content Include="Scripts\lou-multi-select-57fb8d3\test\SpecRunner.html" />
+    <Content Include="Scripts\lou-multi-select-57fb8d3\test\spec\multiSelectSpec.js" />
+    <Content Include="Scripts\lou-multi-select-57fb8d3\test\spec\SpecHelper.js" />
+    <Content Include="Scripts\lou-multi-select-57fb8d3\test\src\jquery.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\moment-with-locales.js" />
     <Content Include="Scripts\moment-with-locales.min.js" />
@@ -395,6 +413,14 @@
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\AnonymousRequests.cshtml" />
     <Content Include="Views\User\Logs.cshtml" />
+    <Content Include="Scripts\lou-multi-select-57fb8d3\.gitignore" />
+    <Content Include="Scripts\lou-multi-select-57fb8d3\bower.json" />
+    <Content Include="Scripts\lou-multi-select-57fb8d3\css\multi-select.dev.css.map" />
+    <Content Include="Scripts\lou-multi-select-57fb8d3\multi-select.jquery.json" />
+    <Content Include="Scripts\lou-multi-select-57fb8d3\package.json" />
+    <Content Include="Scripts\lou-multi-select-57fb8d3\README.markdown" />
+    <Content Include="Scripts\lou-multi-select-57fb8d3\scss\multi-select.scss" />
+    <Content Include="Scripts\lou-multi-select-57fb8d3\test\lib\jasmine-1.2.0\MIT.LICENSE" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

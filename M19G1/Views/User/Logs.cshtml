@@ -105,38 +105,47 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">×</button>
                 <h4 class="modal-title" id="myModalLabel">Information</h4>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+
             </div>
             <div class="modal-body">
                 <form>
                     <div class="form-group">
                         <input type="text" class="form-control" id="Id" placeholder="Id" hidden="hidden" disabled="disabled" />
                     </div>
-                    <div class="form-group">
-                        <label for="Date">Date</label>
-                        <div class="container">
-                            <div class="input-group date" id="Birthday" data-target-input="nearest">
-                                <input type="text" disabled class="form-control datetimepicker-input" data-target="#Date" id="DateText" />
-                                <span class="input-group-addon" data-target="#Date" data-toggle="datetimepicker">
-                                    <span class="fa fa-calendar"></span>
-                                </span>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="Date">Date</label>
+                        <div class="col-md-9">
+                            <div class="container">
+                                <div class="input-group date" id="Birthday" data-target-input="nearest">
+                                    <input type="text" disabled class="form-control datetimepicker-input" data-target="#Date" id="DateText" />
+                                    <span class="input-group-addon" data-target="#Date" data-toggle="datetimepicker">
+                                        <span class="fa fa-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="Message">Message</label>
-                        <input type="text" disabled class="form-control" id="Message" placeholder="Message" />
-                    </div>
-                    <div class="form-group">
-                        <label for="Level">Level</label>
-                        <input type="text" disabled class="form-control" id="Level" placeholder="Level" />
-                    </div>
-                    <div class="form-group">
-                        <label for="Logger">Logger</label>
-                        <input type="text" disabled class="form-control" id="Logger" placeholder="Logger" />
-                    </div>
-                </form>
+                    <div class="form-group row ">
+                        <label class="col-md-3 col-form-label" for="Message">Message</label>
+                        <div class="col-md-9">
+                            <input type="text" disabled class="form-control" id="Message" placeholder="Message" />
+                            </div>
+                        </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="Level">Level</label>
+                        <div class="col-md-9">
+                            <input type="text" disabled class="form-control" id="Level" placeholder="Level" />
+                            </div>
+                            </div>
+                    <div class="form-grouprow ">
+                        <label class="col-md-3 col-form-label" for="Logger">Logger</label>
+                        <div class="col-md-9">
+                            <input type="text" disabled class="form-control" id="Logger" placeholder="Logger" />
+                        </div>
+                        </div>
+</form>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>

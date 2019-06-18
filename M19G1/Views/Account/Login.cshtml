@@ -4,57 +4,203 @@
     ViewBag.Title = "Log in";
 }
 
-<h2>@ViewBag.Title.</h2>
-<div class="row">
-    <div class="col-md-8">
-        <section id="loginForm">
-            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-            {
-                @Html.AntiForgeryToken()
-                <h4>Use a local account to log in.</h4>
-                <hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
+@*<div class="row">*@
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment-with-locales.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet" />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+<script src="https://rawgit.com/tempusdominus/bootstrap-4/master/build/js/tempusdominus-bootstrap-4.js"></script>
+<link href="https://rawgit.com/tempusdominus/bootstrap-4/master/build/css/tempusdominus-bootstrap-4.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+<script th:src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js}"></script>
+<script th:src="//cdn.datatables.net/plug-ins/1.10.11/sorting/datetime-moment.js}"></script>
+<div class="col-sm-6 offset-sm-3 text-center">
+    <section id="loginForm" class="form-inlin justify-content-center">
+        @*<section  >*@
+        <h4>Log in</h4>
+        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                <div class="col-md-12">
+                    <div class="row d-flex justify-content-center">
                         @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
                         @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                <div class="col-md-12">
+                    <div class="row d-flex justify-content-center">
                         @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
                         @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-12">
+                    <div class="row d-flex justify-content-center">
                         <div class="checkbox">
                             @Html.CheckBoxFor(m => m.RememberMe)
                             @Html.LabelFor(m => m.RememberMe)
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Log in" class="btn btn-default" />
+            </div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <div class="row d-flex justify-content-center">
+                        <input type="submit" class="btn btn-outline-success" value="Log in" />
                     </div>
                 </div>
-                <p>
-                    @Html.ActionLink("Register as a new user", "Register")
-                </p>
-                @* Enable this once you have account confirmation enabled for password reset functionality
-                    <p>
-                        @Html.ActionLink("Forgot your password?", "ForgotPassword")
-                    </p>*@
+            </div>
+            <p>
+                @*@Html.ActionLink("Register as a new user", "Register")*@
+            <p>If you don't have an account press "Register"</p>
+            <button class="btn btn-outline-info" onclick="LoadUser(0)">Register</button>
+            </p>
+            //Enable this once you have account confirmation enabled for password reset functionality
+            <p>
+                @Html.ActionLink("Forgot your password?", "ForgotPassword")
+            </p>
+        }
+        @*</section>*@
+    </section>
+</div>
+@*<div class="col-md-4">
+                <section id="socialLoginForm">
+                    @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+                </section>
+            </div>
+    </div>*@
+<script type="text/javascript">
+    function LoadUser(id) {
+        $.ajax({
+            url: "/User/LoadUser/" + id,
+            type: "GET",
+            contentType: "application/json;charset=UTF-8",
+            dataType: "json",
+            success: function (response) {
+                $('#myModal').modal('show');
+            },
+            error: function (response) {
+                alert(response.responseText);
             }
-        </section>
-    </div>
-    <div class="col-md-4">
-        <section id="socialLoginForm">
-            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-        </section>
+        });
+        return false;
+    }
+    function AddUser() {
+        var userObj = {
+            Id: $('#Id').val(),
+            FirstName: $('#FirstName').val(),
+            LastName: $('#LastName').val(),
+            Email: $('#Email').val(),
+            Username: $('#Username').val(),
+            Gender: $('#Gender').val(),
+            Birthday: $('#Birthday').val(),
+            RoleName: $('#RoleName').val(),
+        };
+
+        $.ajax({
+            url: "/User/AddUser",
+            data: JSON.stringify(userObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                usersTable.ajax.reload();
+                $('#myModal').modal('hide');
+
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+
+        });
+    }
+</script>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Register Form</h4>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="Id" placeholder="Id" hidden="hidden" disabled="disabled" />
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="FirstName">Firstame</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" id="FirstName" placeholder="Firstame" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="LastName">LastName</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" id="LastName" placeholder="LastName" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="Email">Email</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" id="Email" placeholder="Email" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="Username">Username</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" id="Username" placeholder="Username" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="Gender">Gender</label><br>
+                        <div class="col-md-9">
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" class="custom-control-input" id="Male" value="M" name="Gender" checked>
+                                <label class="custom-control-label" for="Male">Male</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" class="custom-control-input" id="Female" value="F" name="Gender">
+                                <label class="custom-control-label" for="Female">Female</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="Birthday">Birthday</label>
+                        <div class="col-md-9">
+                            <div class="container">
+                                <div class="input-group date" id="Birthday" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" data-target="#Birthday" id="BirthdayText" />
+                                    <span class="input-group-addon" data-target="#Birthday" data-toggle="datetimepicker">
+                                        <span class="fa fa-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="RoleName">Role</label>
+                        @*<input type="checkbox" class="form-check-input" id="Administrator" value="Administrator">
+                        @Html.DropDownList("RoleName", (MultiSelectList)ViewData["RoleName"], htmlAttributes: new { id = "RoleName", selectionmode = "Multiple" })*@
+                    </div>
+
+                </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="Add" onclick="return AddUser();">Save</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

@@ -28,7 +28,7 @@ namespace M19G1.Models
         ErrorMessage = "Username Should be minimum 3 characters and a maximum of 30 characters")]
         public string Username { get; set; }
         [Required]
-        public List<string> RoleName { get; set; }
+        public string RoleName { get; set; }
         public DateTime Birthday { get; set; }
         public string Gender { get; set; }
     }

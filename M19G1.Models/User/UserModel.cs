@@ -16,7 +16,7 @@ namespace M19G1.Models
         public string Username { get; set; }
         public string PhoneNr { get; set; }
         public string Gender { get; set; }
-        public List<string> RoleName { get; set; }
+        public string RoleName { get; set; }
         public DateTime? Birthday { get; set; }
         public DateTime? DateCreated { get; set; }
         public DateTime? LockoutEndDateUtc { get; set; }

@@ -1,4 +1,6 @@
-﻿using M19G1.Models;
+﻿using M19G1.DAL;
+using M19G1.BLL;
+using M19G1.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -12,7 +14,6 @@ namespace M19G1.Controllers
     [Authorize]
     public class AccountController : BaseController
     {
-        
         public AccountController()
         {
         }
@@ -42,7 +43,7 @@ namespace M19G1.Controllers
             }
 
             
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: true);
+            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -362,7 +363,20 @@ namespace M19G1.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            switch (CurrentUser.Roles.Select(r => r.RoleId).SingleOrDefault())
+            {
+                case 3:
+                    return RedirectToAction("Index", "User");
+                case 4:
+                    return RedirectToAction("Index", "User");              
+                case 5:
+                    return RedirectToAction("Index", "User");
+                case 6:
+                    return RedirectToAction("Index", "User");
+                case 7:
+                    return RedirectToAction("Index", "User");
+            }
+            return RedirectToAction("Login", "Account");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult
@@ -392,6 +406,26 @@ namespace M19G1.Controllers
                 }
                 context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
             }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (UserManager != null)
+                {
+                    UserManager.Dispose();
+                    UserManager = null;
+                }
+
+                if (SignInManager != null)
+                {
+                    SignInManager.Dispose();
+                    SignInManager = null;
+                }
+            }
+
+            base.Dispose(disposing);
         }
         #endregion
     }

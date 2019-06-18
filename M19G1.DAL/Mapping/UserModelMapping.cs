@@ -26,7 +26,7 @@ namespace M19G1.DAL.Mapping.User
                 LockoutEndDateUtc = user.LockoutEndDateUtc,
                 PhoneNr = user.PhoneNumber,
                 Username = user.UserName,
-                RoleName = user.AspNetRoles.Select(u=>u.Name).ToList()
+                RoleName = user.AspNetRoles.SingleOrDefault().Name
             };
         }
 
@@ -39,26 +39,26 @@ namespace M19G1.DAL.Mapping.User
             userToUpdate.UserName = userModel.Username;
             userToUpdate.Birthday = userModel.Birthday;
             userToUpdate.Gender = userModel.Gender;
-            userToUpdate.Email = userModel.Email;        
+            userToUpdate.Email = userModel.Email;
             userToUpdate.PhoneNumber = userModel.PhoneNr;
             //userToUpdate.AspNetRoles=userModel.RoleName
             return userToUpdate;
         }
-        public static AspNetUser ToEntityToAnonymous( AspNetUser userToUpdate)
+        public static AspNetUser ToEntityToAnonymous(AspNetUser userToUpdate)
         {
             string anonym = "xxxxx";
-            userToUpdate.FirstName =anonym;
+            userToUpdate.FirstName = anonym;
             userToUpdate.LastName = anonym;
             userToUpdate.UserName = anonym;
             userToUpdate.Birthday = DateTime.Now;
-            userToUpdate.Gender ="x";
+            userToUpdate.Gender = "x";
             userToUpdate.Email = anonym;
-            userToUpdate.PhoneNumber= anonym;
+            userToUpdate.PhoneNumber = anonym;
             userToUpdate.PasswordHash = anonym;
 
             return userToUpdate;
         }
-        public static AspNetUser ToEntityToCreate(UserModel userModel,string hashedPassword)
+        public static AspNetUser ToEntityToCreate(UserModel userModel, string hashedPassword)
         {
             return new AspNetUser
             {
@@ -74,7 +74,10 @@ namespace M19G1.DAL.Mapping.User
                 UserName = userModel.Username,
                 Gender = userModel.Gender,
                 PhoneNumber = userModel.PhoneNr,
-                PasswordHash = hashedPassword
+                PasswordHash = hashedPassword,
+                SecurityStamp = Guid.NewGuid().ToString(),
+                LockoutEndDateUtc = null,
+                LockoutEnabled = true
             };
         }
         public static AspNetUser ToEntityToCreate(UserRequestModel userModel, string hashedPassword)

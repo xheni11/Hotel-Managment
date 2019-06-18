@@ -25,7 +25,7 @@ namespace M19G1.DAL.Mapping
                 Username=user.Username,
                 Gender = user.Gender,
                 PhoneNumber=user.PhoneNumber,
-                RoleName=user.Role.Name
+                //RoleName=user.Role.Name
             };
         }
 

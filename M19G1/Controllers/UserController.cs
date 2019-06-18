@@ -4,22 +4,19 @@ using M19G1.DAL;
 using M19G1.MappingViewModel;
 using M19G1.Models;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace M19G1.Controllers
 {
-    public class UserController : Controller
+    public class UserController : BaseController
     {
         private UserService _userService = new UserService(new UnitOfWork());
         private RoleService _roleService = new RoleService(new UnitOfWork());
         private PasswordHasher passwordHasher = new PasswordHasher();
         private PasswordGenerator passwordGenerator = new PasswordGenerator();
-        private BaseController _controller = new BaseController();
         private EmailService _emailService = new EmailService();
         [HttpGet]
         public ActionResult Index()
@@ -32,13 +29,15 @@ namespace M19G1.Controllers
         [HttpGet]
         public ActionResult GeneratorPassword(int id)
         {
-            string hashedPassword= passwordHasher.HashPassword(passwordGenerator.RandomPassword());
+            string password = passwordGenerator.RandomPassword();
+            string hashedPassword= passwordHasher.HashPassword(password);
+            
             _userService.GenerateNewPassword(id, hashedPassword);
             IdentityMessage identityMessage = new IdentityMessage
             {
-                Destination = "canajrediana@gmail.com",//vendos currentuser.email kur te besh login
+                Destination = _userService.GetUserById(id).Email,//vendos currentuser.email kur te besh login
                 Body = "New password for hotel app",
-                Subject = "Your new password for hotel app: " + passwordGenerator.RandomPassword()
+                Subject = "Your new password for hotel app: " + password
             };
             _emailService.SendAsync(identityMessage);
             return Json("Index", JsonRequestBehavior.AllowGet);
@@ -64,7 +63,7 @@ namespace M19G1.Controllers
             var searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
             if (!string.IsNullOrEmpty(sortColumn) || !string.IsNullOrEmpty(searchValue))
             {
-                users = UserViewModelMapping.ToViewModel(_userService.GetUsersOrderBy(sortColumn, searchValue, 0)); //_controller.CurrentUser.Id kur te bej login
+                users = UserViewModelMapping.ToViewModel(_userService.GetUsersOrderBy(sortColumn, searchValue,0)); //currentuser
             }
             recordsTotal = users.Count();   
             var data = users.Skip(skip).Take(pageSize).ToArray();

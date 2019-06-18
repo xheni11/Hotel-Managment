@@ -13,7 +13,7 @@ using System.Reflection;
 using M19G1;
 namespace M19G1.BLL
 {
-    public class UserService : IUserService 
+    public class UserService : IUserService
     {
         private readonly UnitOfWork _internalUnitOfWork;
         private readonly UserRepository _usersRepository;
@@ -28,29 +28,32 @@ namespace M19G1.BLL
 
         public void CreateUser(UserModel userModel, string hashedPassword)
         {
-            if (!UsernameExists(userModel.Username)&&!EmailExists(userModel.Email))
+            if (!UsernameExists(userModel.Username) && !EmailExists(userModel.Email))
             {
-                _internalUnitOfWork.AspNetUsersRepository.Insert(UserModelMapping.ToEntityToCreate(userModel, hashedPassword));
+                var user = UserModelMapping.ToEntityToCreate(userModel, hashedPassword);
+                var role = _internalUnitOfWork.AspNetRolesRepository.Get(x => x.Name.Equals(userModel.RoleName)).SingleOrDefault();
+                user.AspNetRoles.Add(role);
+                _internalUnitOfWork.AspNetUsersRepository.Insert(user);
                 _internalUnitOfWork.Save();
             }
         }
-        public void CreateUser(UserRequestModel userRequest,string hashedPassword)
+
+        public void CreateUser(UserRequestModel userRequest, string hashedPassword)
         {
             if (!UsernameExists(userRequest.Username) && !EmailExists(userRequest.Email))
-            {               
+            {
                 _internalUnitOfWork.AspNetUsersRepository.Insert(UserModelMapping.ToEntityToCreate(userRequest, hashedPassword));
                 _internalUnitOfWork.Save();
             }
         }
         public void UpdateUser(UserModel userModel)
         {
-            if (!UsernameExists(userModel.Username) && !EmailExists(userModel.Email))
+            if (!UsernameExists(userModel.Username, userModel.Id) && !EmailExists(userModel.Email, userModel.Id))
             {
                 AspNetUser userToUpdate = _usersRepository.GetByID(userModel.Id);
                 userToUpdate = UserModelMapping.ToEntity(userModel, userToUpdate);
-                List<AspNetRole> roles = new List<AspNetRole>();
-                roles=(_roleRepository.GetRoleByName(userModel.RoleName));
-                userToUpdate.AspNetRoles = roles;
+                userToUpdate.AspNetRoles.Clear();
+                userToUpdate.AspNetRoles.Add(_roleRepository.GetRoleByName(userModel.RoleName));
                 _internalUnitOfWork.AspNetUsersRepository.Update(userToUpdate);
                 _internalUnitOfWork.Save();
             }
@@ -65,7 +68,7 @@ namespace M19G1.BLL
 
         public UserModel GetLoginUser(string username, string password)
         {
-            return UserModelMapping.ToModel(_usersRepository.GetUserByUsernameAndPassword(username,password));
+            return UserModelMapping.ToModel(_usersRepository.GetUserByUsernameAndPassword(username, password));
         }
 
         public List<UserModel> GetAllUsers()
@@ -75,7 +78,7 @@ namespace M19G1.BLL
 
         public List<UserModel> GetUsersOrderBy(string sortField, string search, int currentUserId)
         {
-            return UserModelMapping.ToModel(_usersRepository.OrderBy(_usersRepository.GetNotAnonymous(), sortField,search,currentUserId));
+            return UserModelMapping.ToModel(_usersRepository.OrderBy(_usersRepository.GetNotAnonymous(), sortField, search, currentUserId));
         }
 
         public void UpdateUserActivity(int userId)
@@ -85,18 +88,30 @@ namespace M19G1.BLL
         }
         public UserModel GetUserById(int id)
         {
-            return UserModelMapping.ToModel( _usersRepository.GetByID(id));
+            return UserModelMapping.ToModel(_usersRepository.GetByID(id));
         }
-       
+
         public bool UsernameExists(string username)
         {
             return _usersRepository.GetUserByUsername(username).Any();
+        }
+        public bool UsernameExists(string username, int idUser)
+        {
+            AspNetUser user = _usersRepository.GetUserByUsername(username).FirstOrDefault();
+            return user != null ? user.Id != idUser : true;
         }
         public bool EmailExists(string email)
         {
             return _usersRepository.GetUserByEmail(email).Any();
         }
-        public void GenerateNewPassword(int idUser,string hashedPassword)
+        public bool EmailExists(string email, int idUser)
+        {
+            AspNetUser user = _usersRepository.GetUserByEmail(email).FirstOrDefault();
+
+            return user != null ? user.Id != idUser : true;
+
+        }
+        public void GenerateNewPassword(int idUser, string hashedPassword)
         {
             AspNetUser user = _internalUnitOfWork.AspNetUsersRepository.GetByID(idUser);
             user.PasswordHash = hashedPassword;
@@ -107,7 +122,7 @@ namespace M19G1.BLL
         public void MakeUserAnonymous(int id)
         {
             AspNetUser userToUpdate = _usersRepository.GetByID(id);
-            userToUpdate = UserModelMapping.ToEntityToAnonymous( userToUpdate);
+            userToUpdate = UserModelMapping.ToEntityToAnonymous(userToUpdate);
             _internalUnitOfWork.AspNetUsersRepository.Update(userToUpdate);
             _internalUnitOfWork.Save();
 
@@ -118,5 +133,5 @@ namespace M19G1.BLL
         }
     }
 
-  
+
 }
