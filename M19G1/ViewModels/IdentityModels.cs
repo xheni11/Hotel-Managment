@@ -20,6 +20,8 @@ namespace M19G1.Models
         [StringLength(1)]
         public string Gender { get; set; }
 
+        public bool IsUserLoged { get; set; }
+
         public DateTime? Birthday { get; set; }
 
         public DateTime? DateCreated { get; set; }

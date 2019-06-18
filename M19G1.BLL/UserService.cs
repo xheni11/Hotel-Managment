@@ -46,6 +46,12 @@ namespace M19G1.BLL
                 _internalUnitOfWork.Save();
             }
         }
+        public void UpdateIsUserLoged(int userId)
+        {
+
+            _usersRepository.UpdateIsUserLoged(userId);
+            _internalUnitOfWork.Save();
+        }
         public void UpdateUser(UserModel userModel)
         {
             if (!UsernameExists(userModel.Username, userModel.Id) && !EmailExists(userModel.Email, userModel.Id))

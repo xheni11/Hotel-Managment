@@ -14,6 +14,7 @@ namespace M19G1.Controllers
     [Authorize]
     public class AccountController : BaseController
     {
+        private UserService _userService = new UserService(new UnitOfWork());
         public AccountController()
         {
         }
@@ -362,6 +363,11 @@ namespace M19G1.Controllers
             if (Url.IsLocalUrl(returnUrl))
             {
                 return Redirect(returnUrl);
+            }
+            if(!CurrentUser.IsUserLoged)
+            {
+                _userService.UpdateIsUserLoged(CurrentUser.Id);
+                return RedirectToAction("Index", "User");
             }
             switch (CurrentUser.Roles.Select(r => r.RoleId).SingleOrDefault())
             {

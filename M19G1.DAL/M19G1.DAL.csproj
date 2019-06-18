@@ -67,6 +67,10 @@
     <Compile Include="Migrations\201906142314235_fkAnonymous.Designer.cs">
       <DependentUpon>201906142314235_fkAnonymous.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906182132422_addIsUserLogedField.cs" />
+    <Compile Include="Migrations\201906182132422_addIsUserLogedField.Designer.cs">
+      <DependentUpon>201906182132422_addIsUserLogedField.cs</DependentUpon>
+    </Compile>
     <Compile Include="Repository\LogRepository.cs" />
     <Compile Include="Repository\AnonymousRequestRepository.cs" />
     <Compile Include="Repository\BaseRepository.cs" />
@@ -125,6 +129,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906142314235_fkAnonymous.resx">
       <DependentUpon>201906142314235_fkAnonymous.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906182132422_addIsUserLogedField.resx">
+      <DependentUpon>201906182132422_addIsUserLogedField.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

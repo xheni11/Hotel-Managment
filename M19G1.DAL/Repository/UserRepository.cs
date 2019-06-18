@@ -30,6 +30,12 @@ namespace M19G1.DAL.Repository
             userToDisable.Enabled ^= true;
             Update(userToDisable);
         }
+        public void UpdateIsUserLoged(int userId)
+        {
+            AspNetUser userToUpdate = GetByID(userId);
+            userToUpdate.IsUserLoged=true;
+            Update(userToUpdate);
+        }
         public IEnumerable<AspNetUser> OrderBy(IEnumerable<AspNetUser> entities, string propertyName, string searchValue,int currentUserId)
         {
            

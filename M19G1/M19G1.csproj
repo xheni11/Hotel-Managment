@@ -409,10 +409,10 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Dummy\Index.cshtml" />
-    <Content Include="Views\User\Requests.cshtml" />
+    <Content Include="Views\UserRequest\Requests.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
-    <Content Include="Views\User\AnonymousRequests.cshtml" />
-    <Content Include="Views\User\Logs.cshtml" />
+    <Content Include="Views\AnonymousRequest\AnonymousRequests.cshtml" />
+    <Content Include="Views\Log\Logs.cshtml" />
     <Content Include="Scripts\lou-multi-select-57fb8d3\.gitignore" />
     <Content Include="Scripts\lou-multi-select-57fb8d3\bower.json" />
     <Content Include="Scripts\lou-multi-select-57fb8d3\css\multi-select.dev.css.map" />

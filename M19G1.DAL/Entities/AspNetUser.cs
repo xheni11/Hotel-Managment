@@ -52,6 +52,8 @@ namespace M19G1.DAL.Entities
 
         public int AccessFailedCount { get; set; }
 
+        public bool IsUserLoged { get; set; }
+
         [Required]
         [StringLength(256)]
         public string UserName { get; set; }

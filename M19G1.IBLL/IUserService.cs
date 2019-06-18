@@ -22,5 +22,6 @@ namespace M19G1.IBLL
         bool UsernameExists(string username,int id);
         bool EmailExists(string email,int id);
         IEnumerable<UserModel> GetNotAnonymous();
+        void UpdateIsUserLoged(int userId);
     }
 }
