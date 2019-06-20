@@ -421,6 +421,7 @@
     <Content Include="Scripts\lou-multi-select-57fb8d3\README.markdown" />
     <Content Include="Scripts\lou-multi-select-57fb8d3\scss\multi-select.scss" />
     <Content Include="Scripts\lou-multi-select-57fb8d3\test\lib\jasmine-1.2.0\MIT.LICENSE" />
+    <Content Include="Views\Account\SendRequest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

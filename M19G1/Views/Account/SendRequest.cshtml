@@ -1,5 +1,4 @@
-﻿@using M19G1.Models
-@model UserClientViewModel
+﻿@model M19G1.Models.UserViewModel
 @{
     ViewBag.Title = "Register";
 }
@@ -38,7 +37,12 @@
             @Html.TextBoxFor(m => m.Username, new { @class = "form-control", placeholder = "Username" })
         </div>
     </div>
-
+    @*<div class="form-group row">
+        @Html.Label("Role you want", new { @class = "col -md -3 col-form -label" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(m=>m.RoleName, (SelectList)ViewData["RoleName"],htmlAttributes: new { @class= "form-control" })
+        </div>
+    </div>*@
     <div class="form-group row">
         @Html.LabelFor(m => m.Birthday, new { @class = "col -md -3 col-form -label" })
         <div class="col-md-10">
@@ -53,10 +57,10 @@
         </div>
     </div>
     <div class="form-group row">
-        @Html.LabelFor(m => m.Gender, new { @class = "col -md -3 col-form -label" })
+            @Html.LabelFor(m => m.Gender, new { @class = "col -md -3 col-form -label" })
         <div class="col-md-10">
-            Male @Html.RadioButtonFor(model => model.Gender, "M", new { @checked = true })
-
+            Male @Html.RadioButtonFor(model => model.Gender, "M",new {@checked=true})
+            
             Female @Html.RadioButtonFor(model => model.Gender, "F", new { })
         </div>
     </div>
@@ -66,23 +70,22 @@
             @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email" })
         </div>
     </div>
-    <div class="form-group row">
+    @*<div class="form-group row">
         @Html.LabelFor(m => m.Password, new { @class = "col -md -3 col-form -label" })
         <div class="col-md-10">
             @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
         </div>
     </div>
     <div class="form-group row">
-        @Html.LabelFor(m => m.ConfirmedPassword, new { @class = "col -md -3 col-form -label" })
+        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col -md -3 col-form -label" })
         <div class="col-md-10">
-            @Html.PasswordFor(m => m.ConfirmedPassword, new { @class = "form-control", placeholder = "Confirm Password" })
+            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "Confirm Password" })
         </div>
-    </div>
+    </div>*@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            @*@Html.ActionLink("register", "RegisterUser")*@
-            <input type="submit" class="btn btn-default" value="Register" />
+            @Html.ActionLink("register", "RegisterUser", "Account")
         </div>
     </div>
 }

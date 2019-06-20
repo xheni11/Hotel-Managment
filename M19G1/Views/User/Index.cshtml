@@ -112,7 +112,7 @@
             },
             {
                 data: null, render: function (data, type, full, meta) {
-                    return ' <a  class="btn btn-outline-secondary"   onclick="UpdateActivity(' + full.Id + ')">' + full.Active + '</a>';
+                    return ' <a  class="btn btn-outline-secondary"   onclick="UpdateActivity(' + full.Id + ')">' + full.Active + '</a>';                  
 
                 }
             },
@@ -429,7 +429,7 @@
                     <div class="form-group">
                         <label for="RoleName">Role</label>
                         @*<input type="checkbox" class="form-check-input" id="Administrator" value="Administrator">*@
-                        @Html.DropDownList("RoleName", (MultiSelectList)ViewData["RoleName"], htmlAttributes: new { id = "RoleName", selectionmode = "Multiple" })
+                        @Html.DropDownList("RoleName", (SelectList) ViewData["RoleName"], htmlAttributes: new { id = "RoleName" })
                     </div>
 
                 </form>

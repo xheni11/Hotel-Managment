@@ -1,5 +1,6 @@
 ﻿using M19G1.DAL.Entities;
 using M19G1.Models;
+using M19G1.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,6 +45,7 @@ namespace M19G1.DAL.Mapping.User
             //userToUpdate.AspNetRoles=userModel.RoleName
             return userToUpdate;
         }
+
         public static AspNetUser ToEntityToAnonymous(AspNetUser userToUpdate)
         {
             string anonym = "xxxxx";
@@ -80,6 +82,27 @@ namespace M19G1.DAL.Mapping.User
                 LockoutEnabled = true
             };
         }
+        public static AspNetUser ToEntityToCreateClient(UserClientModel userModel,string hashedPassword)
+        {
+            return new AspNetUser
+            {
+                CreatedBy = 1,
+                CreatedOn = DateTime.Now,
+                Birthday = userModel.Birthday,
+                Deleted = false,
+                DateCreated = DateTime.Now,
+                Email = userModel.Email,
+                Enabled = true,
+                FirstName = userModel.FirstName,
+                LastName = userModel.LastName,
+                UserName = userModel.Username,
+                Gender = userModel.Gender,
+                PasswordHash = hashedPassword,
+                SecurityStamp = Guid.NewGuid().ToString(),
+                LockoutEndDateUtc = null,
+                LockoutEnabled = true
+            };
+        }
         public static AspNetUser ToEntityToCreate(UserRequestModel userModel, string hashedPassword)
         {
             return new AspNetUser
@@ -96,7 +119,10 @@ namespace M19G1.DAL.Mapping.User
                 UserName = userModel.Username,
                 Gender = userModel.Gender,
                 PhoneNumber = userModel.PhoneNumber,
-                PasswordHash = hashedPassword
+                PasswordHash = hashedPassword,
+                SecurityStamp = Guid.NewGuid().ToString(),
+                LockoutEndDateUtc = null,
+                LockoutEnabled = true
             };
         }
         public static List<UserModel> ToModel(IEnumerable<AspNetUser> user)

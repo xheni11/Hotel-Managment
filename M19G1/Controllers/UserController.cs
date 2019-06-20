@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace M19G1.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class UserController : BaseController
     {
         private UserService _userService = new UserService(new UnitOfWork());
@@ -22,7 +23,7 @@ namespace M19G1.Controllers
         public ActionResult Index()
         {
             List<UserViewModel> users = UserViewModelMapping.ToViewModel(_userService.GetNotAnonymous());
-            MultiSelectList selectListRoles = new MultiSelectList(_roleService.GetAllRoles().Select(s => s.RoleName));
+            SelectList selectListRoles = new SelectList(_roleService.GetAllRoles().Select(s => s.RoleName));
             ViewData["RoleName"] = selectListRoles;
             return View();
         }

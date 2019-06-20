@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using M19G1.MappingViewModel;
 
 namespace M19G1.Controllers
 {
@@ -15,6 +16,8 @@ namespace M19G1.Controllers
     public class AccountController : BaseController
     {
         private UserService _userService = new UserService(new UnitOfWork());
+        private RoleService _roleService = new RoleService(new UnitOfWork());
+        private PasswordHasher passwordHasher = new PasswordHasher();
         public AccountController()
         {
         }
@@ -32,7 +35,9 @@ namespace M19G1.Controllers
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
-        
+ 
+
+
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -102,17 +107,44 @@ namespace M19G1.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            //SelectList selectListRoles = new SelectList(_roleService.GetAllRoles().Select(s => s.RoleName).ToList());
+            //ViewData["RoleName"] = selectListRoles;
             return View();
         }
-        
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+
+        public async Task<ActionResult> Register(UserClientViewModel model )
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                string hashedPassword = passwordHasher.HashPassword(model.Password);
+                _userService.CreateUser(UserViewModelMapping.ToCreateClientModel(model), hashedPassword);
+                var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, false, shouldLockout: false);
+                switch (result)
+                {
+                    case SignInStatus.Success:
+                        return RedirectToLocal("Index/User");
+                    case SignInStatus.LockedOut:
+                        return View("Lockout");
+                    case SignInStatus.RequiresVerification:
+                        return RedirectToAction("SendCode", new { ReturnUrl = "Index/User" });
+                    default:
+                        ModelState.AddModelError("", "Invalid login attempt.");
+                        return View(model);
+                }
+            }
+            return View(model);
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> RegisterUser(RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser { UserName = model.Username, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -124,7 +156,7 @@ namespace M19G1.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "User");
                 }
                 AddErrors(result);
             }
@@ -364,7 +396,7 @@ namespace M19G1.Controllers
             {
                 return Redirect(returnUrl);
             }
-            if(!CurrentUser.IsUserLoged)
+            if(!CurrentUser.IsUserLoged && CurrentUser.Roles.Select(r => r.RoleId).SingleOrDefault()!=7)
             {
                 _userService.UpdateIsUserLoged(CurrentUser.Id);
                 return RedirectToAction("Index", "User");

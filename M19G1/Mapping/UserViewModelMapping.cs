@@ -1,4 +1,5 @@
 ﻿using M19G1.Models;
+using M19G1.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace M19G1.MappingViewModel
                 LastName = userModel.LastName,
                 Active = userModel.Active,
                 Email = userModel.Email,
-                //RoleName = userModel.RoleName,
+                RoleName = userModel.RoleName,
                 Username = userModel.Username,
                 Birthday=(DateTime)userModel.Birthday,
                 Gender=userModel.Gender
@@ -59,5 +60,21 @@ namespace M19G1.MappingViewModel
         {
             return user.Select(ToViewModel).ToList();
         }
+        public static UserClientModel ToCreateClientModel(UserClientViewModel user)
+        {
+            return new UserClientModel
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Birthday = (DateTime)user.Birthday,
+                RoleName = "Client",
+                Username = user.Username,
+                Active = true,
+                Gender = user.Gender
+                
+            };
+        }
+       
     }
 }

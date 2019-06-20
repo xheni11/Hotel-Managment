@@ -65,7 +65,7 @@
     <Compile Include="User\UserCreateModel.cs" />
     <Compile Include="User\UserModel.cs" />
     <Compile Include="UserRequestModel.cs" />
-    <Compile Include="User\UserUpdateModel.cs" />
+    <Compile Include="User\UserClientModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

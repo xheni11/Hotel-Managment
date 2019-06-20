@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace M19G1.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AnonymousRequestController:Controller
     {
         private AnonymousRequestService _anonymousRequestService = new AnonymousRequestService(new UnitOfWork());

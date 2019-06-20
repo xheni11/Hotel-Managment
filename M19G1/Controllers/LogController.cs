@@ -10,7 +10,9 @@ using System.Web;
 using System.Web.Mvc;
 
 namespace M19G1.Controllers
+
 {
+    [Authorize(Roles = "Admin")]
     public class LogController : Controller
     {
         private LogService _logService = new LogService(new UnitOfWork());

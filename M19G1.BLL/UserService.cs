@@ -11,6 +11,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using M19G1;
+using M19G1.Models.User;
+
 namespace M19G1.BLL
 {
     public class UserService : IUserService
@@ -37,7 +39,17 @@ namespace M19G1.BLL
                 _internalUnitOfWork.Save();
             }
         }
-
+        public void CreateUser(UserClientModel userModel, string hashedPassword)
+        {
+            if (!UsernameExists(userModel.Username) && !EmailExists(userModel.Email))
+            {
+                var user = UserModelMapping.ToEntityToCreateClient(userModel, hashedPassword);
+                var role = _internalUnitOfWork.AspNetRolesRepository.Get(x => x.Name.Equals(userModel.RoleName)).SingleOrDefault();
+                user.AspNetRoles.Add(role);
+                _internalUnitOfWork.AspNetUsersRepository.Insert(user);
+                _internalUnitOfWork.Save();
+            }
+        }
         public void CreateUser(UserRequestModel userRequest, string hashedPassword)
         {
             if (!UsernameExists(userRequest.Username) && !EmailExists(userRequest.Email))

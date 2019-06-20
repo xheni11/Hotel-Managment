@@ -14,6 +14,7 @@ using System.Web.Mvc;
 
 namespace M19G1.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class UserRequestController:Controller
     {
         private UserRequestService _userRequestService = new UserRequestService(new UnitOfWork());
