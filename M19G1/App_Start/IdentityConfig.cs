@@ -60,7 +60,8 @@ namespace M19G1
                 RequireNonLetterOrDigit = true,
                 RequireDigit = true,
                 RequireLowercase = true,
-                RequireUppercase = true
+                RequireUppercase = true,
+               
             };
 
             // Configure user lockout defaults

@@ -16,13 +16,13 @@ namespace M19G1.BLL
     {
         private readonly UnitOfWork _internalUnitOfWork;
         private readonly UserRequestRepository _usersRequestRepository;
-
+        private readonly RoleRepository _roleRepository;
 
         public UserRequestService(UnitOfWork unitOfWork)
         {
             _internalUnitOfWork = unitOfWork;
             _usersRequestRepository = _internalUnitOfWork.UserRequestRepository;
-            
+            _roleRepository = _internalUnitOfWork.AspNetRolesRepository;
         }
         public List<UserRequestModel> GetAllRequests()
         {
@@ -41,6 +41,16 @@ namespace M19G1.BLL
         public UserRequestModel GetRequestById(int id)
         {
             return UserRequestModelMapping.ToModel(_usersRequestRepository.GetByID(id));
+        }
+
+        public void CreateRequest(UserRequestModel userModel)
+        {
+            var user = UserRequestModelMapping.ToEntityToCreate(userModel);
+            var role = _internalUnitOfWork.AspNetRolesRepository.Get(x => x.Name.Equals(userModel.RoleName)).SingleOrDefault();
+            user.Role=role;
+            user.RoleId = role.Id;
+            _internalUnitOfWork.UserRequestRepository.Insert(user);
+            _internalUnitOfWork.Save();
         }
     }
 }

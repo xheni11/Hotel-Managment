@@ -7,14 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace M19G1.DAL.Mapping
 {
     public class UserRequestModelMapping
     {
-       
         public static UserRequestModel ToModel(UserRequest user)
         {
-            
+
             return new UserRequestModel
             {
                 Id = user.Id,
@@ -22,13 +22,33 @@ namespace M19G1.DAL.Mapping
                 LastName = user.LastName,
                 Email = user.Email,
                 Birthday = user.Birthday,
-                Username=user.Username,
+                Username = user.Username,
                 Gender = user.Gender,
-                PhoneNumber=user.PhoneNumber,
-                //RoleName=user.Role.Name
+                PhoneNumber = user.PhoneNumber,
+                //RoleName = user.Role.Name
             };
         }
 
+        public static UserRequest ToEntityToCreate(UserRequestModel user)
+        {
+
+            return new UserRequest
+            {
+
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Birthday = user.Birthday,
+                Username = user.Username,
+                Gender = user.Gender,
+                PhoneNumber = user.PhoneNumber,
+                CreatedOn = DateTime.Now,
+                Deleted = false,
+                CreatedBy = 1
+                
+                
+            };
+        }
         public static List<UserRequestModel> ToModel(IEnumerable<UserRequest> user)
         {
             return user.Select(ToModel).ToList();

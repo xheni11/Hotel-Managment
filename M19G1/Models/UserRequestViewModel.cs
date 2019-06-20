@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace M19G1.ViewModels
+namespace M19G1.Models
 {
     public class UserRequestViewModel
     {
@@ -28,7 +28,9 @@ namespace M19G1.ViewModels
         public string Username { get; set; }
         [Required]
         public string RoleName { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
         public DateTime Birthday { get; set; }
         public string Gender { get; set; }
+        public string PhoneNumber { get; set; }
     }
 }

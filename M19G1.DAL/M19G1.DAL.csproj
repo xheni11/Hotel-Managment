@@ -71,6 +71,14 @@
     <Compile Include="Migrations\201906182132422_addIsUserLogedField.Designer.cs">
       <DependentUpon>201906182132422_addIsUserLogedField.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906201926490_roleInUserRequest.cs" />
+    <Compile Include="Migrations\201906201926490_roleInUserRequest.Designer.cs">
+      <DependentUpon>201906201926490_roleInUserRequest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906202035535_deleteSomeFieldsUserRequests.cs" />
+    <Compile Include="Migrations\201906202035535_deleteSomeFieldsUserRequests.Designer.cs">
+      <DependentUpon>201906202035535_deleteSomeFieldsUserRequests.cs</DependentUpon>
+    </Compile>
     <Compile Include="Repository\LogRepository.cs" />
     <Compile Include="Repository\AnonymousRequestRepository.cs" />
     <Compile Include="Repository\BaseRepository.cs" />
@@ -132,6 +140,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906182132422_addIsUserLogedField.resx">
       <DependentUpon>201906182132422_addIsUserLogedField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906201926490_roleInUserRequest.resx">
+      <DependentUpon>201906201926490_roleInUserRequest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906202035535_deleteSomeFieldsUserRequests.resx">
+      <DependentUpon>201906202035535_deleteSomeFieldsUserRequests.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

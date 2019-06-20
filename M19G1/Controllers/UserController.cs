@@ -77,7 +77,7 @@ namespace M19G1.Controllers
         public ActionResult AddUser(UserViewModel user)
         {
             string hashedPassword = passwordHasher.HashPassword(passwordGenerator.RandomPassword());
-            _userService.CreateUser(UserViewModelMapping.ToCreateUserModel(user),hashedPassword);
+            _userService.CreateUser(UserViewModelMapping.ToCreateUserModel(user),hashedPassword,CurrentUser.Id);
             IdentityMessage identityMessage = new IdentityMessage
             {
                 Destination = user.Email,

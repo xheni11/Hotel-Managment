@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using M19G1.MappingViewModel;
+using M19G1.Common.RandomPassword;
 
 namespace M19G1.Controllers
 {
@@ -18,6 +19,7 @@ namespace M19G1.Controllers
         private UserService _userService = new UserService(new UnitOfWork());
         private RoleService _roleService = new RoleService(new UnitOfWork());
         private PasswordHasher passwordHasher = new PasswordHasher();
+        private UserRequestService _userRequestService = new UserRequestService(new UnitOfWork());
         public AccountController()
         {
         }
@@ -49,7 +51,7 @@ namespace M19G1.Controllers
             }
 
             
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -137,31 +139,26 @@ namespace M19G1.Controllers
             }
             return View(model);
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult SendRequest()
+        {
+            
+            SelectList selectListRoles = new SelectList(_roleService.GetAllRoles().Select(s => s.RoleName));
+            ViewData["RoleName"] = selectListRoles;
+            return View();
+        }
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> RegisterUser(RegisterViewModel model)
+        public async Task<ActionResult> SendRequest(UserRequestViewModel model)
         {
             if (ModelState.IsValid)
-            {
-                var user = new ApplicationUser { UserName = model.Username, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                    return RedirectToAction("Index", "User");
-                }
-                AddErrors(result);
+            {         
+                _userRequestService.CreateRequest(UserRequestViewModelMapping.ToCreateViewModel(model));
+                return View("Login");
             }
-
-            // If we got this far, something failed, redisplay form
             return View(model);
         }
 

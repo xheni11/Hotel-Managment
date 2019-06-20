@@ -60,11 +60,11 @@ namespace M19G1.DAL.Mapping.User
 
             return userToUpdate;
         }
-        public static AspNetUser ToEntityToCreate(UserModel userModel, string hashedPassword)
+        public static AspNetUser ToEntityToCreate(UserModel userModel, string hashedPassword,int createdBy)
         {
             return new AspNetUser
             {
-                CreatedBy = 1,
+                CreatedBy = createdBy,
                 CreatedOn = DateTime.Now,
                 Birthday = userModel.Birthday,
                 Deleted = false,
@@ -86,7 +86,7 @@ namespace M19G1.DAL.Mapping.User
         {
             return new AspNetUser
             {
-                CreatedBy = 1,
+                CreatedBy = 7,
                 CreatedOn = DateTime.Now,
                 Birthday = userModel.Birthday,
                 Deleted = false,
@@ -103,11 +103,11 @@ namespace M19G1.DAL.Mapping.User
                 LockoutEnabled = true
             };
         }
-        public static AspNetUser ToEntityToCreate(UserRequestModel userModel, string hashedPassword)
+        public static AspNetUser ToEntityToCreate(UserRequestModel userModel, string hashedPassword,int createdBy)
         {
             return new AspNetUser
             {
-                CreatedBy = 1,
+                CreatedBy = createdBy,
                 CreatedOn = DateTime.Now,
                 Birthday = userModel.Birthday,
                 Deleted = false,

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace M19G1.DAL.Entities
 {
-    public class UserRequest:BaseEntity
+    public class UserRequest : BaseEntity
     {
         public int Id { get; set; }
         [Required]
@@ -17,13 +17,13 @@ namespace M19G1.DAL.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        public bool EmailConfirmed { get; set; }
         public string PhoneNumber { get; set; }
         public DateTime? Birthday { get; set; }
-        public DateTime? DateCreated { get; set; }
         [StringLength(1)]
         public string Gender { get; set; }
-        public AspNetRole Role { get; set; }
         public int RoleId { get; set; }
+        [ForeignKey("RoleId")]
+        public AspNetRole Role { get; set; }
+        
     }
 }

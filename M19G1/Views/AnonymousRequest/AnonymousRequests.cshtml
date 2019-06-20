@@ -184,59 +184,60 @@
                         <label class="col-md-3 col-form-label" for="FirstName">Firstame</label>
                         <div class="col-md-9">
                             <input type="text" disabled class="form-control" id="FirstName" placeholder="Firstame" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="LastName">LastName</label>
+                        <div class="col-md-9">
+                            <input type="text" disabled class="form-control" id="LastName" placeholder="LastName" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="Email">Email</label>
+                        <div class="col-md-9">
+                            <input type="text" disabled class="form-control" id="Email" placeholder="Email" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="Username">Username</label>
+                        <div class="col-md-9">
+                            <input type="text" disabled class="form-control" id="Username" placeholder="Username" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="Gender">Gender</label><br>
+                        <div class="col-md-9">
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" disabled class="custom-control-input" id="Male" value="M" name="Gender" checked>
+                                <label class="custom-control-label" for="Male">Male</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" disabled class="custom-control-input" id="Female" value="F" name="Gender">
+                                <label class="custom-control-label" for="Female">Female</label>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="LastName">LastName</label>
-                            <div class="col-md-9">
-                                <input type="text" disabled class="form-control" id="LastName" placeholder="LastName" />
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="Email">Email</label>
-                            <div class="col-md-9">
-                                <input type="text" disabled class="form-control" id="Email" placeholder="Email" />
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="Username">Username</label>
-                            <div class="col-md-9">
-                                <input type="text" disabled class="form-control" id="Username" placeholder="Username" />
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="Gender">Gender</label><br>
-                            <div class="col-md-9">
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" class="custom-control-input" id="Male" value="M" name="Gender" checked>
-                                    <label class="custom-control-label" for="Male">Male</label>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="Birthday">Birthday</label>
+                        <div class="col-md-9">
+                            <div class="container">
+                                <div class="input-group date" id="Birthday" data-target-input="nearest">
+                                    <input type="text" disabled class="form-control datetimepicker-input" data-target="#Birthday" id="BirthdayText" />
+                                    <span class="input-group-addon" data-target="#Birthday" data-toggle="datetimepicker">
+                                        <span class="fa fa-calendar"></span>
+                                    </span>
                                 </div>
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" class="custom-control-input" id="Female" value="F" name="Gender">
-                                    <label class="custom-control-label" for="Female">Female</label>
-                                </div>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="Birthday">Birthday</label>
-                            <div class="col-md-9">
-                                <div class="container">
-                                    <div class="input-group date" id="Birthday" data-target-input="nearest">
-                                        <input type="text" disabled class="form-control datetimepicker-input" data-target="#Birthday" id="BirthdayText" />
-                                        <span class="input-group-addon" data-target="#Birthday" data-toggle="datetimepicker">
-                                            <span class="fa fa-calendar"></span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
+                    </div>
+                    @*<div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="RoleName">Role</label>
+                        <div class="col-md-9">
+                            @Html.DropDownList("RoleName", (SelectList)ViewData["RoleName"], htmlAttributes: new { id = "RoleName", @class = "form-control" })
                         </div>
-                        <div class="form-group">
-                            <label for="RoleName">Role</label>
-                            @*<input type="checkbox" class="form-check-input" id="Administrator" value="Administrator">*@
-                            @*@@Html.DropDownList("RoleName", ViewData["RoleName"] as MultiSelectList, htmlAttributes: new { id = "RoleName" })*@
-                        </div>
+                    </div>*@
 
-</form>
+                </form>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>

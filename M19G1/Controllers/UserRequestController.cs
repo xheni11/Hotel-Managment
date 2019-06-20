@@ -15,14 +15,17 @@ using System.Web.Mvc;
 namespace M19G1.Controllers
 {
     [Authorize(Roles = "Admin")]
-    public class UserRequestController:Controller
+    public class UserRequestController:BaseController
     {
         private UserRequestService _userRequestService = new UserRequestService(new UnitOfWork());
         private UserService _userService = new UserService(new UnitOfWork());
+        private BLL.RoleService _roleService = new BLL.RoleService(new UnitOfWork());
         [HttpGet]
         public ActionResult Requests()
         {
             List<UserRequestViewModel> users = UserRequestViewModelMapping.ToViewModel(_userRequestService.GetAllRequests());
+            SelectList selectListRoles = new SelectList(_roleService.GetAllRoles().Select(s => s.RoleName));
+            ViewData["RoleName"] = selectListRoles;
             return View();
         }
         [HttpPost]
@@ -58,7 +61,7 @@ namespace M19G1.Controllers
             PasswordHasher passwordHasher = new PasswordHasher();
             PasswordGenerator passwordGenerator = new PasswordGenerator();
             string hashedPassword = passwordHasher.HashPassword(passwordGenerator.RandomPassword());           
-            _userService.CreateUser(UserRequestViewModelMapping.ToCreateViewModel(user),hashedPassword);
+            _userService.CreateUser(UserRequestViewModelMapping.ToCreateViewModel(user),hashedPassword,CurrentUser.Id);
             _userRequestService.DeleteRequest(user.Id);
             return Json("Index", JsonRequestBehavior.AllowGet);
         }

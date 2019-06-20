@@ -7,7 +7,7 @@ namespace M19G1.IBLL
 {
     public interface IUserService
     {
-        void CreateUser(UserModel userModel,string hash);
+        void CreateUser(UserModel userModel,string hash,int createdBy);
         void UpdateUserActivity(int userId);
         void DeleteUser(int idUser);
         UserModel GetLoginUser(string username, string password);
@@ -15,7 +15,7 @@ namespace M19G1.IBLL
         List<UserModel> GetUsersOrderBy(string sortField, string search,int idCurrentUser);
         UserModel GetUserById(int id);
         void GenerateNewPassword(int idUser, string hashedPassword);
-        void CreateUser(UserRequestModel userRequest,string hash);
+        void CreateUser(UserRequestModel userRequest,string hash,int createdBy);
         void MakeUserAnonymous(int id);
         bool UsernameExists(string username);
         bool EmailExists(string email);

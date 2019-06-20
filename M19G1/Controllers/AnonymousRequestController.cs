@@ -16,10 +16,13 @@ namespace M19G1.Controllers
     {
         private AnonymousRequestService _anonymousRequestService = new AnonymousRequestService(new UnitOfWork());
         private UserService _userService = new UserService(new UnitOfWork());
+        private RoleService _roleService = new RoleService(new UnitOfWork());
         [HttpGet]
         public ActionResult AnonymousRequests()
         {
             List<AnonymousRequestViewModel> users = AnonymousRequestViewModelMapping.ToViewModel( _anonymousRequestService.GetAllRequests());
+            SelectList selectListRoles = new SelectList(_roleService.GetAllRoles().Select(s => s.RoleName));
+            ViewData["RoleName"] = selectListRoles;
             return View();
         }
         [HttpPost]

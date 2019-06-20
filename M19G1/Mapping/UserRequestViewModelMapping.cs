@@ -17,7 +17,7 @@ namespace M19G1.MappingViewModel
                 FirstName = userModel.FirstName,
                 LastName = userModel.LastName,
                 Email = userModel.Email,
-                RoleName = userModel.RoleName,
+                //RoleName = userModel.RoleName,
                 Username = userModel.Username,
                 Birthday = (DateTime)userModel.Birthday,
                 Gender = userModel.Gender
@@ -34,6 +34,7 @@ namespace M19G1.MappingViewModel
                 RoleName = user.RoleName,
                 Username = user.Username,
                 Gender = user.Gender
+                
 
             };
         }

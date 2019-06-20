@@ -28,11 +28,11 @@ namespace M19G1.BLL
             _roleRepository = _internalUnitOfWork.AspNetRolesRepository;
         }
 
-        public void CreateUser(UserModel userModel, string hashedPassword)
+        public void CreateUser(UserModel userModel, string hashedPassword,int createdBy)
         {
             if (!UsernameExists(userModel.Username) && !EmailExists(userModel.Email))
             {
-                var user = UserModelMapping.ToEntityToCreate(userModel, hashedPassword);
+                var user = UserModelMapping.ToEntityToCreate(userModel, hashedPassword,createdBy);
                 var role = _internalUnitOfWork.AspNetRolesRepository.Get(x => x.Name.Equals(userModel.RoleName)).SingleOrDefault();
                 user.AspNetRoles.Add(role);
                 _internalUnitOfWork.AspNetUsersRepository.Insert(user);
@@ -50,11 +50,11 @@ namespace M19G1.BLL
                 _internalUnitOfWork.Save();
             }
         }
-        public void CreateUser(UserRequestModel userRequest, string hashedPassword)
+        public void CreateUser(UserRequestModel userRequest, string hashedPassword,int createdBy)
         {
             if (!UsernameExists(userRequest.Username) && !EmailExists(userRequest.Email))
             {
-                _internalUnitOfWork.AspNetUsersRepository.Insert(UserModelMapping.ToEntityToCreate(userRequest, hashedPassword));
+                _internalUnitOfWork.AspNetUsersRepository.Insert(UserModelMapping.ToEntityToCreate(userRequest, hashedPassword,createdBy));
                 _internalUnitOfWork.Save();
             }
         }
