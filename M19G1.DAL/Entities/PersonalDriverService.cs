@@ -19,5 +19,6 @@ namespace M19G1.DAL.Entities
         public AspNetUser Driver { get; set; }
         public int DriverId { get; set; }
         public TimeSpan VoyageTime { get; set; }
+        public bool Taken { get; set; }
     }
 }

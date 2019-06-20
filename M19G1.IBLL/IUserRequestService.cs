@@ -13,5 +13,6 @@ namespace M19G1.IBLL
         void DeleteRequest(int id);
         List<UserRequestModel> GetUsersOrderBy(string sortField, string search);
         UserRequestModel GetRequestById(int id);
+        void CreateRequest(UserRequestModel userModel);
     }
 }

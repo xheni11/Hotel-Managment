@@ -51,6 +51,7 @@
     <Compile Include="IAnonymousRequestService.cs" />
     <Compile Include="IBookingService.cs" />
     <Compile Include="ILogService.cs" />
+    <Compile Include="IPersonalDriverService.cs" />
     <Compile Include="IRoleService.cs" />
     <Compile Include="IUserRequestService.cs" />
     <Compile Include="IUserService.cs" />

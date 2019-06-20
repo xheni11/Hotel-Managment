@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Mapping\AnonymousRequestModelMapping.cs" />
+    <Compile Include="Mapping\DriverModelMapping.cs" />
     <Compile Include="Mapping\LogModelMapping.cs" />
     <Compile Include="Mapping\RoleModelMapping.cs" />
     <Compile Include="Mapping\UserModelMapping.cs" />
@@ -79,6 +80,15 @@
     <Compile Include="Migrations\201906202035535_deleteSomeFieldsUserRequests.Designer.cs">
       <DependentUpon>201906202035535_deleteSomeFieldsUserRequests.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906202251474_takenRouteFieldTaxiService.cs" />
+    <Compile Include="Migrations\201906202251474_takenRouteFieldTaxiService.Designer.cs">
+      <DependentUpon>201906202251474_takenRouteFieldTaxiService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906202253241_takenRouteFieldTaxiService1.cs" />
+    <Compile Include="Migrations\201906202253241_takenRouteFieldTaxiService1.Designer.cs">
+      <DependentUpon>201906202253241_takenRouteFieldTaxiService1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\DriverRepository.cs" />
     <Compile Include="Repository\LogRepository.cs" />
     <Compile Include="Repository\AnonymousRequestRepository.cs" />
     <Compile Include="Repository\BaseRepository.cs" />
@@ -146,6 +156,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906202035535_deleteSomeFieldsUserRequests.resx">
       <DependentUpon>201906202035535_deleteSomeFieldsUserRequests.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906202251474_takenRouteFieldTaxiService.resx">
+      <DependentUpon>201906202251474_takenRouteFieldTaxiService.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906202253241_takenRouteFieldTaxiService1.resx">
+      <DependentUpon>201906202253241_takenRouteFieldTaxiService1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

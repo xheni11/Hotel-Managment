@@ -23,6 +23,14 @@ namespace M19G1.DAL
             _aspNetRolesRepository ?? (_aspNetRolesRepository = new RoleRepository (_context));
 
         #endregion
+        #region DriverRepository Repository
+
+        private DriverRepository _driverRepository;
+
+        public DriverRepository DiverRepository =>
+            _driverRepository ?? (_driverRepository = new DriverRepository(_context));
+
+        #endregion
 
         #region AspNetUsers Repository
 
