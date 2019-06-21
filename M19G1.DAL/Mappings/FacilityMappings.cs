@@ -10,32 +10,36 @@ namespace M19G1.DAL.Mappings
 {
     public static class FacilityMappings
     {
-        public static FacilityModel MapFacilityToFacilityModel(Facility facility)
+        public static FacilityModel MapFacilityToFacilityModel(Facility facility, bool mapNestedObject = false)
         {
-            return new FacilityModel
+            var facModel = new FacilityModel
             {
                 FacilityId = facility.Id,
                 Available = facility.Available,
                 Description = facility.Description,
-                FacilityName = facility.Description,
-                ExtraFacilites = facility.ExtraFacilities.Select(ef => MapExtraFacilityToEFModel(ef)).ToList(),
-                RoomFacilties = facility.RoomFacilities.Select(rf => MapRoomFacilityToRFModel(rf)).ToList()
-            };            
+                FacilityName = facility.Name,
+            };
+            if(mapNestedObject)
+            {
+                facModel.RoomFacilities = facility.RoomFacilities?.Select(rf => MapRoomFacilityToRFModel(rf, null, facModel)).ToList();
+                facModel.ExtraFacilites = facility.ExtraFacilities?.Select(ef => MapExtraFacilityToEFModel(ef, null, facModel)).ToList();
+            }           
+            return facModel;     
         }
-        public static RoomFacilityModel MapRoomFacilityToRFModel(RoomFacility roomFacility)
+        public static RoomFacilityModel MapRoomFacilityToRFModel(RoomFacility roomFacility,RoomModel Rmodel, FacilityModel Fmodel)
         {
             return new RoomFacilityModel
             {
                 Id = roomFacility.Id,
                 FQuantity = roomFacility.Quantity,
                 FacilityId = roomFacility.FacilityId,
-                Facility = MapFacilityToFacilityModel(roomFacility.Facility),
+                Facility = Fmodel,
                 RoomId = roomFacility.RoomId,
-                Room = RoomMappings.MapRoomToRoomModel(roomFacility.Room)
+                Room = Rmodel
             };
 
         }
-        public static ExtraFacilityModel MapExtraFacilityToEFModel(ExtraFacility extraFacility)
+        public static ExtraFacilityModel MapExtraFacilityToEFModel(ExtraFacility extraFacility,BookingRoomModel BRmodel,FacilityModel Fmodel )
         {
             return new ExtraFacilityModel
             {
@@ -43,10 +47,25 @@ namespace M19G1.DAL.Mappings
                 Price = extraFacility.Price,
                 EFQuantity = extraFacility.Quantity,
                 FacilityId = extraFacility.FacilityId,
-                Facility = MapFacilityToFacilityModel(extraFacility.Facility),
+                Facility = Fmodel,
                 BookingRoomId = extraFacility.BookingRoomId,
-                BookingRoom = BookingMappings.MapBookingRoomToBookingRoomModel(extraFacility.BookingRoom)
+                BookingRoom = BRmodel
                 
+            };
+
+        }
+
+        public static ExtraFacility MapExtraFacilityModelToExtraFacility(ExtraFacilityModel model, BookingRoom broom, Facility facility)
+        {
+            return new ExtraFacility
+            {
+                Id = model.Id,
+                Quantity = model.EFQuantity,
+                Price = model.Price,
+                FacilityId = model.FacilityId,
+                BookingRoomId = model.BookingRoomId,
+                Facility = facility,
+                BookingRoom = broom
             };
 
         }

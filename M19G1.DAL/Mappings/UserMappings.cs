@@ -12,7 +12,7 @@ namespace M19G1.DAL.Mappings
     {
         public static UserModel MapAspNetUserToUserModel(AspNetUser user)
         {
-            return new UserModel
+            var userModel =  new UserModel
             {
                 Id = user.Id,
                 FName = user.FirstName,
@@ -29,11 +29,12 @@ namespace M19G1.DAL.Mappings
                 Username = user.UserName,
                 SecurityStamp = user.SecurityStamp,
                 TwoFactorEnabled = user.TwoFactorEnabled,
-                AnonymousRequest = MapAnonymousRequestToARModel(user.AnonymousRequest),
-                Bookings = user.Bookings.Select(b => BookingMappings.MapBookingToBookingModel(b)).ToList(),
-                DriverServices = user.DriverServices.Select(ds => DriverServiceMappings.MapDriverServiceToDriverServiceModel(ds)).ToList(),
-                UserRoles = user.AspNetRoles.Select(r => RoleMappings.MapRoleToRoleModel(r)).ToList()
+                AnonymousRequest = MapAnonymousRequestToARModel(user.AnonymousRequest)
             };
+            userModel.Bookings = user.Bookings.Select(b => BookingMappings.MapBookingToBookingModel(b, userModel)).ToList();
+            userModel.DriverServices = user.DriverServices.Select(ds => DriverServiceMappings.MapDriverServiceToDriverServiceModel(ds,null, userModel)).ToList();
+            userModel.UserRoles = user.AspNetRoles.Select(r => RoleMappings.MapRoleToRoleModel(r)).ToList();
+            return userModel;
         }
         public static AnonymousRequestModel MapAnonymousRequestToARModel(AnonymousRequest request)
         {

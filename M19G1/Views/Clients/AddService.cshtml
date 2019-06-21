@@ -1,0 +1,78 @@
+﻿@model M19G1.Models.AddDriverServiceViewModel
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Booking.Id)
+    <div class="form-horizontal">
+        <h4>@ViewBag.Result</h4>
+        <h5>Booking details :</h5>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Booking.StartDate, htmlAttributes: new { @class = "control-label col-md-1.5" })
+            <text> :   </text>
+            @Html.DisplayFor(model => model.Booking.StartDate)
+            <text>  |  </text>
+            @Html.LabelFor(model => model.Booking.EndDate, htmlAttributes: new { @class = "control-label col-md-1.5" })
+            <text> :   </text>
+            @Html.DisplayFor(model => model.Booking.EndDate)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Booking.Rooms, htmlAttributes: new { @class = "control-label col-md-1" })
+            <text> : </text>
+            @foreach (var room in Model.Booking.Rooms)
+            {
+                @Html.DisplayFor(item => room.Name) <text> | </text>
+            }
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Booking.DriverServices, htmlAttributes: new { @class = "control-label col-md-1.5" })
+            <text> : </text>
+            @foreach (var ds in Model.Booking.DriverServices)
+            {
+                @Html.DisplayFor(item => ds.Location ) <text> at time : </text>
+                @Html.DisplayFor(item => ds.PickUpTime)
+                <text> ; </text>
+            }
+        </div>
+    </div>
+
+    <div class="form-horizontal">
+        <h4>Add Driver Service </h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.PickUpTime, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+              
+                @Html.EditorFor(model => model.PickUpTime, new { htmlAttributes = new { @type = "datetime", @class = "form-control datetimepicker",Value = DateTime.Now} })
+                @Html.ValidationMessageFor(model => model.PickUpTime, "", new {  @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Location, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Destination, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Destination, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Destination, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

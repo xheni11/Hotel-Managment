@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace M19G1.Controllers
 {
-    public class AdminController : Controller
+    public class ClientController : Controller
     {
         // GET: Admin
         public ActionResult Index()

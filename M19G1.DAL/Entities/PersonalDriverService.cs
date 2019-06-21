@@ -13,7 +13,7 @@ namespace M19G1.DAL.Entities
         public Booking Booking { get; set; }
         public int BookingId { get; set; }
         public AspNetUser Driver { get; set; }
-        public int DriverId { get; set; }
+        public int? DriverID { get; set; }
         public TimeSpan VoyageTime { get; set; }
         
 

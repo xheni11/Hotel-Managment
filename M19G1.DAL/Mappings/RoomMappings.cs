@@ -10,9 +10,9 @@ namespace M19G1.DAL.Mappings
 {
     public static class RoomMappings
     {
-        public static RoomModel MapRoomToRoomModel(Room room)
+        public static RoomModel MapRoomToRoomModel(Room room,RoomCategoryModel CatModel, bool mapNestedObject = false)
         {
-            return new RoomModel
+            var roomModel = new RoomModel
             {
                 Id = room.Id,
                 Active = room.Enabled,
@@ -21,21 +21,73 @@ namespace M19G1.DAL.Mappings
                 Price = room.Price,
                 RoomName = room.Name,
                 CategoryId = room.CategoryId,
-                RoomCategory = MapRoomCategoryToRCModel(room.Category),
-                RoomDescription = room.Description,
-                BookingRooms = room.BookingRooms.Select(b => BookingMappings.MapBookingRoomToBookingRoomModel(b)).ToList(),
-                RoomFacilities = room.RoomFacilities.Select(rf => FacilityMappings.MapRoomFacilityToRFModel(rf)).ToList()
+                RoomCategory = CatModel,
+                RoomDescription = room.Description
             };
+            if (mapNestedObject) {
+                roomModel.BookingRooms = room.BookingRooms.Select(b => BookingMappings.MapBookingRoomToBookingRoomModel(b, null, roomModel)).ToList();
+                roomModel.RoomFacilities = room.RoomFacilities.Select(rf => FacilityMappings.
+                MapRoomFacilityToRFModel(rf, roomModel, FacilityMappings.MapFacilityToFacilityModel(rf.Facility))).ToList();
+            }
+            
+            return roomModel;
         }
+        public static RoomModel MapRoomToRoomModelDetails(Room room, RoomCategoryModel CatModel)
+        {
+            var roomModel = new RoomModel
+            {
+                Id = room.Id,
+                Active = room.Enabled,
+                Occupied = room.Occupied,
+                GuestsNr = room.NrOfGuests,
+                Price = room.Price,
+                RoomName = room.Name,
+                CategoryId = room.CategoryId,
+                RoomCategory = CatModel,
+                RoomDescription = room.Description
+            };
+            if(room.RoomFacilities != null)
+            {
+                List<RoomFacilityModel> roomFacilities = new List<RoomFacilityModel>();
+                if(room.RoomFacilities.Count > 0)
+                {
+                    foreach(var roomFacility in room.RoomFacilities)
+                    {
+                        if(roomFacility.Facility != null)
+                        {
+                            FacilityModel facilityModel = FacilityMappings.MapFacilityToFacilityModel(roomFacility.Facility);
+                            RoomFacilityModel roomFacilityModel = FacilityMappings.MapRoomFacilityToRFModel(roomFacility, roomModel, facilityModel);
+                            roomFacilities.Add(roomFacilityModel);
+                        }
+                    }
+                }
+                roomModel.RoomFacilities = roomFacilities;
+            }
+            return roomModel;
+        }
+
         public static RoomCategoryModel MapRoomCategoryToRCModel(RoomCategory RoomCat)
         {
-            return new RoomCategoryModel
+            var Cat = new RoomCategoryModel
             {
                 Id = RoomCat.Id,
                 CatName = RoomCat.Name,
-                Description = RoomCat.Description,
-                Rooms = RoomCat.Rooms.Select(r => MapRoomToRoomModel(r)).ToList()
+                Description = RoomCat.Description
+               
             };
+            Cat.Rooms = RoomCat.Rooms.Select(r => MapRoomToRoomModel(r, Cat)).ToList();
+            return Cat;
         }
+        public static RoomCategoryModel MapRoomCategoryToRoomCategoryModel(RoomCategory roomCat)
+        {
+            var Cat = new RoomCategoryModel
+            {
+                Id = roomCat.Id,
+                CatName = roomCat.Name,
+                Description = roomCat.Description
+            };
+            return Cat;
+        }
+
     }
 }

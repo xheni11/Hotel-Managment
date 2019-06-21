@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNet.Identity
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -9,36 +10,180 @@
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
+
+    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Hotel App</a>
+
+        @Html.Partial("_LoginPartial")
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+                <div class="sidebar-sticky">
+                    <ul class="nav flex-column">
+
+                        @if (User.IsInRole("Client"))
+                        {
+                            <li class="nav-item">
+                                @Html.ActionLink("Old Bookings", "OldBookings", "Clients", htmlAttributes: new { @class = "nav-link" })
+
+                            </li>
+                            <li class="nav-item">
+                                @Html.ActionLink("Active Bookings", "ActiveBookings", "Clients", htmlAttributes: new { @class = "nav-link" })
+                            </li>
+                            <li class="nav-item">
+                                @Html.ActionLink("New Booking", "CreateBooking", "Clients", htmlAttributes: new { @class = "nav-link" })
+                            </li>
+                            <li class="nav-item">
+                                @Html.ActionLink("Reset Password", "ResetPassword", "Clients", htmlAttributes: new { @class = "nav-link" })
+                            </li>
+                            <li class="nav-item">
+                                @Html.ActionLink("Filter Rooms", "FilterRooms", "Clients", htmlAttributes: new { @class = "nav-link" })
+                            </li>
+
+
+                        }
+                        
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                @Html.ActionLink("Old Bookings", "OldBookings", "Clients", htmlAttributes: new { @class = "nav-link" })
+
+                            </li>
+                            <li class="nav-item">
+                                @Html.ActionLink("Active Bookings", "ActiveBookings", "Clients", htmlAttributes: new { @class = "nav-link" })
+                            </li>
+                            <li class="nav-item">
+                                @Html.ActionLink("New Booking", "CreateBooking", "Clients", htmlAttributes: new { @class = "nav-link" })
+                            </li>
+                            <li class="nav-item">
+                                @Html.ActionLink("Reset Password", "ResetPassword", "Clients", htmlAttributes: new { @class = "nav-link" })
+                            </li>
+                            <li class="nav-item">
+                                @Html.ActionLink("Filter Rooms", "FilterRooms", "Clients", htmlAttributes: new { @class = "nav-link" })
+                            </li>
+
+
+                        }
+                        @if (User.IsInRole("Driver"))
+                        {
+                            <li class="nav-item">
+                                @Html.ActionLink("Old Bookings", "OldBookings", "Clients", htmlAttributes: new { @class = "nav-link" })
+
+                            </li>
+                            <li class="nav-item">
+                                @Html.ActionLink("Active Bookings", "ActiveBookings", "Clients", htmlAttributes: new { @class = "nav-link" })
+                            </li>
+                            <li class="nav-item">
+                                @Html.ActionLink("New Booking", "CreateBooking", "Clients", htmlAttributes: new { @class = "nav-link" })
+                            </li>
+                            <li class="nav-item">
+                                @Html.ActionLink("Reset Password", "ResetPassword", "Clients", htmlAttributes: new { @class = "nav-link" })
+                            </li>
+                            <li class="nav-item">
+                                @Html.ActionLink("Filter Rooms", "FilterRooms", "Clients", htmlAttributes: new { @class = "nav-link" })
+                            </li>
+
+
+                        }
+                        @if (User.IsInRole("Manager"))
+                        {
+                            <li class="nav-item">
+                                @Html.ActionLink("Old Bookings", "OldBookings", "Clients", htmlAttributes: new { @class = "nav-link" })
+
+                            </li>
+                            <li class="nav-item">
+                                @Html.ActionLink("Active Bookings", "ActiveBookings", "Clients", htmlAttributes: new { @class = "nav-link" })
+                            </li>
+                            <li class="nav-item">
+                                @Html.ActionLink("New Booking", "CreateBooking", "Clients", htmlAttributes: new { @class = "nav-link" })
+                            </li>
+                            <li class="nav-item">
+                                @Html.ActionLink("Reset Password", "ResetPassword", "Clients", htmlAttributes: new { @class = "nav-link" })
+                            </li>
+                            <li class="nav-item">
+                                @Html.ActionLink("Filter Rooms", "FilterRooms", "Clients", htmlAttributes: new { @class = "nav-link" })
+                            </li>
+
+
+                        }
+                        @if (User.IsInRole("Recepsionist"))
+                        {
+                            <li class="nav-item">
+                                @Html.ActionLink("Old Bookings", "OldBookings", "Clients", htmlAttributes: new { @class = "nav-link" })
+
+                            </li>
+                            <li class="nav-item">
+                                @Html.ActionLink("Active Bookings", "ActiveBookings", "Clients", htmlAttributes: new { @class = "nav-link" })
+                            </li>
+                            <li class="nav-item">
+                                @Html.ActionLink("New Booking", "CreateBooking", "Clients", htmlAttributes: new { @class = "nav-link" })
+                            </li>
+                            <li class="nav-item">
+                                @Html.ActionLink("Reset Password", "ResetPassword", "Clients", htmlAttributes: new { @class = "nav-link" })
+                            </li>
+                            <li class="nav-item">
+                                @Html.ActionLink("Filter Rooms", "FilterRooms", "Clients", htmlAttributes: new { @class = "nav-link" })
+                            </li>
+
+
+                        }
+                        <li class="nav-item">
+                            @Html.ActionLink("Active Bookings", "ActiveBookings", "Clients", htmlAttributes: new { @class = "nav-link" })
+                        </li>
+                        <li class="nav-item">
+                            @Html.ActionLink("New Booking", "CreateBooking", "Clients", htmlAttributes: new { @class = "nav-link" })
+                        </li>
+                        <li class="nav-item">
+                            @Html.ActionLink("Reset Password", "ResetPassword", "Clients", htmlAttributes: new { @class = "nav-link" })
+                        </li>
+                        <li class="nav-item">
+                            @Html.ActionLink("Filter Rooms", "FilterRooms", "Clients", htmlAttributes: new { @class = "nav-link" })
+                        </li>
+
+                    </ul>
+
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                        <span>Account settings</span>
+                        <a class="d-flex align-items-center text-muted" href="#">
+                            <span data-feather="plus-circle"></span>
+                        </a>
+                    </h6>
+                    <ul class="nav flex-column mb-2">
+                        <li class="nav-item">
+                            @Html.ActionLink("Change Password", "OldBookings", "Clients", htmlAttributes: new { @class = "nav-link" })
+                        </li>
+                        <li class="nav-item">
+                            @Html.ActionLink("Anonymize Account", "OldBookings", "Clients", htmlAttributes: new { @class = "nav-link" })
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="file-text"></span>
+                                Social engagement
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="file-text"></span>
+                                Year-end sale
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+                @RenderBody()
+            </main>
         </div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
+
+
+
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
 </body>
 </html>
