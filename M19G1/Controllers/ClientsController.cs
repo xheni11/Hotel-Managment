@@ -33,7 +33,7 @@ namespace M19G1.Controllers
         // GET: Admin
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("ActiveBookings");
         }
 
         [HttpGet]
@@ -94,6 +94,8 @@ namespace M19G1.Controllers
         public ActionResult AddFacility(int id)
         {
             BookingModel bookingModel = _bookingService.GetBookingById(id);
+            if (bookingModel == null)
+                return RedirectToAction("ActiveBookings");
             List<FacilityModel> Facilities = _facilityService.GetFacilites();
 
             BookingViewModel bookingViewModel = BookingMappings.MapBookingModelToBookingViewModel(bookingModel);
@@ -128,6 +130,8 @@ namespace M19G1.Controllers
         public ActionResult AddService(int id)
         {
             BookingModel bookingModel = _bookingService.GetBookingById(id);
+            if (bookingModel == null)
+                return RedirectToAction("ActiveBookings");
             BookingViewModel bookingViewModel = BookingMappings.MapBookingModelToBookingViewModel(bookingModel);
             AddDriverServiceViewModel model = new AddDriverServiceViewModel();
             model.Booking = bookingViewModel;
@@ -161,6 +165,8 @@ namespace M19G1.Controllers
         public ActionResult Details(int id)
         {
             BookingModel bookingModel = _bookingService.GetBookingById(id);
+            if (bookingModel == null)
+                return RedirectToAction("OldBookings");
             BookingViewModel bookingViewModel = BookingMappings.MapBookingModelToBookingViewModel(bookingModel);
             BookingDetailsViewModel model = new BookingDetailsViewModel();
             model.bookingModel = bookingViewModel;
@@ -253,5 +259,35 @@ namespace M19G1.Controllers
             _bookingService.FinishBooking(id);
             return RedirectToAction("ActiveBookings");
         }
+
+        [HttpPost]
+        public ActionResult BookAgain(BookAgainViewModel model)
+        {
+            if(model.StartDate <= DateTime.Now || model.StartDate >= model.EndDate)
+            {
+                return RedirectToAction("OldBookings");
+               // return Json("OldBookings",JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                BookAgainModel bookAgainModel = BookingMappings.MapBookAgainViewModelToBookAgainModel(model);
+                NotifyMessage message =_bookingService.TryToBookAgain(bookAgainModel);
+                //How to pass message ??
+                return RedirectToAction("OldBookings");
+            }
+            
+        }
+
+        [HttpGet]
+        public ActionResult RoomDetails(int id)
+        {
+            RoomModel roomModel = _roomService.GetRoomById(id);
+            if (roomModel == null)
+                return RedirectToAction("FilterRooms");
+            RoomDetailsViewModel model = RoomMappings.MapRoomModelToRoomDetailsViewModel(roomModel);
+            return View(model);
+        } 
+
+       
     }
 }

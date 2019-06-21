@@ -29,6 +29,18 @@ namespace M19G1.Mappings
                 SelectedFacilities = model.SelectedFacilities
             };
         }
-
+        public static RoomDetailsViewModel MapRoomModelToRoomDetailsViewModel(RoomModel model)
+        {
+            return new RoomDetailsViewModel
+            {
+                RoomName = model.RoomName,
+                GuestsNr = model.GuestsNr,
+                Price = model.Price,
+                RoomDescription = model.RoomDescription,
+                RoomCategory = model.RoomCategory,
+                RoomFacilities = model.RoomFacilities
+            };
+        }
     }
+    
 }

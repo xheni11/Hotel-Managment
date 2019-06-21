@@ -17,7 +17,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.CategoryId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.CategoryId, new SelectList(Model.Categories, "Id", "CatName"), "Choose Category")
+                @Html.DropDownListFor(model => model.CategoryId, new SelectList(Model.Categories, "Id", "CatName"), "Choose Category", new { @class = "btn btn-default dropdown-toggle" })
                 @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -52,14 +52,14 @@
         <div class="form-group">
             @Html.LabelFor(model => model.SelectedFacilities, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.ListBoxFor(model => model.SelectedFacilities, new MultiSelectList(Model.Facilities, "FacilityId", "FacilityName"))
+                @Html.ListBoxFor(model => model.SelectedFacilities, new MultiSelectList(Model.Facilities, "FacilityId", "FacilityName"), new { @class = "multiselect form-control", multiple = "multiple" })
                 @Html.ValidationMessageFor(model => model.SelectedFacilities, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Filter" class="btn btn-default" />
+                <input type="submit" value="Filter" class="btn btn-primary" />
             </div>
         </div>
     </div>
@@ -67,51 +67,52 @@
 
 @if (Model.Rooms != null)
 {
-  if (Model.Rooms.Count > 0)
-  {
-
-   <table class="table">
-    <tr>
-        <th>
-            @Html.Label("Category")
-        </th>
-        <th>
-            @Html.Label("Room Name")
-        </th>
-        <th>
-            @Html.Label("Price")
-        </th>
-        <th>
-            @Html.Label("Nr of Guests")
-        </th>
-    </tr>
-
-    @foreach (var item in Model.Rooms)
+    if (Model.Rooms.Count > 0)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.RoomCategory.CatName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RoomName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GuestsNr)
-            </td>
-            <td>
-                @Html.ActionLink("Details", "Details", new { id = item.Id })
-            </td>
-        </tr>
-    }
-    
-
-</table>
+        <div>
+            <table id="myTable">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Room Name</th>
+                        <th>Max Price</th>
+                        <th>Number Of guests</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Rooms)
+                    {
+                        <tr>
+                            <td>
+                                @item.RoomCategory.CatName
+                            </td>
+                            <td>
+                                @item.RoomName
+                            </td>
+                            <td>
+                                @item.Price
+                            </td>
+                            <td>
+                                @item.GuestsNr
+                            </td>
+                            <td>
+                                @Html.ActionLink("Details", "RoomDetails", new { id = item.Id })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     }
 }
-
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+}

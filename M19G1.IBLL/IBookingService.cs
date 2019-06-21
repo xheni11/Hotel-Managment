@@ -17,5 +17,6 @@ namespace M19G1.IBLL
         int CreateNewBooking(BookingModel model);
         bool AddRoomForBooking(ChooseRoomModel model);
         bool FinishBooking(int bookingId);
+        NotifyMessage TryToBookAgain(BookAgainModel model);
     }
 }

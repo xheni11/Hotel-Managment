@@ -11,6 +11,7 @@ namespace M19G1.IBLL
     {
         List<RoomModel> FilterRooms(FilterRoomModel model);
         List<RoomModel> GetFreeRoomsForBooking(int bookingId);
+        RoomModel GetRoomById(int id);
         
     }
 }

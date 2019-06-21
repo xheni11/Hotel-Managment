@@ -32,6 +32,39 @@ namespace M19G1.DAL.Mappings
             
             return roomModel;
         }
+        public static RoomModel MapRoomToRoomModelDetails(Room room, RoomCategoryModel CatModel)
+        {
+            var roomModel = new RoomModel
+            {
+                Id = room.Id,
+                Active = room.Enabled,
+                Occupied = room.Occupied,
+                GuestsNr = room.NrOfGuests,
+                Price = room.Price,
+                RoomName = room.Name,
+                CategoryId = room.CategoryId,
+                RoomCategory = CatModel,
+                RoomDescription = room.Description
+            };
+            if(room.RoomFacilities != null)
+            {
+                List<RoomFacilityModel> roomFacilities = new List<RoomFacilityModel>();
+                if(room.RoomFacilities.Count > 0)
+                {
+                    foreach(var roomFacility in room.RoomFacilities)
+                    {
+                        if(roomFacility.Facility != null)
+                        {
+                            FacilityModel facilityModel = FacilityMappings.MapFacilityToFacilityModel(roomFacility.Facility);
+                            RoomFacilityModel roomFacilityModel = FacilityMappings.MapRoomFacilityToRFModel(roomFacility, roomModel, facilityModel);
+                            roomFacilities.Add(roomFacilityModel);
+                        }
+                    }
+                }
+                roomModel.RoomFacilities = roomFacilities;
+            }
+            return roomModel;
+        }
 
         public static RoomCategoryModel MapRoomCategoryToRCModel(RoomCategory RoomCat)
         {
@@ -45,5 +78,16 @@ namespace M19G1.DAL.Mappings
             Cat.Rooms = RoomCat.Rooms.Select(r => MapRoomToRoomModel(r, Cat)).ToList();
             return Cat;
         }
+        public static RoomCategoryModel MapRoomCategoryToRoomCategoryModel(RoomCategory roomCat)
+        {
+            var Cat = new RoomCategoryModel
+            {
+                Id = roomCat.Id,
+                CatName = roomCat.Name,
+                Description = roomCat.Description
+            };
+            return Cat;
+        }
+
     }
 }

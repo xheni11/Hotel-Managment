@@ -128,6 +128,23 @@ namespace M19G1.BLL
             else
                 return allowedRooms;
         }
+
+        public RoomModel GetRoomById(int id)
+        {
+            Room room = _internalUnitOfWork.RoomRepository.GetByID(id);
+            if (room == null)
+                return null;
+            RoomCategoryModel roomCategory = new RoomCategoryModel();
+            if(room.Category != null)
+            {
+                roomCategory = RoomMappings.MapRoomCategoryToRoomCategoryModel(room.Category);
+            }
+            if (roomCategory.CatName == null)
+                roomCategory = null;
+            RoomModel roomModel = RoomMappings.MapRoomToRoomModelDetails(room, roomCategory );
+            return roomModel;
+        }
+
         private bool Intersect(DateTime start1, DateTime end1, DateTime start2, DateTime end2)
         {
             bool notIntersect = (start1 < start2 && end1 < start2) || (start1 > end2 && end1 > end2);

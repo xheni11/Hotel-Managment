@@ -42,7 +42,22 @@ namespace M19G1.DAL.Mappings
             }
             //@return.BookingRooms = booking.BookingRooms?.Select(br => MapBookingRoomToBookingRoomModel(br, @return,
             //    RoomMappings.MapRoomToRoomModel(br.Room, null))).ToList();
-            @return.DriverServices = booking.DriverServices?.Select(ds => DriverServiceMappings.MapDriverServiceToDriverServiceModel(ds, @return, null)).ToList();
+            var driverServices = new List<DriverServiceModel>();
+            if(booking.DriverServices != null)
+            {
+                if(booking.DriverServices.Count > 0)
+                {
+                    foreach(var ds in booking.DriverServices)
+                    {
+                        DriverServiceModel dsModel = DriverServiceMappings.MapDriverServiceToDriverServiceModel(ds, @return, null);
+                        if (dsModel != null)
+                            driverServices.Add(dsModel);
+                    }
+                    
+                }
+            }
+            @return.DriverServices = driverServices;
+            //@return.DriverServices = booking.DriverServices?.Select(ds => DriverServiceMappings.MapDriverServiceToDriverServiceModel(ds, @return, null)).ToList();
             return @return;
         }
 
@@ -61,8 +76,15 @@ namespace M19G1.DAL.Mappings
                 
             };
             @return.Rating = model.Rating != null ? MapRatingModelToRating(model.Rating, @return) : null;
-            @return.DriverServices = model.DriverServices?.Select(ds =>
-                     DriverServiceMappings.MapDriverServiceModelToPersonalDriverService(ds)).ToList();
+            if(model.DriverServices != null)
+            {
+                if(model.DriverServices.Count > 0)
+                {
+                     @return.DriverServices = model.DriverServices.Select(ds =>
+                         DriverServiceMappings.MapDriverServiceModelToPersonalDriverService(ds)).ToList();
+                }
+            }
+            
             return @return;
 
         }
@@ -131,6 +153,26 @@ namespace M19G1.DAL.Mappings
             {
                 BookingId = model.bookingId,
                 RoomId = model.roomId
+            };
+        }
+
+        public static BookAgainBookingModel MapBookingToBookAgainBookingModel(Booking model)
+        {
+            return new BookAgainBookingModel
+            {
+                BookingId = model.Id,
+                StartDate = model.StartDate,
+                EndDate = model.EndDate
+            };
+
+        }
+
+        public static BookingRoom MapBookingRoomModelToBookingRoom(BookingRoomModel model)
+        {
+            return new BookingRoom
+            {
+                BookingId = model.BookingId,
+                RoomId = model.RoomId
             };
         }
     }
