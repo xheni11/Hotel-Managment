@@ -10,7 +10,7 @@ namespace M19G1.DAL.Mapping
 {
     public class DriverModelMapping
     {
-        public static DriverServiceModel ToModel(PersonalDriverService driver)
+        public static DriverServiceModel ToModel(DAL.Entities.PersonalDriverService driver)
         {
             return new DriverServiceModel
             {
@@ -40,7 +40,7 @@ namespace M19G1.DAL.Mapping
             };
         }
 
-        public List<DriverServiceModel> ToModel(IEnumerable<PersonalDriverService> drivers)
+        public static List<DriverServiceModel> ToModel(IEnumerable<DAL.Entities.PersonalDriverService> drivers)
         {
             return drivers.Select(ToModel).ToList();
         }

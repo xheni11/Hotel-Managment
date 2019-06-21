@@ -25,6 +25,7 @@ namespace M19G1.DAL.Repository
         {
             PersonalDriverService driverServiceToUpdate = GetByID(driverId);
             driverServiceToUpdate.Completed = true;
+            driverServiceToUpdate.PickUpTime = DateTime.Now;
             Update(driverServiceToUpdate);
         }
     }

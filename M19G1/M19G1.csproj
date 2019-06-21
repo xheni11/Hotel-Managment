@@ -188,6 +188,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AnonymousRequestController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\DriverServiceController.cs" />
     <Compile Include="Controllers\DummyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LogController.cs" />
@@ -198,6 +199,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Mapping\AnonymousRequestViewModelMapping.cs" />
+    <Compile Include="Mapping\DriverServiceViewModelMapping.cs" />
     <Compile Include="Mapping\LoginViewModelToModel.cs" />
     <Compile Include="Mapping\LogViewModelMapping.cs" />
     <Compile Include="Mapping\UserRequestViewModelMapping.cs" />
@@ -207,6 +209,7 @@
       <DependentUpon>201906021859327_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\DriverServiceViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scripts\Startup.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -383,6 +386,7 @@
     <Content Include="Views\AnonymousRequest\AnonymousRequests.cshtml" />
     <Content Include="Views\Log\Logs.cshtml" />
     <Content Include="Views\Account\SendRequest.cshtml" />
+    <Content Include="Views\DriverService\DriverService.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
