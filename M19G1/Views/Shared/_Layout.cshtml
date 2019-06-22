@@ -48,20 +48,17 @@
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                @Html.ActionLink("Old Bookings", "OldBookings", "Clients", htmlAttributes: new { @class = "nav-link" })
+                                @Html.ActionLink("Users", "Index", "User", htmlAttributes: new { @class = "nav-link" })
 
                             </li>
                             <li class="nav-item">
-                                @Html.ActionLink("Active Bookings", "ActiveBookings", "Clients", htmlAttributes: new { @class = "nav-link" })
+                                @Html.ActionLink("User Requests", "UserRequest", "Requests", htmlAttributes: new { @class = "nav-link" })
                             </li>
                             <li class="nav-item">
-                                @Html.ActionLink("New Booking", "CreateBooking", "Clients", htmlAttributes: new { @class = "nav-link" })
+                                @Html.ActionLink("Anonymous Requests", "AnonymousRequest", "AnonymousRequests", htmlAttributes: new { @class = "nav-link" })
                             </li>
                             <li class="nav-item">
-                                @Html.ActionLink("Reset Password", "ResetPassword", "Clients", htmlAttributes: new { @class = "nav-link" })
-                            </li>
-                            <li class="nav-item">
-                                @Html.ActionLink("Filter Rooms", "FilterRooms", "Clients", htmlAttributes: new { @class = "nav-link" })
+                                @Html.ActionLink("Logs", "Log", "Logs", htmlAttributes: new { @class = "nav-link" })
                             </li>
 
 
@@ -129,7 +126,7 @@
 
 
                         }
-                        <li class="nav-item">
+                        @*<li class="nav-item">
                             @Html.ActionLink("Active Bookings", "ActiveBookings", "Clients", htmlAttributes: new { @class = "nav-link" })
                         </li>
                         <li class="nav-item">
@@ -140,7 +137,7 @@
                         </li>
                         <li class="nav-item">
                             @Html.ActionLink("Filter Rooms", "FilterRooms", "Clients", htmlAttributes: new { @class = "nav-link" })
-                        </li>
+                        </li>*@
 
                     </ul>
 

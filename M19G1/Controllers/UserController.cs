@@ -22,7 +22,7 @@ namespace M19G1.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            List<UserViewModel> users = UserViewModelMapping.ToViewModel(_userService.GetNotAnonymous());
+            List<UserViewModel> users = UserViewModelMapping.ToViewModel(_userService.GetNotAnonymous(CurrentUser.Id));
             SelectList selectListRoles = new SelectList(_roleService.GetAllRoles().Select(s => s.RoleName));
             ViewData["RoleName"] = selectListRoles;
             return View();
@@ -52,7 +52,7 @@ namespace M19G1.Controllers
         [HttpPost]
         public JsonResult ListUsers()
         {
-            List<UserViewModel> users =UserViewModelMapping.ToViewModel( _userService.GetNotAnonymous());    
+            List<UserViewModel> users =UserViewModelMapping.ToViewModel( _userService.GetNotAnonymous(CurrentUser.Id));    
             int recordsTotal;
             var start = Request.Form.GetValues("start").FirstOrDefault();
             var length = Request.Form.GetValues("length").FirstOrDefault();
@@ -64,7 +64,7 @@ namespace M19G1.Controllers
             var searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
             if (!string.IsNullOrEmpty(sortColumn) || !string.IsNullOrEmpty(searchValue))
             {
-                users = UserViewModelMapping.ToViewModel(_userService.GetUsersOrderBy(sortColumn, searchValue,0)); //currentuser
+                users = UserViewModelMapping.ToViewModel(_userService.GetUsersOrderBy(sortColumn, searchValue,CurrentUser.Id)); //currentuser
             }
             recordsTotal = users.Count();   
             var data = users.Skip(skip).Take(pageSize).ToArray();

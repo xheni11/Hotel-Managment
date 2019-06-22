@@ -8,9 +8,9 @@ namespace M19G1.Mapping
 {
     public class DriverServiceViewModelMapping
     {
-        public static DriverServiceViewModel ToViewModel(TaxiServiceModel driver)
+        public static TaxiServiceViewModel ToViewModel(TaxiServiceModel driver)
         {
-            return new DriverServiceViewModel
+            return new TaxiServiceViewModel
             {
                 Id = driver.Id,
                 Completed = driver.Completed,
@@ -21,7 +21,7 @@ namespace M19G1.Mapping
             };
         }
 
-        public static TaxiServiceModel ToModel(DriverServiceViewModel driver, int driverId)
+        public static TaxiServiceModel ToModel(TaxiServiceViewModel driver, int driverId)
         {
             return new TaxiServiceModel
             {
@@ -35,7 +35,7 @@ namespace M19G1.Mapping
             };
         }
 
-        public static List<DriverServiceViewModel> ToViewModel(IEnumerable<TaxiServiceModel> drivers)
+        public static List<TaxiServiceViewModel> ToViewModel(IEnumerable<TaxiServiceModel> drivers)
         {
             return drivers.Select(ToViewModel).ToList();
         }

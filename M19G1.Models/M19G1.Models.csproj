@@ -54,9 +54,8 @@
     <Compile Include="BookAgainBookingModel.cs" />
     <Compile Include="BookingModel.cs" />
     <Compile Include="BookingRoomModel.cs" />
-    <Compile Include="TaxiServiceModel.cs" />
-    <Compile Include="ChooseRoomModel.cs" />
     <Compile Include="DriverServiceModel.cs" />
+    <Compile Include="ChooseRoomModel.cs" />
     <Compile Include="ExtraFacilityModel.cs" />
     <Compile Include="FacilityModel.cs" />
     <Compile Include="FilterRoomModel.cs" />
@@ -68,6 +67,7 @@
     <Compile Include="RoomCategoryModel.cs" />
     <Compile Include="RoomFacilityModel.cs" />
     <Compile Include="RoomModel.cs" />
+    <Compile Include="TaxiServiceModel.cs" />
     <Compile Include="UserClientModel.cs" />
     <Compile Include="UserModel.cs" />
     <Compile Include="UserRequestModel.cs" />

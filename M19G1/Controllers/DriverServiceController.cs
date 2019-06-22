@@ -17,7 +17,7 @@ namespace M19G1.Controllers
         // GET: DriverService
         public ActionResult Index()
         {
-            List<DriverServiceViewModel> users = DriverServiceViewModelMapping.ToViewModel(_driverService.GetAllDriverService());
+            List<TaxiServiceViewModel> users = DriverServiceViewModelMapping.ToViewModel(_driverService.GetAllDriverService());
             return View();
         }
     }

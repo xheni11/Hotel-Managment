@@ -7,13 +7,13 @@ namespace M19G1.DAL.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class addIsUserLogedField : IMigrationMetadata
+    public sealed partial class someChanges : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(addIsUserLogedField));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(someChanges));
         
         string IMigrationMetadata.Id
         {
-            get { return "201906182132422_addIsUserLogedField"; }
+            get { return "201906221916285_someChanges"; }
         }
         
         string IMigrationMetadata.Source

@@ -58,14 +58,7 @@ namespace M19G1.DAL
             _aspNetUserLoginsRepository ?? (_aspNetUserLoginsRepository = RepositoryFactory.CreateRepository<AspNetUserLogin>(_context));
 
         #endregion
-        #region Room Repository
 
-        private BaseRepository<Room> _roomRepository;
-
-        public BaseRepository<Room> RoomRepository =>
-            _roomRepository ?? (_roomRepository = RepositoryFactory.CreateRepository<Room>(_context));
-
-        #endregion
         #region Category Repository
 
         private BaseRepository<RoomCategory> _categoryRoomRepository;
@@ -109,14 +102,7 @@ namespace M19G1.DAL
             _bookingRepository ?? (_bookingRepository = RepositoryFactory.CreateRepository<Booking>(_context));
 
         #endregion
-        #region BookingRoom Repository
 
-        private BaseRepository<BookingRoom> _bookingRoomRepository;
-
-        public BaseRepository<BookingRoom> BookingRoomRepository =>
-            _bookingRoomRepository ?? (_bookingRoomRepository = RepositoryFactory.CreateRepository<BookingRoom>(_context));
-
-        #endregion
         #region AnonymousRequest Repository
 
         private AnonymousRequestRepository _anonymousRequestRepository;
@@ -161,14 +147,7 @@ namespace M19G1.DAL
 
         #endregion
 
-        #region
-
-        private BaseRepository<Facility> _facilityRepository;
-
-        public BaseRepository<Facility> FacilityRepository =>
-            _facilityRepository ?? (_facilityRepository = RepositoryFactory.CreateRepository<Facility>(_context));
-
-        #endregion
+ 
 
         #region
 
@@ -196,13 +175,7 @@ namespace M19G1.DAL
             _bookingRoomRepository ?? (_bookingRoomRepository = RepositoryFactory.CreateRepository<BookingRoom>(_context));
         #endregion
 
-        #region
-
-        private BaseRepository<ExtraFacility> _extraFacilityRepository;
-
-        public BaseRepository<ExtraFacility> ExtraFacilityRepository =>
-            _extraFacilityRepository ?? (_extraFacilityRepository = RepositoryFactory.CreateRepository<ExtraFacility>(_context));
-        #endregion
+   
 
         #region
 
@@ -212,14 +185,7 @@ namespace M19G1.DAL
             _driverServiceRepository ?? (_driverServiceRepository = RepositoryFactory.CreateRepository<PersonalDriverService>(_context));
         #endregion
 
-        #region
 
-        private BaseRepository<Rating> _ratingRepository;
-
-        public BaseRepository<Rating> RatingRepository =>
-            _ratingRepository ?? (_ratingRepository = RepositoryFactory.CreateRepository<Rating>(_context));
-
-        #endregion
 
         public void BeginTransaction()
         {

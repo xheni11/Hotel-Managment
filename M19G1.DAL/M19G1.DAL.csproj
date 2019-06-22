@@ -60,41 +60,9 @@
     <Compile Include="Mappings\RoleModelMapping.cs" />
     <Compile Include="Mappings\UserModelMapping.cs" />
     <Compile Include="Mappings\UserRequestModelMapping.cs" />
-    <Compile Include="Migrations\201906141413226_anonymousRequestFK.cs" />
-    <Compile Include="Migrations\201906141413226_anonymousRequestFK.Designer.cs">
-      <DependentUpon>201906141413226_anonymousRequestFK.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201906141903085_PkAnonymous.cs" />
-    <Compile Include="Migrations\201906141903085_PkAnonymous.Designer.cs">
-      <DependentUpon>201906141903085_PkAnonymous.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201906142314235_fkAnonymous.cs" />
-    <Compile Include="Migrations\201906142314235_fkAnonymous.Designer.cs">
-      <DependentUpon>201906142314235_fkAnonymous.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201906182132422_addIsUserLogedField.cs" />
-    <Compile Include="Migrations\201906182132422_addIsUserLogedField.Designer.cs">
-      <DependentUpon>201906182132422_addIsUserLogedField.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201906201926490_roleInUserRequest.cs" />
-    <Compile Include="Migrations\201906201926490_roleInUserRequest.Designer.cs">
-      <DependentUpon>201906201926490_roleInUserRequest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201906202035535_deleteSomeFieldsUserRequests.cs" />
-    <Compile Include="Migrations\201906202035535_deleteSomeFieldsUserRequests.Designer.cs">
-      <DependentUpon>201906202035535_deleteSomeFieldsUserRequests.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201906202251474_takenRouteFieldTaxiService.cs" />
-    <Compile Include="Migrations\201906202251474_takenRouteFieldTaxiService.Designer.cs">
-      <DependentUpon>201906202251474_takenRouteFieldTaxiService.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201906202253241_takenRouteFieldTaxiService1.cs" />
-    <Compile Include="Migrations\201906202253241_takenRouteFieldTaxiService1.Designer.cs">
-      <DependentUpon>201906202253241_takenRouteFieldTaxiService1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201906221641488_someChanges.cs" />
-    <Compile Include="Migrations\201906221641488_someChanges.Designer.cs">
-      <DependentUpon>201906221641488_someChanges.cs</DependentUpon>
+    <Compile Include="Migrations\201906221916285_someChanges.cs" />
+    <Compile Include="Migrations\201906221916285_someChanges.Designer.cs">
+      <DependentUpon>201906221916285_someChanges.cs</DependentUpon>
     </Compile>
     <Compile Include="Repository\DriverRepository.cs" />
     <Compile Include="Repository\LogRepository.cs" />
@@ -117,22 +85,6 @@
     <Compile Include="Entities\RoomFacility.cs" />
     <Compile Include="Entities\PersonalDriverService.cs" />
     <Compile Include="Entities\UserRequest.cs" />
-    <Compile Include="Migrations\201906021917091_Initial.cs" />
-    <Compile Include="Migrations\201906021917091_Initial.Designer.cs">
-      <DependentUpon>201906021917091_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201906100948237_BookingTime_RatingDescr.cs" />
-    <Compile Include="Migrations\201906100948237_BookingTime_RatingDescr.Designer.cs">
-      <DependentUpon>201906100948237_BookingTime_RatingDescr.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201906101052523_Booking_CheckinCheckout.cs" />
-    <Compile Include="Migrations\201906101052523_Booking_CheckinCheckout.Designer.cs">
-      <DependentUpon>201906101052523_Booking_CheckinCheckout.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201906171045487_NullableDriverId.cs" />
-    <Compile Include="Migrations\201906171045487_NullableDriverId.Designer.cs">
-      <DependentUpon>201906171045487_NullableDriverId.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Persistence\M19G1Context.cs" />
     <Compile Include="Repository\GenericRepository.cs" />
@@ -156,38 +108,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201906021917091_Initial.resx">
-      <DependentUpon>201906021917091_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201906141413226_anonymousRequestFK.resx">
-      <DependentUpon>201906141413226_anonymousRequestFK.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201906141903085_PkAnonymous.resx">
-      <DependentUpon>201906141903085_PkAnonymous.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201906142314235_fkAnonymous.resx">
-      <DependentUpon>201906142314235_fkAnonymous.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201906182132422_addIsUserLogedField.resx">
-      <DependentUpon>201906182132422_addIsUserLogedField.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201906201926490_roleInUserRequest.resx">
-      <DependentUpon>201906201926490_roleInUserRequest.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201906202035535_deleteSomeFieldsUserRequests.resx">
-      <DependentUpon>201906202035535_deleteSomeFieldsUserRequests.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201906202251474_takenRouteFieldTaxiService.resx">
-      <DependentUpon>201906202251474_takenRouteFieldTaxiService.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201906202253241_takenRouteFieldTaxiService1.resx">
-      <DependentUpon>201906202253241_takenRouteFieldTaxiService1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201906221641488_someChanges.resx">
-      <DependentUpon>201906221641488_someChanges.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201906221916285_someChanges.resx">
+      <DependentUpon>201906221916285_someChanges.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

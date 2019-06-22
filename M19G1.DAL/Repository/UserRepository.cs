@@ -59,9 +59,9 @@ namespace M19G1.DAL.Repository
             return _dbSet.Where(u => u.Email.Equals(email));
 
         }
-        public IEnumerable<AspNetUser> GetNotAnonymous()
+        public IEnumerable<AspNetUser> GetNotAnonymous(int currentUser)
         {
-           return _dbSet.Where(u => u.AnonymousRequest.Confirmed == false || u.AnonymousRequest.Id==null && u.Deleted==false);
+           return _dbSet.Where(u => u.AnonymousRequest.Confirmed == false || u.AnonymousRequest.Id==null && u.Deleted==false && u.Id!=currentUser);
         }
 
     }

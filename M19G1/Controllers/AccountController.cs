@@ -362,7 +362,7 @@ namespace M19G1.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
         //
@@ -400,7 +400,7 @@ namespace M19G1.Controllers
             }
             switch (CurrentUser.Roles.Select(r => r.RoleId).SingleOrDefault())
             {
-                case 3:
+                case 1:
                     return RedirectToAction("Index", "User");
                 case 4:
                     return RedirectToAction("Index", "User");              

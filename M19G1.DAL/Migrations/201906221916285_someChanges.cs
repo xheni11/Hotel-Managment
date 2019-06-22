@@ -3,7 +3,7 @@ namespace M19G1.DAL.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class ModelCreate : DbMigration
+    public partial class someChanges : DbMigration
     {
         public override void Up()
         {
@@ -12,14 +12,16 @@ namespace M19G1.DAL.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false),
-                        DateCreated = c.DateTime(),
                         Confirmed = c.Boolean(nullable: false),
+                        Deleted = c.Boolean(nullable: false),
+                        CreatedBy = c.Int(nullable: false),
+                        CreatedOn = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.AspNetUsers", t => t.Id)
                 .Index(t => t.Id);
             
-            /* CreateTable(
+            CreateTable(
                 "dbo.AspNetUsers",
                 c => new
                     {
@@ -40,7 +42,11 @@ namespace M19G1.DAL.Migrations
                         LockoutEndDateUtc = c.DateTime(),
                         LockoutEnabled = c.Boolean(nullable: false),
                         AccessFailedCount = c.Int(nullable: false),
+                        IsUserLoged = c.Boolean(nullable: false),
                         UserName = c.String(nullable: false, maxLength: 256),
+                        Deleted = c.Boolean(nullable: false),
+                        CreatedBy = c.Int(nullable: false),
+                        CreatedOn = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -50,8 +56,11 @@ namespace M19G1.DAL.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Name = c.String(nullable: false, maxLength: 256),
+                        Deleted = c.Boolean(nullable: false),
+                        CreatedBy = c.Int(nullable: false),
+                        CreatedOn = c.DateTime(nullable: false),
                     })
-                .PrimaryKey(t => t.Id); */
+                .PrimaryKey(t => t.Id);
             
             CreateTable(
                 "dbo.UserRequests",
@@ -62,18 +71,19 @@ namespace M19G1.DAL.Migrations
                         FirstName = c.String(),
                         LastName = c.String(),
                         Email = c.String(),
-                        EmailConfirmed = c.Boolean(nullable: false),
                         PhoneNumber = c.String(),
                         Birthday = c.DateTime(),
-                        DateCreated = c.DateTime(),
                         Gender = c.String(maxLength: 1),
                         RoleId = c.Int(nullable: false),
+                        Deleted = c.Boolean(nullable: false),
+                        CreatedBy = c.Int(nullable: false),
+                        CreatedOn = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.AspNetRoles", t => t.RoleId, cascadeDelete: true)
                 .Index(t => t.RoleId);
             
-          /*  CreateTable(
+            CreateTable(
                 "dbo.AspNetUserClaims",
                 c => new
                     {
@@ -81,6 +91,9 @@ namespace M19G1.DAL.Migrations
                         UserId = c.Int(nullable: false),
                         ClaimType = c.String(),
                         ClaimValue = c.String(),
+                        Deleted = c.Boolean(nullable: false),
+                        CreatedBy = c.Int(nullable: false),
+                        CreatedOn = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
@@ -93,22 +106,29 @@ namespace M19G1.DAL.Migrations
                         LoginProvider = c.String(nullable: false, maxLength: 128),
                         ProviderKey = c.String(nullable: false, maxLength: 128),
                         UserId = c.Int(nullable: false),
+                        Deleted = c.Boolean(nullable: false),
+                        CreatedBy = c.Int(nullable: false),
+                        CreatedOn = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => new { t.LoginProvider, t.ProviderKey, t.UserId })
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
-                .Index(t => t.UserId); */
+                .Index(t => t.UserId);
             
             CreateTable(
                 "dbo.Bookings",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
+                        BookingTime = c.DateTime(nullable: false),
                         StartDate = c.DateTime(nullable: false),
                         EndDate = c.DateTime(nullable: false),
                         Valid = c.Boolean(nullable: false),
-                        CheckIn = c.Boolean(nullable: false),
-                        CheckOut = c.Boolean(nullable: false),
+                        CheckInTime = c.DateTime(),
+                        CheckOutTime = c.DateTime(),
                         UserId = c.Int(nullable: false),
+                        Deleted = c.Boolean(nullable: false),
+                        CreatedBy = c.Int(nullable: false),
+                        CreatedOn = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
@@ -121,6 +141,9 @@ namespace M19G1.DAL.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         RoomId = c.Int(nullable: false),
                         BookingId = c.Int(nullable: false),
+                        Deleted = c.Boolean(nullable: false),
+                        CreatedBy = c.Int(nullable: false),
+                        CreatedOn = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Rooms", t => t.RoomId, cascadeDelete: true)
@@ -137,6 +160,9 @@ namespace M19G1.DAL.Migrations
                         Price = c.Decimal(nullable: false, precision: 18, scale: 2),
                         BookingRoomId = c.Int(nullable: false),
                         FacilityId = c.Int(nullable: false),
+                        Deleted = c.Boolean(nullable: false),
+                        CreatedBy = c.Int(nullable: false),
+                        CreatedOn = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Facilities", t => t.FacilityId, cascadeDelete: true)
@@ -152,6 +178,9 @@ namespace M19G1.DAL.Migrations
                         Name = c.String(),
                         Description = c.String(),
                         Available = c.Boolean(nullable: false),
+                        Deleted = c.Boolean(nullable: false),
+                        CreatedBy = c.Int(nullable: false),
+                        CreatedOn = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -163,6 +192,9 @@ namespace M19G1.DAL.Migrations
                         Quantity = c.Int(nullable: false),
                         RoomId = c.Int(nullable: false),
                         FacilityId = c.Int(nullable: false),
+                        Deleted = c.Boolean(nullable: false),
+                        CreatedBy = c.Int(nullable: false),
+                        CreatedOn = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Rooms", t => t.RoomId, cascadeDelete: true)
@@ -178,10 +210,14 @@ namespace M19G1.DAL.Migrations
                         Name = c.String(),
                         NrOfGuests = c.Int(nullable: false),
                         Price = c.Decimal(nullable: false, precision: 18, scale: 2),
-                        Enabled = c.Boolean(nullable: false),
+                        Vacancy = c.Decimal(nullable: false, precision: 18, scale: 2),
                         Occupied = c.Boolean(nullable: false),
                         Description = c.String(),
+                        Enabled = c.Boolean(nullable: false),
                         CategoryId = c.Int(nullable: false),
+                        Deleted = c.Boolean(nullable: false),
+                        CreatedBy = c.Int(nullable: false),
+                        CreatedOn = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.RoomCategories", t => t.CategoryId, cascadeDelete: true)
@@ -194,6 +230,9 @@ namespace M19G1.DAL.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         Name = c.String(),
                         Description = c.String(),
+                        Deleted = c.Boolean(nullable: false),
+                        CreatedBy = c.Int(nullable: false),
+                        CreatedOn = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -207,14 +246,18 @@ namespace M19G1.DAL.Migrations
                         Destination = c.String(),
                         Completed = c.Boolean(nullable: false),
                         BookingId = c.Int(nullable: false),
-                        DriverId = c.Int(nullable: false),
+                        DriverID = c.Int(nullable: false),
                         VoyageTime = c.Time(nullable: false, precision: 7),
+                        Taken = c.Boolean(nullable: false),
+                        Deleted = c.Boolean(nullable: false),
+                        CreatedBy = c.Int(nullable: false),
+                        CreatedOn = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Bookings", t => t.BookingId, cascadeDelete: true)
-                .ForeignKey("dbo.AspNetUsers", t => t.DriverId)
+                .ForeignKey("dbo.AspNetUsers", t => t.DriverID)
                 .Index(t => t.BookingId)
-                .Index(t => t.DriverId);
+                .Index(t => t.DriverID);
             
             CreateTable(
                 "dbo.Ratings",
@@ -222,7 +265,11 @@ namespace M19G1.DAL.Migrations
                     {
                         Id = c.Int(nullable: false),
                         Rate = c.Double(nullable: false),
+                        Description = c.String(),
                         DateCreated = c.DateTime(),
+                        Deleted = c.Boolean(nullable: false),
+                        CreatedBy = c.Int(nullable: false),
+                        CreatedOn = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Bookings", t => t.Id)
@@ -242,7 +289,7 @@ namespace M19G1.DAL.Migrations
                     })
                 .PrimaryKey(t => t.Id);
             
-           /* CreateTable(
+            CreateTable(
                 "dbo.AspNetUserRoles",
                 c => new
                     {
@@ -253,13 +300,13 @@ namespace M19G1.DAL.Migrations
                 .ForeignKey("dbo.AspNetRoles", t => t.RoleId, cascadeDelete: true)
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.RoleId)
-                .Index(t => t.UserId); */
+                .Index(t => t.UserId);
             
         }
         
         public override void Down()
         {
-            DropForeignKey("dbo.PersonalDriverServices", "DriverId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.PersonalDriverServices", "DriverID", "dbo.AspNetUsers");
             DropForeignKey("dbo.Bookings", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Ratings", "Id", "dbo.Bookings");
             DropForeignKey("dbo.PersonalDriverServices", "BookingId", "dbo.Bookings");
@@ -279,7 +326,7 @@ namespace M19G1.DAL.Migrations
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.Ratings", new[] { "Id" });
-            DropIndex("dbo.PersonalDriverServices", new[] { "DriverId" });
+            DropIndex("dbo.PersonalDriverServices", new[] { "DriverID" });
             DropIndex("dbo.PersonalDriverServices", new[] { "BookingId" });
             DropIndex("dbo.Rooms", new[] { "CategoryId" });
             DropIndex("dbo.RoomFacilities", new[] { "FacilityId" });

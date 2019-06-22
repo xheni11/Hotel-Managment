@@ -18,14 +18,14 @@ namespace M19G1.DAL.Mapping
                 BookingId=driver.BookingId,
                 Completed=driver.Completed,
                 Destination=driver.Destination,
-                DriverId=driver.DriverId,
+                DriverId=driver.DriverID,
                 Location=driver.Location,
                 TotalTime=driver.VoyageTime
 
             };
         }
 
-        public static PersonalDriverService ToEntity(TaxiServiceModel driver)
+        public static M19G1.DAL.Entities.PersonalDriverService ToEntity(TaxiServiceModel driver)
         {
             return new PersonalDriverService
             {
@@ -33,7 +33,7 @@ namespace M19G1.DAL.Mapping
                 BookingId = driver.BookingId,
                 Completed = driver.Completed,
                 Destination = driver.Destination,
-                DriverId = driver.DriverId,
+                DriverID = driver.DriverId,
                 Location = driver.Location,
                 VoyageTime = driver.TotalTime
 

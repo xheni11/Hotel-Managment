@@ -96,7 +96,7 @@ namespace M19G1.BLL
 
         public List<UserModel> GetUsersOrderBy(string sortField, string search, int currentUserId)
         {
-            return UserModelMapping.ToModel(_usersRepository.OrderBy(_usersRepository.GetNotAnonymous(), sortField, search, currentUserId));
+            return UserModelMapping.ToModel(_usersRepository.OrderBy(_usersRepository.GetNotAnonymous(currentUserId), sortField, search, currentUserId));
         }
 
         public void UpdateUserActivity(int userId)
@@ -145,9 +145,9 @@ namespace M19G1.BLL
             _internalUnitOfWork.Save();
 
         }
-        public IEnumerable<UserModel> GetNotAnonymous()
+        public IEnumerable<UserModel> GetNotAnonymous(int currentUser)
         {
-            return UserModelMapping.ToModel(_usersRepository.GetNotAnonymous());
+            return UserModelMapping.ToModel(_usersRepository.GetNotAnonymous(currentUser));
         }
     }
 

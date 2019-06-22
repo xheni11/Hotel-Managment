@@ -23,7 +23,7 @@ namespace M19G1.BLL
         {
             if(model.StartTime >= DateTime.Now.AddMinutes(10) && model.StartTime <= DateTime.Now.AddDays(10))
             {
-                PersonalDriverService driverService = DriverServiceMappings.MapDriverServiceModelToPersonalDriverService(model);
+                M19G1.DAL.Entities.PersonalDriverService driverService = DriverServiceMappings.MapDriverServiceModelToPersonalDriverService(model);
                 _internalUnitOfWork.DriverServiceRepository.Insert(driverService);
                 return true;
 

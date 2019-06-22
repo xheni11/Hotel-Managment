@@ -27,7 +27,7 @@ namespace M19G1.BLL
         }
         public void GetMyDriverServiceUnCompleted(int idUser)
         {
-            _driverRepository.GetAll().Where(d => d.Taken == true && d.DriverId==idUser && d.Completed==false && d.Booking.StartDate.Date == DateTime.Now.Date);
+            _driverRepository.GetAll().Where(d => d.Taken == true && d.DriverID==idUser && d.Completed==false && d.Booking.StartDate.Date == DateTime.Now.Date);
         }
 
         public void RouteTaken(int id)
