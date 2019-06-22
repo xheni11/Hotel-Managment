@@ -46,7 +46,7 @@ namespace M19G1.DAL.Repository
             }
             else
             {
-                return entities.Where(u =>u.Id!=currentUserId && u.FirstName.Equals(searchValue)).OrderBy(e => propertyInfo.GetValue(e, null));
+                return entities.Where(u =>u.Id!=currentUserId && u.FirstName.Contains(searchValue)).OrderBy(e => propertyInfo.GetValue(e, null));
             }
         }
         public IEnumerable<AspNetUser> GetUserByUsername(string username)

@@ -40,7 +40,7 @@
         "orderMulti": false, // for disable multiple column at once
         "pageLength": 5,
         "ajax": {
-            "url": "/AnonymousRequest/ListRequests",
+            "url": "/User/ListRequest",
             "type": "POST",
             "datatype": "json",
         },
@@ -115,7 +115,7 @@
 
     function PopUpDelete(id) {
         $.ajax({
-            url: "/AnonymousRequest/LoadRequest/" + id,
+            url: "/User/LoadRequestAnonymous/" + id,
             type: "GET",
             contentType: "application/json;charset=UTF-8",
             dataType: "json",
@@ -130,9 +130,9 @@
         return false;
     }
 
-    function LoadRequest(id) {
+    function LoadRequestAnonymous(id) {
         $.ajax({
-            url: "/AnonymousRequest/LoadRequest/" + id,
+            url: "/User/LoadRequestAnonymous/" + id,
             type: "GET",
             contentType: "application/json;charset=UTF-8",
             dataType: "json",

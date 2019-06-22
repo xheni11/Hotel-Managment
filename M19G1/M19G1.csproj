@@ -642,10 +642,9 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Dummy\Index.cshtml" />
-    <Content Include="Views\UserRequest\Requests.cshtml" />
+    <Content Include="Views\User\Requests.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
-    <Content Include="Views\AnonymousRequest\AnonymousRequests.cshtml" />
-    <Content Include="Views\Log\Logs.cshtml" />
+    <Content Include="Views\User\AnonymousRequests.cshtml" />
     <Content Include="Views\Account\SendRequest.cshtml" />
     <Content Include="Views\DriverService\DriverService.cshtml" />
     <Content Include="Views\Clients\OldBookings.cshtml" />
@@ -657,6 +656,7 @@
     <Content Include="Views\Clients\CreateBooking.cshtml" />
     <Content Include="Views\Clients\ChooseRooms.cshtml" />
     <Content Include="Views\Clients\RoomDetails.cshtml" />
+    <Content Include="Views\User\Logs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

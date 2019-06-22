@@ -1,4 +1,4 @@
-﻿@model M19G1.ViewModels.UserRequestViewModel
+﻿@model M19G1.Models.UserRequestViewModel
 @{
     /**/
     ViewBag.Title = "User Page";
@@ -40,7 +40,7 @@
         "orderMulti": false, // for disable multiple column at once
         "pageLength": 5,
         "ajax": {
-            "url": "/UserRequest/ListRequests",
+            "url": "/User/ListRequests",
             "type": "POST",
             "datatype": "json",
         },
@@ -104,7 +104,7 @@
     function DeleteRequest() {
         var id = $('#Id').val();
         $.ajax({
-            url: "/UserRequest/DeleteRequest/" + id,
+            url: "/User/DeleteRequest/" + id,
             type: "GET",
             contentType: "application/json;charset=UTF-8",
             dataType: "json",
@@ -131,7 +131,7 @@
 
         };
         $.ajax({
-            url: "/UserRequest/AcceptRequest",
+            url: "/User/AcceptRequest",
             data: JSON.stringify(userObj),
             type: "POST",
             contentType: "application/json;charset=utf-8",
@@ -147,7 +147,7 @@
     };
     function PopUpDelete(id) {
         $.ajax({
-            url: "/UserRequest/LoadRequest/" + id,
+            url: "/User/LoadRequest/" + id,
             type: "GET",
             contentType: "application/json;charset=UTF-8",
             dataType: "json",
@@ -164,7 +164,7 @@
 
     function LoadRequest(id) {
         $.ajax({
-            url: "/UserRequest/LoadRequest/" + id,
+            url: "/User/LoadRequest/" + id,
             type: "GET",
             contentType: "application/json;charset=UTF-8",
             dataType: "json",
