@@ -1,0 +1,88 @@
+﻿@model M19G1.Models.RoomDetailsViewModel
+
+<div>
+    <h4>RoomDetailsViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RoomName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RoomName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GuestsNr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GuestsNr)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RoomDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RoomDescription)
+        </dd>
+        <dt>
+            @Html.Display("Category")
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RoomCategory.CatName)
+        </dd>
+    </dl>
+</div>
+
+
+@if (Model.RoomFacilities != null)
+{
+    if (Model.RoomFacilities.Count > 0)
+    {
+        <div>
+            <table id="myTable">
+                <thead>
+                    <tr>
+                        <th>Facility Name</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.RoomFacilities)
+                    {
+                        <tr>
+                            <td>
+                                @item.Facility.FacilityName
+                            </td>
+                            <td>
+                                @item.Facility.Description
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+}
+<div>
+    @Html.ActionLink("Back to Filter", "FilterRooms")
+</div>
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+}
+
+

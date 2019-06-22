@@ -161,6 +161,66 @@ namespace M19G1.DAL
 
         #endregion
 
+        #region
+
+        private BaseRepository<Facility> _facilityRepository;
+
+        public BaseRepository<Facility> FacilityRepository =>
+            _facilityRepository ?? (_facilityRepository = RepositoryFactory.CreateRepository<Facility>(_context));
+
+        #endregion
+
+        #region
+
+        private BaseRepository<RoomCategory> _roomCategoryRepository;
+
+        public BaseRepository<RoomCategory> RoomCategoryRepository =>
+            _roomCategoryRepository ?? (_roomCategoryRepository = RepositoryFactory.CreateRepository<RoomCategory>(_context));
+
+        #endregion
+
+        #region
+
+        private BaseRepository<Room> _roomRepository;
+
+        public BaseRepository<Room> RoomRepository =>
+            _roomRepository ?? (_roomRepository = RepositoryFactory.CreateRepository<Room>(_context));
+
+        #endregion
+
+        #region
+
+        private BaseRepository<BookingRoom> _bookingRoomRepository;
+
+        public BaseRepository<BookingRoom> BookingRoomRepository =>
+            _bookingRoomRepository ?? (_bookingRoomRepository = RepositoryFactory.CreateRepository<BookingRoom>(_context));
+        #endregion
+
+        #region
+
+        private BaseRepository<ExtraFacility> _extraFacilityRepository;
+
+        public BaseRepository<ExtraFacility> ExtraFacilityRepository =>
+            _extraFacilityRepository ?? (_extraFacilityRepository = RepositoryFactory.CreateRepository<ExtraFacility>(_context));
+        #endregion
+
+        #region
+
+        private BaseRepository<PersonalDriverService> _driverServiceRepository;
+
+        public BaseRepository<PersonalDriverService> DriverServiceRepository =>
+            _driverServiceRepository ?? (_driverServiceRepository = RepositoryFactory.CreateRepository<PersonalDriverService>(_context));
+        #endregion
+
+        #region
+
+        private BaseRepository<Rating> _ratingRepository;
+
+        public BaseRepository<Rating> RatingRepository =>
+            _ratingRepository ?? (_ratingRepository = RepositoryFactory.CreateRepository<Rating>(_context));
+
+        #endregion
+
         public void BeginTransaction()
         {
             _transaction = _context.Database.BeginTransaction(IsolationLevel.ReadCommitted);

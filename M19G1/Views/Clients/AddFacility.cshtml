@@ -1,0 +1,65 @@
+﻿@model M19G1.Models.AddFacilityViewModel
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>@ViewBag.Result</h4>
+        <h5>Booking details :</h5>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Booking.StartDate, htmlAttributes: new { @class = "control-label col-md-1" })
+            <text> :   </text>
+            @Html.DisplayFor(model => model.Booking.StartDate)
+            <text>  |  </text>
+            @Html.LabelFor(model => model.Booking.EndDate, htmlAttributes: new { @class = "control-label col-md-1" })
+            <text> :   </text>
+            @Html.DisplayFor(model => model.Booking.EndDate)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Booking.Rooms, htmlAttributes: new { @class = "control-label col-md-1" })
+            <text> : </text>
+            @foreach (var room in Model.Booking.Rooms)
+            {
+                    @Html.DisplayFor(item => room.Name) <text> | </text>
+            }
+        </div>
+    </div>
+
+    <div class="form-horizontal">
+        <h4>Add Facility </h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Booking.Id)
+        <div class="form-group">
+            @Html.LabelFor(model => model.RoomId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.RoomId, new SelectList(Model.Booking.Rooms, "RoomId", "Name"))
+                @Html.ValidationMessageFor(model => model.RoomId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FacilityId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.FacilityId, new SelectList(Model.Facilities, "FacilityId", "FacilityName"))
+                @Html.ValidationMessageFor(model => model.FacilityId, "", new { @class = "text-danger" })
+            </div>
+            @Html.LabelFor(model => model.FacilityQuantity, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FacilityQuantity, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.FacilityQuantity, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Add Facility" class="btn btn-default" />
+            </div>
+        </div>
+}
+
+<div>
+    @Html.ActionLink("Back to bookings", "ActiveBookings")
+</div>

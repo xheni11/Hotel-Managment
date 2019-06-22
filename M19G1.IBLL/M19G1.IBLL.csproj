@@ -54,6 +54,11 @@
     <Compile Include="IPersonalDriverService.cs" />
     <Compile Include="IRoleService.cs" />
     <Compile Include="IUserRequestService.cs" />
+    <Compile Include="IDriverService.cs" />
+    <Compile Include="IFacilityService.cs" />
+    <Compile Include="IRatingService.cs" />
+    <Compile Include="IRoomCategoryService.cs" />
+    <Compile Include="IRoomService.cs" />
     <Compile Include="IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -9,15 +9,19 @@ namespace M19G1.Models
     public  class BookingModel
     {
         public int Id { get; set; }
+        public DateTime BookTime { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public bool Valid { get; set; }
-        public bool CheckIn { get; set; }
-        public bool CheckOut { get; set; }
+        public DateTime? CheckIn { get; set; }
+        public DateTime? CheckOut { get; set; }
         public int ClientId { get; set; }
         public UserModel Client { get; set; }
         public List<BookingRoomModel> BookingRooms { get; set; }
-        public List<TaxiServiceModel> DriverServices { get; set; }
+        public List<DriverServiceModel> DriverServices { get; set; }
+        public RatingModel Rating { get; set; }
+
+        public bool Cancelable { get; set; }
         
     }
 }
