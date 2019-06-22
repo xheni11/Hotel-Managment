@@ -62,6 +62,7 @@
     <Compile Include="RoomCategoryModel.cs" />
     <Compile Include="RoomFacilityModel.cs" />
     <Compile Include="RoomModel.cs" />
+    <Compile Include="UserClientModel.cs" />
     <Compile Include="UserModel.cs" />
     <Compile Include="UserRequestModel.cs" />
   </ItemGroup>

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using M19G1;
-using M19G1.Models.User;
+using M19G1.Models;
 
 namespace M19G1.BLL
 {
