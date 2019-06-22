@@ -17,7 +17,7 @@ namespace M19G1.Models
         public int ClientId { get; set; }
         public UserModel Client { get; set; }
         public List<BookingRoomModel> BookingRooms { get; set; }
-        public List<DriverServiceModel> DriverServices { get; set; }
+        public List<TaxiServiceModel> DriverServices { get; set; }
         
     }
 }

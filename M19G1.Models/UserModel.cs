@@ -23,7 +23,7 @@ namespace M19G1.Models
 
         public List<RoleModel> UserRoles { get; set; }
         public virtual List<BookingModel> Bookings { get; set; }
-        public virtual List<DriverServiceModel> DriverServices { get; set; }
+        public virtual List<TaxiServiceModel> DriverServices { get; set; }
         public virtual AnonymousRequestModel AnonymousRequest { get; set; }
 
     }

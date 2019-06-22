@@ -2,7 +2,7 @@
 using M19G1.Common.RandomPassword;
 using M19G1.DAL;
 using M19G1.DAL.Entities;
-using M19G1.DAL.Mapping.User;
+using M19G1.DAL.Mappings;
 using M19G1.DAL.Repository;
 using M19G1.IBLL;
 using M19G1.Models;

@@ -52,7 +52,7 @@
     <Compile Include="AnonymousRequestModel.cs" />
     <Compile Include="BookingModel.cs" />
     <Compile Include="BookingRoomModel.cs" />
-    <Compile Include="DriverServiceModel.cs" />
+    <Compile Include="TaxiServiceModel.cs" />
     <Compile Include="ExtraFacilityModel.cs" />
     <Compile Include="FacilityModel.cs" />
     <Compile Include="LogModel.cs" />
@@ -62,10 +62,8 @@
     <Compile Include="RoomCategoryModel.cs" />
     <Compile Include="RoomFacilityModel.cs" />
     <Compile Include="RoomModel.cs" />
-    <Compile Include="User\UserCreateModel.cs" />
-    <Compile Include="User\UserModel.cs" />
+    <Compile Include="UserModel.cs" />
     <Compile Include="UserRequestModel.cs" />
-    <Compile Include="User\UserClientModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

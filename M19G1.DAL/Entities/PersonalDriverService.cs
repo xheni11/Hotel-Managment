@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace M19G1.DAL.Entities
 {
-    public class PersonalDriverService : BaseEntity
+    public class PersonalDriverService:BaseEntity
     {
         public int Id { get; set; }
         public DateTime PickUpTime { get; set; }

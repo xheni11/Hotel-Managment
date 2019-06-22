@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace M19G1.DAL.Mapping.User
+namespace M19G1.DAL.Mappings
 {
     public class UserModelMapping
     {

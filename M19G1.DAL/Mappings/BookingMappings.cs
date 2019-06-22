@@ -20,7 +20,7 @@ namespace M19G1.DAL.Mappings
                 Valid = booking.Valid,
                 CheckIn = booking.CheckIn,
                 CheckOut = booking.CheckOut,
-                Client = UserMappings.MapAspNetUserToUserModel(booking.Client),
+                Client = UserModelMapping.ToModel(booking.Client),
                 ClientId = booking.UserId,
                 BookingRooms = booking.BookingRooms.Select(br => MapBookingRoomToBookingRoomModel(br)).ToList(),
                 DriverServices = booking.DriverServices.Select(ds => DriverServiceMappings.MapDriverServiceToDriverServiceModel(ds)).ToList()

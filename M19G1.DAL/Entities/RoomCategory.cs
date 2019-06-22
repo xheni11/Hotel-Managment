@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace M19G1.DAL.Entities
 {
-    public  class RoomCategory : BaseEntity
+    public  class RoomCategory:BaseEntity
     {
         public RoomCategory()
         {

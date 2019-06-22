@@ -9,7 +9,7 @@ namespace M19G1.IBLL
 {
     public interface IPersonalDriverService
     {
-        List<DriverServiceModel> GetAllDriverService();
+        List<TaxiServiceModel> GetAllDriverService();
         void GetMyDriverServiceUnCompleted(int idUser);
         void RouteTaken(int id);
         void RouteCompleted(int id);

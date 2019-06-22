@@ -21,7 +21,7 @@ namespace M19G1.BLL
             _internalUnitOfWork = unitOfWork;
             _driverRepository = _internalUnitOfWork.DiverRepository;
         }
-        public List<DriverServiceModel> GetAllDriverService()
+        public List<TaxiServiceModel> GetAllDriverService()
         {
             return DriverModelMapping.ToModel(_driverRepository.GetAll().Where(d=>d.Taken==false && d.Booking.StartDate.Date==DateTime.Now.Date).ToList());
         }

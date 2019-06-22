@@ -10,9 +10,9 @@ namespace M19G1.DAL.Mappings
 {
     public static class DriverServiceMappings
     {
-        public static DriverServiceModel MapDriverServiceToDriverServiceModel(PersonalDriverService driverService)
+        public static TaxiServiceModel MapDriverServiceToDriverServiceModel(PersonalDriverService driverService)
         {
-            return new DriverServiceModel
+            return new TaxiServiceModel
             {
                 Id = driverService.Id,
                 Completed = driverService.Completed,
@@ -21,9 +21,9 @@ namespace M19G1.DAL.Mappings
                 StartTime = driverService.PickUpTime,
                 TotalTime = driverService.VoyageTime,
                 BookingId = driverService.BookingId,
-                Booking = BookingMappings.MapBookingToBookingModel(driverService.Booking),
+                //Booking = BookingMappings.MapBookingToBookingModel(driverService.Booking),
                 DriverId = driverService.DriverId,
-                Driver = UserMappings.MapAspNetUserToUserModel(driverService.Driver)
+                //Driver = UserMappings.MapAspNetUserToUserModel(driverService.Driver)
 
             };
         }

@@ -198,12 +198,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Mapping\AnonymousRequestViewModelMapping.cs" />
-    <Compile Include="Mapping\DriverServiceViewModelMapping.cs" />
-    <Compile Include="Mapping\LoginViewModelToModel.cs" />
-    <Compile Include="Mapping\LogViewModelMapping.cs" />
-    <Compile Include="Mapping\UserRequestViewModelMapping.cs" />
-    <Compile Include="Mapping\UserViewModelMapping.cs" />
+    <Compile Include="Mappings\AnonymousRequestViewModelMapping.cs" />
+    <Compile Include="Mappings\DriverServiceViewModelMapping.cs" />
+    <Compile Include="Mappings\LoginViewModelToModel.cs" />
+    <Compile Include="Mappings\LogViewModelMApping.cs" />
+    <Compile Include="Mappings\UserRequestViewModelMapping.cs" />
+    <Compile Include="Mappings\UserViewModelMapping.cs" />
     <Compile Include="Migrations\201906021859327_initial.cs" />
     <Compile Include="Migrations\201906021859327_initial.Designer.cs">
       <DependentUpon>201906021859327_initial.cs</DependentUpon>

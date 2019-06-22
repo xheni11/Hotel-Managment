@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace M19G1.Models
 {
-    public class DriverServiceModel
+    public class TaxiServiceModel
     {
         public int Id { get; set; }
         public DateTime StartTime { get; set; }

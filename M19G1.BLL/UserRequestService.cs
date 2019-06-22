@@ -1,6 +1,6 @@
 ﻿using M19G1.DAL;
 using M19G1.DAL.Mapping;
-using M19G1.DAL.Mapping.User;
+using M19G1.DAL.Mappings;
 using M19G1.DAL.Repository;
 using M19G1.IBLL;
 using M19G1.Models;

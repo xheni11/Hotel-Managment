@@ -50,12 +50,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Mapping\AnonymousRequestModelMapping.cs" />
-    <Compile Include="Mapping\DriverModelMapping.cs" />
-    <Compile Include="Mapping\LogModelMapping.cs" />
-    <Compile Include="Mapping\RoleModelMapping.cs" />
-    <Compile Include="Mapping\UserModelMapping.cs" />
-    <Compile Include="Mapping\UserRequestModelMapping.cs" />
+    <Compile Include="Mappings\BookingMappings.cs" />
+    <Compile Include="Mappings\DriverServiceMappings.cs" />
+    <Compile Include="Mappings\FacilityMappings.cs" />
+    <Compile Include="Mappings\RoomMappings.cs" />
+    <Compile Include="Mappings\AnonymousRequestModelMapping.cs" />
+    <Compile Include="Mappings\DriverModelMapping.cs" />
+    <Compile Include="Mappings\LogModelMapping.cs" />
+    <Compile Include="Mappings\RoleModelMapping.cs" />
+    <Compile Include="Mappings\UserModelMapping.cs" />
+    <Compile Include="Mappings\UserRequestModelMapping.cs" />
     <Compile Include="Migrations\201906141413226_anonymousRequestFK.cs" />
     <Compile Include="Migrations\201906141413226_anonymousRequestFK.Designer.cs">
       <DependentUpon>201906141413226_anonymousRequestFK.cs</DependentUpon>
@@ -87,6 +91,10 @@
     <Compile Include="Migrations\201906202253241_takenRouteFieldTaxiService1.cs" />
     <Compile Include="Migrations\201906202253241_takenRouteFieldTaxiService1.Designer.cs">
       <DependentUpon>201906202253241_takenRouteFieldTaxiService1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906221641488_someChanges.cs" />
+    <Compile Include="Migrations\201906221641488_someChanges.Designer.cs">
+      <DependentUpon>201906221641488_someChanges.cs</DependentUpon>
     </Compile>
     <Compile Include="Repository\DriverRepository.cs" />
     <Compile Include="Repository\LogRepository.cs" />
@@ -162,6 +170,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906202253241_takenRouteFieldTaxiService1.resx">
       <DependentUpon>201906202253241_takenRouteFieldTaxiService1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906221641488_someChanges.resx">
+      <DependentUpon>201906221641488_someChanges.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

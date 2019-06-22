@@ -10,9 +10,9 @@ namespace M19G1.DAL.Mapping
 {
     public class DriverModelMapping
     {
-        public static DriverServiceModel ToModel(DAL.Entities.PersonalDriverService driver)
+        public static TaxiServiceModel ToModel(DAL.Entities.PersonalDriverService driver)
         {
-            return new DriverServiceModel
+            return new TaxiServiceModel
             {
                 Id = driver.Id,                
                 BookingId=driver.BookingId,
@@ -25,7 +25,7 @@ namespace M19G1.DAL.Mapping
             };
         }
 
-        public static PersonalDriverService ToEntity(DriverServiceModel driver)
+        public static PersonalDriverService ToEntity(TaxiServiceModel driver)
         {
             return new PersonalDriverService
             {
@@ -40,7 +40,7 @@ namespace M19G1.DAL.Mapping
             };
         }
 
-        public static List<DriverServiceModel> ToModel(IEnumerable<DAL.Entities.PersonalDriverService> drivers)
+        public static List<TaxiServiceModel> ToModel(IEnumerable<DAL.Entities.PersonalDriverService> drivers)
         {
             return drivers.Select(ToModel).ToList();
         }
