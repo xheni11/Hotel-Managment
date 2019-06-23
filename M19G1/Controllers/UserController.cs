@@ -88,7 +88,7 @@ namespace M19G1.Controllers
             {
                 Destination = user.Email,
                 Body = "Credentials of hotel app account",
-                Subject = "Username: " + user.Username + "\n Password: " + passwordGenerator.RandomPassword()
+                Subject = "Username: " + user.Username + " Password: " + passwordGenerator.RandomPassword()
             };
             _emailService.SendAsync(identityMessage);
             return Json("Index", JsonRequestBehavior.AllowGet);
@@ -144,6 +144,7 @@ namespace M19G1.Controllers
             ViewData["RoleName"] = selectListRoles;
             return View();
         }
+
         [HttpPost]
         public JsonResult ListRequests()
         {

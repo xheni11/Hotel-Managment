@@ -19,7 +19,7 @@ namespace M19G1
             WebMail.SmtpUseDefaultCredentials = true;  
             WebMail.EnableSsl = true;
             WebMail.UserName = "canajxheni111@gmail.com";
-            WebMail.Password = "";
+            WebMail.Password = "11itsmylife";
             WebMail.From = "hotelapp@gmail.com";
             WebMail.Send(to: message.Destination, subject: message.Subject, body: message.Body, cc: "", bcc:"", isBodyHtml: true);
             return Task.FromResult(0);

@@ -23,7 +23,7 @@ namespace M19G1.BLL
         }
         public List<TaxiServiceModel> GetAllDriverService()
         {
-            return DriverModelMapping.ToModel(_driverRepository.GetAll().Where(d=>d.Taken==false && d.Booking.StartDate.Date==DateTime.Now.Date).ToList());
+            return DriverModelMapping.ToModel(_driverRepository.GetAll().Where(d=>d.Taken==false && d.PickUpTime.Date==DateTime.Now.Date).ToList());
         }
         public void GetMyDriverServiceUnCompleted(int idUser)
         {

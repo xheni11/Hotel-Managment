@@ -11,14 +11,21 @@ using System.Web.Mvc;
 
 namespace M19G1.Controllers
 {
+    //[Authorize(Roles = "Driver")]
     public class DriverServiceController : BaseController
     {
         private BLL.PersonalDriverService _driverService = new PersonalDriverService(new UnitOfWork());
-        // GET: DriverService
-        public ActionResult Index()
+        [HttpGet]
+        public ActionResult DriverService()
         {
-            List<TaxiServiceViewModel> users = DriverServiceViewModelMapping.ToViewModel(_driverService.GetAllDriverService());
+           // List<TaxiServiceViewModel> driverService = DriverServiceViewModelMapping.ToViewModel(_driverService.GetAllDriverService());
             return View();
+        }
+        [HttpPost]
+        public JsonResult ListRoutes()
+        {
+            List<TaxiServiceViewModel> driverService = DriverServiceViewModelMapping.ToViewModel(_driverService.GetAllDriverService());
+            return Json("DriverService", JsonRequestBehavior.AllowGet);
         }
     }
 }

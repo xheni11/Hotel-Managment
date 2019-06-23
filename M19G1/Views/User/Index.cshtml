@@ -1,4 +1,4 @@
-﻿@model M19G1.Models.UserViewModel
+﻿@model  M19G1.Models.UserViewModel
 @{
     /**/
     ViewBag.Title = "User Page";
@@ -15,21 +15,11 @@
 <link href="https://rawgit.com/tempusdominus/bootstrap-4/master/build/css/tempusdominus-bootstrap-4.css" rel="stylesheet" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 
+ <script type="text/javascript" charset="utf8" src="~/Scripts/DataTables/datatables.js"></script>
+ <link rel="stylesheet" type="text/css" href="~/Scripts/DataTables/datatables.css">
 
-<script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
-<script src="~/Scripts/bootstrap.min.js"></script>
-<script src="~/Scripts/bootstrap-toggle-master/js/bootstrap-toggle.min.js"></script>
-<link rel="stylesheet" type="text/css" href="~/Content/bootstrap.min.css" />
-<link rel="stylesheet" type="text/css" href="~/Scripts/bootstrap-toggle-master/css/bootstrap-toggle.min.css" />
-
-<script src="~/Scripts/bootstrap.js" type="text/javascript"></script>
-<link rel="stylesheet" type="text/css" href="~/Scripts/DataTables/datatables.css">
-<script type="text/javascript" charset="utf8" src="~/Scripts/DataTables/datatables.js"></script>
-
-<script th:src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js}"></script>
-<script th:src="//cdn.datatables.net/plug-ins/1.10.11/sorting/datetime-moment.js}"></script>
 <div class="container">
-    <button type="button" class="btn btn-outline-info"  style="margin-left:45px;" id="AddUser" onclick="return AddPopUp(0);">Add User</button>
+    <button type="button" class="btn btn-outline-info" style="margin-left:45px;" id="AddUser" onclick="return AddPopUp(0);">Add User</button>
     <br><br><br>
     <div style="width:90%; margin:0 auto;">
         <table id="users" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
@@ -39,16 +29,28 @@
                     <th>Lastname</th>
                     <th>Role</th>
                     <th>Edit</th>
-                    @*<th>Delete</th>*@
                     <th>Reset Password</th>
                     <th>Activity</th>
                 </tr>
             </thead>
+            @*<tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
+                        <td>@Html.DisplayFor(modelItem => item.LastName)</td>
+                        <td>@Html.DisplayFor(modelItem => item.RoleName)</td>
+                        <td><button class="btn btn-outline-info" onclick="LoadUser(@item.Id)">Edit</button></td>
+                        <td><button class="btn btn-outline-secondary" onclick="PopUpPassword(@item.Id)">Reset Password</button></td>
+                        <td><button class="btn btn-outline-secondary" onclick="UpdateActivity(@item.Id)">@item.Active</button></td>
+                    </tr>
+                }
+            </tbody>*@
         </table>
     </div>
 </div>
-<script type="text/javascript">
 
+<script type="text/javascript">
     var usersTable = $("#users").DataTable({
 
         "processing": false, // for show progress bar
@@ -80,11 +82,11 @@
                 "searchable": false,
                 "orderable": false
             },
-            //{
-            //    "targets": [6],
-            //    "searchable": false,
-            //    "orderable": false
-            //},
+                //{
+                //    "targets": [6],
+                //    "searchable": false,
+                //    "orderable": false
+                //},
 
             ],
 
@@ -110,7 +112,7 @@
             },
             {
                 data: null, render: function (data, type, full, meta) {
-                    return ' <a  class="btn btn-outline-secondary"   onclick="UpdateActivity(' + full.Id + ')">' + full.Active + '</a>';                  
+                    return ' <a  class="btn btn-outline-secondary"   onclick="UpdateActivity(' + full.Id + ')">' + full.Active + '</a>';
 
                 }
             },
@@ -118,6 +120,7 @@
         ]
 
     });
+
 
     function convertJsonDateToShortDate(data) {
         const dateValue = new Date(parseInt(data.substr(6)));
@@ -131,7 +134,7 @@
             contentType: "application/json;charset=UTF-8",
             dataType: "json",
             success: function (response) {
-                usersTable.ajax.reload();
+                usersTable.ajax.reload(); 
             },
             error: function (response) {
                 alert(response.responseText);
@@ -261,18 +264,17 @@
     }
 
     function AddUser() {
-        if (validate==true) {
-            var userObj = {
-                Id: $('#Id').val(),
-                FirstName: $('#FirstName').val(),
-                LastName: $('#LastName').val(),
-                Email: $('#Email').val(),
-                Username: $('#Username').val(),
-                Gender: $('#Gender').val(),
-                Birthday: $('#Birthday').val(),
-                RoleName: $('#RoleName').val(),
-            };
-        }
+        var userObj = {
+            Id: $('#Id').val(),
+            FirstName: $('#FirstName').val(),
+            LastName: $('#LastName').val(),
+            Email: $('#Email').val(),
+            Username: $('#Username').val(),
+            Gender: $('#Gender').val(),
+            Birthday: $('#Birthday').val(),
+            RoleName: $('#RoleName').val(),
+        };
+
         $.ajax({
             url: "/User/AddUser",
             data: JSON.stringify(userObj),
@@ -281,8 +283,9 @@
             dataType: "json",
             success: function (result) {
                 usersTable.ajax.reload();
+                
                 $('#myModal').modal('hide');
-
+                $('#myModal').ajax.reload();
             },
             error: function (errormessage) {
                 alert(errormessage.responseText);
@@ -291,38 +294,6 @@
         });
     }
 
-    function validate() {
-        var isValid = true;
-        if ($('#FirstName').val().trim() == "") {
-            $('#FirstName').css('border-color', 'Red');
-            isValid = false;
-        }
-        else {
-            $('#FirstName').css('border-color', 'lightgrey');
-        }
-        if ($('#LastName').val().trim() == "") {
-            $('#LastName').css('border-color', 'Red');
-            isValid = false;
-        }
-        else {
-            $('#LastName').css('border-color', 'lightgrey');
-        }
-        if ($('#Email').val().trim() == "") {
-            $('#Email').css('border-color', 'Red');
-            isValid = false;
-        }
-        else {
-            $('#Email').css('border-color', 'lightgrey');
-        }
-        if ($('#Username').val().trim() == "") {
-            $('#Username').css('border-color', 'Red');
-            isValid = false;
-        }
-        else {
-            $('#Userame').css('border-color', 'lightgrey');
-        }
-        return isValid;
-    }
     $('#myModal').on('shown', function () {
         $("#modal-content").scrollTop(0);
     });
@@ -355,7 +326,7 @@
         });
     };
 
-    $('#RoleName').multiSelect();
+
 </script>
 
 @Model
@@ -427,9 +398,9 @@
                         <div class="col-md-9">
                             @Html.DropDownList("RoleName", (SelectList)ViewData["RoleName"], htmlAttributes: new { id = "RoleName", @class = "form-control" })
                         </div>
-                        </div>
+                    </div>
 
-</form>
+                </form>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" id="Add" onclick="return AddUser();">Save</button>
                     <button type="button" class="btn btn-primary" id="Update" onclick="return UpdateUser();">Update</button>
@@ -460,3 +431,5 @@
         </div>
     </div>
 </div>
+
+

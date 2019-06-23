@@ -28,14 +28,14 @@
                             @if (User.IsInRole("Client"))
                             {
                                 <li class="nav-item">
-                                    @Html.ActionLink("Old Bookings", "OldBookings", "Clients", htmlAttributes: new { @class = "nav-link" })
+                                    @Html.ActionLink("Old Bookings", "OldBookings", "Clients",null,htmlAttributes: new { @class = "nav-link" })
 
                                 </li>
                                 <li class="nav-item">
                                     @Html.ActionLink("Active Bookings", "ActiveBookings", "Clients", htmlAttributes: new { @class = "nav-link" })
                                 </li>
                                 <li class="nav-item">
-                                    @Html.ActionLink("New Booking", "CreateBooking", "Clients", htmlAttributes: new { @class = "nav-link" })
+                                    @Html.ActionLink("New Booking", "CreateBooking", "Clients",null ,htmlAttributes: new { @class = "nav-link" })
                                 </li>
                                 <li class="nav-item">
                                     @Html.ActionLink("Reset Password", "ResetPassword", "Clients", htmlAttributes: new { @class = "nav-link" })

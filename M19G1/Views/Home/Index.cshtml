@@ -250,8 +250,8 @@
             LastName: $('#LastName').val(),
             Email: $('#Email').val(),
             Username: $('#Username').val(),
-            Gender: $('#Gender').val(),
-            Birthday: $('#Birthday').val(),
+            Gender: $('input[name=Gender]:checked', '#myModal').val(),
+            Birthday: $('#BirthdayText').val(),
         };
         $.ajax({
             url: "/Home/AddUser",

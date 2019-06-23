@@ -28,6 +28,7 @@ namespace M19G1
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
                       "~/Content/datatables/css/datatables.bootstrap.css", "~/Content/dashboard.css"));
+
         }
     }
 }
