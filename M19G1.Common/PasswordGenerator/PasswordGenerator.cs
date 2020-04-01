@@ -8,8 +8,8 @@ namespace M19G1.Common.RandomPassword
 {
     public class PasswordGenerator
     {
-        Random _random;
-        public string RandomString(int size, bool lowerCase)
+        static Random _random;
+        private static string RandomString(int size, bool lowerCase)
         {
             StringBuilder builder = new StringBuilder();
              _random = new Random();
@@ -23,7 +23,7 @@ namespace M19G1.Common.RandomPassword
                 return builder.ToString().ToLower();
             return builder.ToString();
         }
-        public char RandomSpecialChar()
+        private static char RandomSpecialChar()
         {
              _random = new Random();
             string specialStringChar = "!@#$%^&*()_+=<>?.,;{}[]";
@@ -32,13 +32,13 @@ namespace M19G1.Common.RandomPassword
             return charArray[chIndex] ;
         }
 
-        public int RandomNumber(int min, int max)
+        private static int RandomNumber(int min, int max)
         {
              _random = new Random();
             return _random.Next(min, max);
         }
 
-        public string RandomPassword()
+        public static string RandomPassword()
         {
             StringBuilder builder = new StringBuilder();
             builder.Append(RandomString(3, true));

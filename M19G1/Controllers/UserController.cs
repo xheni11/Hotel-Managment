@@ -22,7 +22,6 @@ namespace M19G1.Controllers
         private AnonymousRequestService _anonymousRequestService = new AnonymousRequestService(new UnitOfWork());
         private LogService _logService = new LogService(new UnitOfWork());
         private PasswordHasher passwordHasher = new PasswordHasher();
-        private PasswordGenerator passwordGenerator = new PasswordGenerator();
         private EmailService _emailService = new EmailService();
         #region
         [HttpGet]
@@ -36,7 +35,7 @@ namespace M19G1.Controllers
         [HttpGet]
         public ActionResult GeneratorPassword(int id)
         {
-            string password = passwordGenerator.RandomPassword();
+            string password = PasswordGenerator.RandomPassword();
             string hashedPassword = passwordHasher.HashPassword(password);
 
             _userService.GenerateNewPassword(id, hashedPassword);
@@ -82,13 +81,13 @@ namespace M19G1.Controllers
         [HttpPost]
         public ActionResult AddUser(UserViewModel user)
         {
-            string hashedPassword = passwordHasher.HashPassword(passwordGenerator.RandomPassword());
+            string hashedPassword = passwordHasher.HashPassword(PasswordGenerator.RandomPassword());
             _userService.CreateUser(UserViewModelMapping.ToCreateUserModel(user), hashedPassword, CurrentUser.Id);
             IdentityMessage identityMessage = new IdentityMessage
             {
                 Destination = user.Email,
                 Body = "Credentials of hotel app account",
-                Subject = "Username: " + user.Username + " Password: " + passwordGenerator.RandomPassword()
+                Subject = "Username: " + user.Username + " Password: " + PasswordGenerator.RandomPassword()
             };
             _emailService.SendAsync(identityMessage);
             return Json("Index", JsonRequestBehavior.AllowGet);
