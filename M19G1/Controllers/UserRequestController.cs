@@ -59,8 +59,7 @@ namespace M19G1.Controllers
         public ActionResult AcceptRequest(UserRequestViewModel user)
         {
             PasswordHasher passwordHasher = new PasswordHasher();
-            PasswordGenerator passwordGenerator = new PasswordGenerator();
-            string hashedPassword = passwordHasher.HashPassword(passwordGenerator.RandomPassword());           
+            string hashedPassword = passwordHasher.HashPassword(PasswordGenerator.RandomPassword());           
             _userService.CreateUser(UserRequestViewModelMapping.ToCreateViewModel(user),hashedPassword,CurrentUser.Id);
             _userRequestService.DeleteRequest(user.Id);
             return Json("Index", JsonRequestBehavior.AllowGet);

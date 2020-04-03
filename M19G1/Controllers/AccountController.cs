@@ -10,6 +10,7 @@ using System.Web;
 using System.Web.Mvc;
 using M19G1.MappingViewModel;
 using M19G1.Common.RandomPassword;
+using System;
 
 namespace M19G1.Controllers
 {
@@ -34,6 +35,9 @@ namespace M19G1.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            //var guid=Guid.NewGuid().ToString("D");
+            //PasswordHasher passwordHasher = new PasswordHasher();
+            //string hashedPassword = passwordHasher.HashPassword("Test@123");
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
