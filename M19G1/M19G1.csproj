@@ -214,6 +214,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Paths.cs" />
     <Compile Include="Mappings\AnonymousRequestViewModelMapping.cs" />
     <Compile Include="Mappings\DriverServiceViewModelMapping.cs" />
     <Compile Include="Mappings\LoginViewModelToModel.cs" />
@@ -234,6 +235,7 @@
       <DependentUpon>201905271016208_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\ClientViewModel.cs" />
     <Compile Include="Models\DriverServiceViewModel.cs" />
     <Compile Include="Models\TaxiServiceViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -426,6 +428,8 @@
     <Content Include="Content\DataTables\images\sort_desc.png" />
     <Content Include="Content\DataTables\images\sort_desc_disabled.png" />
     <Content Include="Content\DataTables\swf\flashExport.swf" />
+    <Content Include="Helpers\EmailTemplates\EmailTemplateForNewEmail.html" />
+    <Content Include="Helpers\EmailTemplates\EmailTemplate.html" />
     <Content Include="Scripts\bootstrap-toggle-master\css\bootstrap-toggle.css" />
     <Content Include="Scripts\bootstrap-toggle-master\css\bootstrap-toggle.min.css" />
     <Content Include="Scripts\bootstrap-toggle-master\css\bootstrap2-toggle.css" />

@@ -160,7 +160,7 @@
     function ResetPassword() {
         var id = $('#Id').val();
         $.ajax({
-            url: "/User/GeneratorPassword/" + id,
+            url: "/User/ResetPassword/" + id,
             type: "GET",
             contentType: "application/json;charset=UTF-8",
             dataType: "json",

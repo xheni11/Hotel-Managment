@@ -4,14 +4,14 @@ using M19G1.DAL;
 using M19G1.DAL.Entities;
 using M19G1.DAL.Mappings;
 using M19G1.DAL.Repository;
+using M19G1.Exceptions;
+using M19G1.Helpers;
 using M19G1.IBLL;
 using M19G1.Models;
-using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Reflection;
-using M19G1;
-using M19G1.Models;
+
 
 namespace M19G1.BLL
 {
@@ -43,11 +43,23 @@ namespace M19G1.BLL
         {
             if (!UsernameExists(userModel.Username) && !EmailExists(userModel.Email))
             {
-                var user = UserModelMapping.ToEntityToCreateClient(userModel, hashedPassword);
-                var role = _internalUnitOfWork.AspNetRolesRepository.Get(x => x.Name.Equals(userModel.RoleName)).SingleOrDefault();
+                AspNetUser user = UserModelMapping.ToEntityToCreateClient(userModel, hashedPassword);
+                AspNetRole role = _internalUnitOfWork.AspNetRolesRepository.Get(x => x.Name.Equals(userModel.RoleName)).SingleOrDefault();
                 user.AspNetRoles.Add(role);
                 _internalUnitOfWork.AspNetUsersRepository.Insert(user);
                 _internalUnitOfWork.Save();
+            }
+        }
+
+        public string GetEmailTemplate(string path)
+        {
+            try
+            {
+                return File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), path));
+            }
+            catch(EmailTemplateNotFoundException ex)
+            {
+                throw ex;
             }
         }
         public void CreateUser(UserRequestModel userRequest, string hashedPassword,int createdBy)
@@ -129,13 +141,12 @@ namespace M19G1.BLL
             return user != null ? user.Id != idUser : true;
 
         }
-        public void GenerateNewPassword(int idUser, string hashedPassword)
+        public void ResetPassword(int idUser, string hashedPassword)
         {
-            AspNetUser user = _internalUnitOfWork.AspNetUsersRepository.GetByID(idUser);
-            user.PasswordHash = hashedPassword;
-            _internalUnitOfWork.AspNetUsersRepository.Update(user);
-            _internalUnitOfWork.Save();
-
+                AspNetUser user = _internalUnitOfWork.AspNetUsersRepository.GetByID(idUser);
+                user.PasswordHash = hashedPassword;
+                _internalUnitOfWork.AspNetUsersRepository.Update(user);
+                _internalUnitOfWork.Save();
         }
         public void MakeUserAnonymous(int id)
         {

@@ -14,7 +14,7 @@ namespace M19G1.IBLL
         List<UserModel> GetAllUsers();        
         List<UserModel> GetUsersOrderBy(string sortField, string search,int idCurrentUser);
         UserModel GetUserById(int id);
-        void GenerateNewPassword(int idUser, string hashedPassword);
+        void ResetPassword(int idUser, string hashedPassword);
         void CreateUser(UserRequestModel userRequest,string hash,int createdBy);
         void MakeUserAnonymous(int id);
         bool UsernameExists(string username);
@@ -23,5 +23,7 @@ namespace M19G1.IBLL
         bool EmailExists(string email,int id);
         IEnumerable<UserModel> GetNotAnonymous(int currentUser);
         void UpdateIsUserLoged(int userId);
+        void UpdateUser(UserModel userModel);
+        string GetEmailTemplate(string path);
     }
 }

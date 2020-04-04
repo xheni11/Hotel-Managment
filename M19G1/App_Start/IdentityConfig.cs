@@ -14,15 +14,22 @@ namespace M19G1
     {
         public Task SendAsync(IdentityMessage message)
         {
-            WebMail.SmtpServer = "smtp.gmail.com"; 
-            WebMail.SmtpPort = 587;
-            WebMail.SmtpUseDefaultCredentials = true;  
-            WebMail.EnableSsl = true;
-            WebMail.UserName = "canajxheni111@gmail.com";
-            WebMail.Password = "11itsmylife";
-            WebMail.From = "hotelapp@gmail.com";
-            WebMail.Send(to: message.Destination, subject: message.Subject, body: message.Body, cc: "", bcc:"", isBodyHtml: true);
-            return Task.FromResult(0);
+            try
+            {
+                WebMail.SmtpServer = "smtp.gmail.com";
+                WebMail.SmtpPort = 587;
+                WebMail.SmtpUseDefaultCredentials = true;
+                WebMail.EnableSsl = true;
+                WebMail.UserName = "canajxheni111@gmail.com";
+                WebMail.Password = "11itsmylife";
+                WebMail.From = "hotelapp@gmail.com";
+                WebMail.Send(to: message.Destination, subject: message.Subject, body: message.Body, cc: "", bcc: "", isBodyHtml: true);
+                return Task.FromResult(0);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 
