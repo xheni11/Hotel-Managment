@@ -18,10 +18,9 @@ namespace M19G1.MappingViewModel
                 LastName = userModel.LastName,
                 Active = userModel.Active,
                 Email = userModel.Email,
-                RoleName = userModel.RoleName,
-                Username = userModel.Username,
-                Birthday=(DateTime)userModel.Birthday,
-                Gender=userModel.Gender
+                UserName = userModel.UserName,
+                Enabled=userModel.Enabled,
+                Roles=userModel.UserRoles.Select(r=>r.RoleName).ToList()
             };
         }
 
@@ -33,16 +32,34 @@ namespace M19G1.MappingViewModel
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,
-                Birthday = (DateTime)user.Birthday,
-                RoleName = user.RoleName,
-                Username = user.Username,
+                UserName = user.UserName,
                 Active = user.Active,
-                Gender=user.Gender
+                Enabled=user.Enabled
                 
                 
             };
         }
-        public static UserModel ToCreateUserModel(UserViewModel user)
+        public static EmailUserViewModel ToEmailUserViewModel(AddUserViewModel user)
+        {
+            return new EmailUserViewModel
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                UserName = user.UserName,
+                Email = user.Email
+            };
+        }
+        public static EmailUserViewModel ToEmailUserViewModel(UserModel user)
+        {
+            return new EmailUserViewModel
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                UserName = user.UserName,
+                Email = user.Email
+            };
+        }
+        public static UserModel ToCreateUserModel(AddUserViewModel user)
         {
             return new UserModel
             {
@@ -50,10 +67,26 @@ namespace M19G1.MappingViewModel
                 LastName = user.LastName,
                 Email = user.Email,
                 Birthday = (DateTime)user.Birthday,
-                RoleName = user.RoleName,
-                Username = user.Username,
-                Active = user.Active,
-                Gender = user.Gender
+                UserName = user.UserName,
+                Gender = user.Gender,
+                RoleId=user.RoleId,
+                Id=user.Id
+            };
+        }
+
+        public static AddUserViewModel ToModel(UserModel user)
+        {
+            return new AddUserViewModel
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Birthday = (DateTime)user.Birthday,
+                UserName = user.UserName,
+                Gender = user.Gender,
+                RoleId = user.RoleId,
+                Id=user.Id,
+                Roles=user.UserRoles
             };
         }
         public static List<UserViewModel> ToViewModel(IEnumerable<UserModel> user)
@@ -72,6 +105,7 @@ namespace M19G1.MappingViewModel
                 Username = user.Username,
                 Active = true,
                 Gender = user.Gender
+            
                 
             };
         }

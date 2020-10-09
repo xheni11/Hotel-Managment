@@ -1,4 +1,5 @@
 ﻿using M19G1.DAL.Entities;
+using M19G1.DAL.Mapping.Role;
 using M19G1.Models;
 using M19G1.Models;
 using System;
@@ -26,8 +27,10 @@ namespace M19G1.DAL.Mappings
                 DateCreated = user.DateCreated,
                 LockoutEndDateUtc = user.LockoutEndDateUtc,
                 PhoneNr = user.PhoneNumber,
-                Username = user.UserName,
-                RoleName = user.AspNetRoles.SingleOrDefault().Name
+                UserName = user.UserName,
+                RoleId = user.AspNetRoles.FirstOrDefault().Id,
+                UserRoles= user.AspNetRoles.Select(RoleModelMapping.ToModel).ToList(),
+                Enabled=user.Enabled
             };
         }
 
@@ -37,11 +40,12 @@ namespace M19G1.DAL.Mappings
 
             userToUpdate.FirstName = userModel.FirstName;
             userToUpdate.LastName = userModel.LastName;
-            userToUpdate.UserName = userModel.Username;
+            userToUpdate.UserName = userModel.UserName;
             userToUpdate.Birthday = userModel.Birthday;
             userToUpdate.Gender = userModel.Gender;
             userToUpdate.Email = userModel.Email;
             userToUpdate.PhoneNumber = userModel.PhoneNr;
+            userToUpdate.Enabled = userModel.Enabled;
             //userToUpdate.AspNetRoles=userModel.RoleName
             return userToUpdate;
         }
@@ -57,7 +61,6 @@ namespace M19G1.DAL.Mappings
             userToUpdate.Email = anonym;
             userToUpdate.PhoneNumber = anonym;
             userToUpdate.PasswordHash = anonym;
-
             return userToUpdate;
         }
         public static AspNetUser ToEntityToCreate(UserModel userModel, string hashedPassword,int createdBy)
@@ -73,7 +76,7 @@ namespace M19G1.DAL.Mappings
                 Enabled = true,
                 FirstName = userModel.FirstName,
                 LastName = userModel.LastName,
-                UserName = userModel.Username,
+                UserName = userModel.UserName,
                 Gender = userModel.Gender,
                 PhoneNumber = userModel.PhoneNr,
                 PasswordHash = hashedPassword,

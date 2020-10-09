@@ -12,7 +12,7 @@ namespace M19G1.MappingViewModel
         {
             return new UserModel
             {
-                Username=loginViewModel.Username,
+                UserName=loginViewModel.Username,
                 
 
             };

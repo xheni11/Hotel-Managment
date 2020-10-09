@@ -11,7 +11,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @type = "datetime", @class = "form-control datetimepicker", Value = DateTime.Now } })
+                @Html.TextBoxFor(model => model.StartDate, new { @type = "datetime", @class = "form-control datetimepicker", @Value = DateTime.Now } )
                 @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -19,7 +19,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @type = "datetime", @class = "form-control datetimepicker", Value = DateTime.Now.AddDays(1) } })
+
+                @Html.TextBoxFor(model => model.EndDate,  new { @type = "datetime", @class = "form-control datetimepicker", @Value = DateTime.Now.AddDays(1) } )
                 @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -27,7 +28,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.InitialLocation, htmlAttributes: new { @class = "control-label col-md-3" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.InitialLocation, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextBoxFor(model => model.InitialLocation, new { @class = "form-control" } )
                 @Html.ValidationMessageFor(model => model.InitialLocation, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -35,7 +36,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.FinalLocation, htmlAttributes: new { @class = "control-label col-md-3" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.FinalLocation, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextBoxFor(model => model.FinalLocation,  new { @class = "form-control" } )
                 @Html.ValidationMessageFor(model => model.FinalLocation, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -49,5 +50,5 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @*@Html.ActionLink("Back to List", "Index")*@
 </div>

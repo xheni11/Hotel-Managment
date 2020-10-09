@@ -11,6 +11,7 @@ using System.Web.Mvc;
 using M19G1.MappingViewModel;
 using M19G1.Common.RandomPassword;
 using System;
+using System.Collections.Generic;
 
 namespace M19G1.Controllers
 {
@@ -149,18 +150,21 @@ namespace M19G1.Controllers
         public ActionResult SendRequest()
         {
             
-            SelectList selectListRoles = new SelectList(_roleService.GetAllRoles().Select(s => s.RoleName));
-            ViewData["RoleName"] = selectListRoles;
-            return View();
+            List<RoleModel> roles = _roleService.GetAllRoles();
+            UserRequestViewModel user = new UserRequestViewModel();
+            user.Roles = roles;
+            return View(user);
         }
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SendRequest(UserRequestViewModel model)
         {
+            List<RoleModel> roles = _roleService.GetAllRoles();
+            model.Roles = roles;
             if (ModelState.IsValid)
             {         
-                _userRequestService.CreateRequest(UserRequestViewModelMapping.ToCreateViewModel(model));
+                _userRequestService.CreateRequest(UserRequestViewModelMapping.ToCreateRequestViewModel(model));
                 return View("Login");
             }
             return View(model);

@@ -24,9 +24,9 @@ namespace M19G1.BLL
             _usersRequestRepository = _internalUnitOfWork.UserRequestRepository;
             _roleRepository = _internalUnitOfWork.AspNetRolesRepository;
         }
-        public List<UserRequestModel> GetAllRequests()
+        public List<UserRequestModel> GetAllRequests( bool desc, string columnName, string search, int pageNumber, int pageSize)
         {
-            return UserRequestModelMapping.ToModel(_usersRequestRepository.GetAll());
+            return UserRequestModelMapping.ToModel(_usersRequestRepository.GetAll(pageNumber, pageSize, columnName, search, desc));
         }
         public List<UserRequestModel> GetUsersOrderBy(string sortField, string search)
         {
@@ -46,11 +46,15 @@ namespace M19G1.BLL
         public void CreateRequest(UserRequestModel userModel)
         {
             var user = UserRequestModelMapping.ToEntityToCreate(userModel);
-            var role = _internalUnitOfWork.AspNetRolesRepository.Get(x => x.Name.Equals(userModel.RoleName)).SingleOrDefault();
-            user.Role=role;
-            user.RoleId = role.Id;
+            var role = _internalUnitOfWork.AspNetRolesRepository.GetByID(userModel.RoleId);
+            user.RoleId = userModel.RoleId;
+            user.Role = role;
             _internalUnitOfWork.UserRequestRepository.Insert(user);
             _internalUnitOfWork.Save();
+        }
+        public int CountAllRecords(int currentUser)
+        {
+           return  _usersRequestRepository.CountAllRecords(currentUser);
         }
     }
 }

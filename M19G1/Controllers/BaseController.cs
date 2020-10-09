@@ -1,4 +1,5 @@
-﻿using M19G1.Models;
+﻿using M19G1.Common.Exceptions.Models;
+using M19G1.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System.Web;
@@ -13,7 +14,7 @@ namespace M19G1.Controllers
         private ApplicationUserManager _userManager;
 
         public ApplicationUser CurrentUser { get; set; }
-
+        public NotifficationModel Alert { get; set; }
         public ApplicationSignInManager SignInManager
         {
             get

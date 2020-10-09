@@ -9,9 +9,9 @@ namespace M19G1
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js",
-                        "~/Scripts/datatables/jquery.datatables.js",
-                        "~/Scripts/datatables/datatables.bootstrap.js"));
+                        "~/Scripts/jquery-3.5.1.js",
+                        "~/Scripts/jquery-3.5.1.min.js"
+                        ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -22,13 +22,19 @@ namespace M19G1
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js"));
+                      "~/Scripts/bootstrap.min.js"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css",
-                      "~/Content/datatables/css/datatables.bootstrap.css", "~/Content/dashboard.css"));
-
+            bundles.Add(new StyleBundle("~/bundles/css").Include(
+                      "~/Content/Site.css",
+                      "~/Content/font-awesome.css",
+                      "~/Content/font-awesome.min.css",
+                      "~/Content/bootstrap.min.css"));
+            bundles.Add(new StyleBundle("~/bundles/search").Include(
+                        "~/Content/Search.css"));
+            bundles.Add(new StyleBundle("~/bundles/sidebar").Include(
+            "~/Content/Sidebar.css"));
+            bundles.Add(new StyleBundle("~/bundles/form").Include(
+"~/Content/form.css"));
         }
     }
 }

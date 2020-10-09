@@ -26,11 +26,12 @@ namespace M19G1.Models
         [StringLength(30, MinimumLength = 3,
         ErrorMessage = "Username Should be minimum 3 characters and a maximum of 30 characters")]
         public string Username { get; set; }
-        [Required]
-        public string RoleName { get; set; }
         [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
         public DateTime Birthday { get; set; }
         public string Gender { get; set; }
         public string PhoneNumber { get; set; }
+        public List<RoleModel> Roles { get; set; }
+        public int  RoleId {get;set;}
+        public string RoleName { get; set; }
     }
 }

@@ -10,5 +10,6 @@ namespace M19G1.Common.Exceptions.Models
     {
         public string Type { get; set; }
         public string Message { get; set; }
+        public string ClassType { get { return "alert-"+this.Type.ToLower(); } set { } }
     }
 }

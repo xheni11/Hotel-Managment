@@ -97,8 +97,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exceptions\EmailTemplateNotFoundException.cs" />
+    <Compile Include="Enums\AlertConstants.cs" />
     <Compile Include="Exceptions\Models\ErrorDetails.cs" />
-    <Compile Include="Exceptions\Models\NotifficationModel.cs" />
+    <Compile Include="AlertNotification\NotifficationModel.cs" />
     <Compile Include="Logging\Interceptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PasswordGenerator\PasswordGenerator.cs" />

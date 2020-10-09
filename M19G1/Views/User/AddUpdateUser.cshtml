@@ -1,0 +1,83 @@
+﻿@model M19G1.Models.AddUserViewModel
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <hr/>
+    <div class="form-horizontal">
+        <div class="card">
+            <div class="card-body">
+                <div style="padding-left:7rem;">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <h3 class="text-center default-text py-3"> User details</h3>
+                    <div class="row row-space">
+                        <div class="col-md-6 mb-4">
+                            <div class="md-form">
+                                @Html.HiddenFor(model => model.Id)
+                                @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", placeholder = "First Name" })
+                                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="md-form">
+                                @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", placeholder = "Last Name" })
+                                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-space">
+                        <div class="col-6">
+                            <div class="md-form">
+                                @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", placeholder = "Username" })
+                                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="md-form">
+                                @Html.DropDownListFor(model => model.RoleId, new SelectList(Model.Roles, "Id", "RoleName"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-space">
+
+                        <div class="col-6">
+                            <div class="md-form">
+                                Gender
+                                @Html.RadioButtonFor(model => model.Gender, "F") Female
+                                @Html.RadioButtonFor(model => model.Gender, "M") Male
+                                @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="md-form">
+                                @Html.TextBoxFor(model => model.Email, new { @class = "form-control", placeholder = "Email" })
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row row-space">
+                        <div class="col-6">
+                            <div class="md-form">
+                                @Html.TextBoxFor(model => model.Birthday, new { @type = "date", @class = "form-control datepicker", @Value = DateTime.Now.ToString("yyyy-MM-dd") })
+                                @Html.ValidationMessageFor(model => model.Birthday, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="text-center">
+                        @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-danger" })
+                        <input type="submit" value="Save" class="btn btn-default" />
+
+                    </div>
+                </div>
+            </div>
+            </div>
+            </div>
+            }
+
+
+

@@ -17,13 +17,29 @@ namespace M19G1.MappingViewModel
                 FirstName = userModel.FirstName,
                 LastName = userModel.LastName,
                 Email = userModel.Email,
-                //RoleName = userModel.RoleName,
                 Username = userModel.Username,
                 Birthday = (DateTime)userModel.Birthday,
-                Gender = userModel.Gender
+                Gender = userModel.Gender,
+                RoleId=userModel.RoleId,
+                RoleName=userModel.RoleName
             };
         }
-        public static UserRequestModel ToCreateViewModel(UserRequestViewModel user)
+        public static UserModel ToCreateViewModel(UserRequestViewModel user)
+        {
+            return new UserModel
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Birthday = (DateTime)user.Birthday,
+                UserName = user.Username,
+                Gender = user.Gender,
+                RoleId=user.RoleId
+                
+
+            };
+        }
+        public static UserRequestModel ToCreateRequestViewModel(UserRequestViewModel user)
         {
             return new UserRequestModel
             {
@@ -31,10 +47,10 @@ namespace M19G1.MappingViewModel
                 LastName = user.LastName,
                 Email = user.Email,
                 Birthday = (DateTime)user.Birthday,
-                RoleName = user.RoleName,
                 Username = user.Username,
-                Gender = user.Gender
-                
+                Gender = user.Gender,
+                RoleId=user.RoleId
+
 
             };
         }
@@ -47,9 +63,9 @@ namespace M19G1.MappingViewModel
                 LastName = user.LastName,
                 Email = user.Email,
                 Birthday = (DateTime)user.Birthday,
-                RoleName = user.RoleName,
                 Username = user.Username,
-                Gender = user.Gender
+                Gender = user.Gender,
+                RoleId=user.RoleId
 
 
             };

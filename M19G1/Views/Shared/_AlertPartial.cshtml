@@ -1,0 +1,20 @@
+﻿@using M19G1.Common.Exceptions.Models
+@if (@TempData["Alerts"] != null)
+{
+    foreach (var alert in (IEnumerable<NotifficationModel>)TempData["Alerts"])
+    {
+        <div id="notify" class="alert alert-dismissible fade show">
+            <strong>@alert.Type!</strong>@alert.Message
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <script>
+        var notify=document.getElementById("notify")
+        notify.classList.add("@alert.ClassType");
+        setTimeout(function () { notify.style.display = "none"; }, 5000);
+
+        </script>
+    }
+}

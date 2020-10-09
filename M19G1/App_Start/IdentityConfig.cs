@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using System;
+using System.Configuration;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Helpers;
@@ -16,13 +17,13 @@ namespace M19G1
         {
             try
             {
-                WebMail.SmtpServer = "smtp.gmail.com";
-                WebMail.SmtpPort = 587;
+                WebMail.SmtpServer = ConfigurationManager.AppSettings["smtpServer"];
+                WebMail.SmtpPort = Convert.ToInt32(ConfigurationManager.AppSettings["port"]);
                 WebMail.SmtpUseDefaultCredentials = true;
                 WebMail.EnableSsl = true;
-                WebMail.UserName = "canajxheni111@gmail.com";
-                WebMail.Password = "11itsmylife";
-                WebMail.From = "hotelapp@gmail.com";
+                WebMail.UserName = ConfigurationManager.AppSettings["username"];
+                WebMail.Password = ConfigurationManager.AppSettings["password"];
+                WebMail.From = ConfigurationManager.AppSettings["email"]; 
                 WebMail.Send(to: message.Destination, subject: message.Subject, body: message.Body, cc: "", bcc: "", isBodyHtml: true);
                 return Task.FromResult(0);
             }

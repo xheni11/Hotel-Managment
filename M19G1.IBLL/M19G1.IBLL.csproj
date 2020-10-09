@@ -111,6 +111,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\M19G1.Common\M19G1.Common.csproj">
+      <Project>{6FDD8EAC-0B34-4F44-92CB-3D505B404657}</Project>
+      <Name>M19G1.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\M19G1.Models\M19G1.Models.csproj">
       <Project>{A37933F1-4D30-43B9-8B5F-B084FDCA2907}</Project>
       <Name>M19G1.Models</Name>

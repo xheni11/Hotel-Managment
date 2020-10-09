@@ -1,0 +1,46 @@
+﻿
+
+/* Style the search field */
+.example input[type=text] {
+    padding: 5px;
+    font-size: 17px;
+    float: right;
+    width: 100%;
+    background: #fff;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #4dd0e1;
+    box-shadow: 0 1px 0 0 #4dd0e1;
+    border: 0px;
+}
+.example input[type=text]:focus:not([readonly]) {
+    border-bottom: 1px solid #4dd0e1;
+    box-shadow: 0 1px 0 0 #4dd0e1;
+}
+
+.example .fa {
+    color: white;
+}
+
+/* Style the submit button */
+form.example button {
+    margin-bottom: 10px;
+    float: right;
+    width: 8%;
+    padding: 5px;
+    background: #4dd0e1;
+    color: white;
+    font-size: 17px;
+    border: 0px;
+    border-left: none; /* Prevent double borders */
+}
+
+    form.example button:hover {
+        background: #17a2b8;
+    }
+
+/* Clear floats */
+form.example::after {
+    content: "";
+    clear: both;
+   
+}

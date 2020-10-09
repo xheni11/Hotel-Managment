@@ -59,10 +59,43 @@ namespace M19G1.DAL.Repository
             return _dbSet.Where(u => u.Email.Equals(email));
 
         }
-        public IEnumerable<AspNetUser> GetNotAnonymous(int currentUser)
+        public IEnumerable<AspNetUser> GetNotAnonymous(int currentUser,int pageNumber,int pageSize,string columnName,string search,bool desc)
         {
-           return _dbSet.Where(u => u.AnonymousRequest.Confirmed == false || u.AnonymousRequest.Id==null && u.Deleted==false && u.Id!=currentUser);
-        }
 
+            if (search != null && !desc)
+            {
+               return _dbSet.Where(u => u.AnonymousRequest.Confirmed == false 
+               || u.AnonymousRequest.Id == null 
+               && u.Deleted == false 
+               && u.Id != currentUser &&
+               (u.UserName.Contains(search) || u.LastName.Contains(search) || u.FirstName.Contains(search) || u.Email.Contains(search))).
+                    OrderBy(CreateExpression<AspNetUser>(columnName)).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+            }
+            else if (search != null && desc)
+            {
+                return _dbSet.Where(u => u.AnonymousRequest.Confirmed == false
+                || u.AnonymousRequest.Id == null
+                && u.Deleted == false
+                && u.Id != currentUser &&
+                (u.UserName.Contains(search) || u.LastName.Contains(search) || u.FirstName.Contains(search) || u.Email.Contains(search))).
+                     OrderByDescending(CreateExpression<AspNetUser>(columnName)).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+            }
+            else if (!desc)
+            {
+                return _dbSet.Where(u => u.AnonymousRequest.Confirmed == false || u.AnonymousRequest.Id == null && u.Deleted == false && u.Id != currentUser).OrderBy(CreateExpression<AspNetUser>(columnName)).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+            }
+            else
+            {
+                return _dbSet.Where(u => u.AnonymousRequest.Confirmed == false || u.AnonymousRequest.Id == null && u.Deleted == false && u.Id != currentUser).OrderByDescending(CreateExpression<AspNetUser>(columnName)).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+            }
+        }
+        public  int CountAllRecords(int currentUser)
+        {
+           return CountAllRecords(u => u.AnonymousRequest.Confirmed == false
+                || u.AnonymousRequest.Id == null
+                && u.Deleted == false
+                && u.Id != currentUser);
+        }
+      
     }
 }

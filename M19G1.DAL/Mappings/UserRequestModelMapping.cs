@@ -25,7 +25,8 @@ namespace M19G1.DAL.Mapping
                 Username = user.Username,
                 Gender = user.Gender,
                 PhoneNumber = user.PhoneNumber,
-                //RoleName = user.Role.Name
+                RoleId=user.RoleId,
+                RoleName = user.Role.Name
             };
         }
 
@@ -38,13 +39,14 @@ namespace M19G1.DAL.Mapping
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,
-                Birthday = user.Birthday,
+                Birthday = (DateTime)user.Birthday,
                 Username = user.Username,
                 Gender = user.Gender,
                 PhoneNumber = user.PhoneNumber,
                 CreatedOn = DateTime.Now,
                 Deleted = false,
-                CreatedBy = 1
+                CreatedBy = 1,
+                RoleId=user.RoleId
                 
                 
             };

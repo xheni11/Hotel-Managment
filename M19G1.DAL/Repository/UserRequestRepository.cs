@@ -27,6 +27,38 @@ namespace M19G1.DAL.Repository
                 return entities.Where(u=> u.FirstName.Equals(searchValue)).OrderBy(e => propertyInfo.GetValue(e, null));
             }
         }
+        public int CountAllRecords(int currentUser)
+        {
+            return CountAllRecords(u => u.Deleted == false
+                && u.Id != currentUser);
+        }
 
+
+        public IEnumerable<UserRequest> GetAll( int pageNumber, int pageSize, string columnName, string search, bool desc)
+        {
+
+            if (search != null && !desc)
+            {
+                return _dbSet.Where(u => 
+                 u.Deleted == false &&
+                (u.Username.Contains(search) || u.LastName.Contains(search) || u.FirstName.Contains(search) || u.Email.Contains(search))).
+                     OrderBy(CreateExpression<UserRequest>(columnName)).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+            }
+            else if (search != null && desc)
+            {
+                return _dbSet.Where(u => 
+                 u.Deleted == false &&
+                (u.Username.Contains(search) || u.LastName.Contains(search) || u.FirstName.Contains(search) || u.Email.Contains(search))).
+                     OrderByDescending(CreateExpression<UserRequest>(columnName)).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+            }
+            else if (!desc)
+            {
+                return _dbSet.Where(u =>  u.Deleted == false).OrderBy(CreateExpression<UserRequest>(columnName)).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+            }
+            else
+            {
+                return _dbSet.Where(u => u.Deleted == false).OrderByDescending(CreateExpression<UserRequest>(columnName)).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+            }
+        }
     }
 }

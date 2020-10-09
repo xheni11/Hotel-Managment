@@ -1,6 +1,6 @@
-﻿using M19G1.BLL;
+﻿using M19G1.Common.Enums;
+using M19G1.Common.Exceptions.Models;
 using M19G1.Common.RandomPassword;
-using M19G1.DAL;
 using M19G1.Helpers;
 using M19G1.IBLL;
 using M19G1.Mapping;
@@ -10,7 +10,6 @@ using M19G1.ViewModels;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -22,32 +21,77 @@ namespace M19G1.Controllers
         private IUserService _userService;
         private IRoleService _roleService;
         private IUserRequestService _userRequestService;
-        private AnonymousRequestService _anonymousRequestService = new AnonymousRequestService(new UnitOfWork());
+        private IAnonymousRequestService _anonymousRequestService ;
         private ILogService _logService;
         private PasswordHasher passwordHasher = new PasswordHasher();
         private EmailService _emailService = new EmailService();
-
-        public UserController(IUserService userService, IRoleService roleService, IUserRequestService userRequestService,ILogService logService)
+        private List<NotifficationModel> _notifficationModels;
+        private NotifficationModel _alertModel;
+        public UserController(IUserService userService, IRoleService roleService, IUserRequestService userRequestService,ILogService logService,IAnonymousRequestService anonymousRequestService)
         {
             _userService = userService;
             _roleService = roleService;
             _userRequestService = userRequestService;
             _logService = logService;
+            _anonymousRequestService = anonymousRequestService;
+            _notifficationModels =new List<NotifficationModel>();
+            _alertModel = new NotifficationModel();
         }
-        #region
+        #region Users
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder,string searchField, int ?pageNumber)
         {
-            List<UserViewModel> users = UserViewModelMapping.ToViewModel(_userService.GetNotAnonymous(CurrentUser.Id));
-            SelectList selectListRoles = new SelectList(_roleService.GetAllRoles().Select(s => s.RoleName));
-            ViewData["RoleName"] = selectListRoles;
-            return View();
+            List<UserViewModel> users;
+            int count = _userService.CountAllNotAnonymous(CurrentUser.Id);
+
+            ViewBag.FirstNameSortParm = String.IsNullOrEmpty(sortOrder) ? "FirstName_desc" : "";
+            ViewBag.LastNameSortParm = sortOrder == "LastName" ? "LastName_desc" : "LastName";
+            ViewBag.EmailSortParm = sortOrder == "Email" ? "Email_desc" : "Email";
+            ViewBag.UsernameSortParm = sortOrder == "Username" ? "Username_desc" : "Username";
+            switch (sortOrder)
+            {
+                case "FirstName_desc":
+                    users = UserViewModelMapping.ToViewModel(_userService.GetNotAnonymous(CurrentUser.Id,true,"FirstName", searchField,pageNumber??1, Helpers.Constants.PAGE_SIZE));
+                    break;
+                case "LastName":
+                    users = UserViewModelMapping.ToViewModel(_userService.GetNotAnonymous(CurrentUser.Id, false, "LastName", searchField, pageNumber ?? 1, Helpers.Constants.PAGE_SIZE));
+
+                    break;
+                case "LastName_desc":
+                    users = UserViewModelMapping.ToViewModel(_userService.GetNotAnonymous(CurrentUser.Id, true, "LastName", searchField, pageNumber ?? 1, Helpers.Constants.PAGE_SIZE));
+
+                    break;
+                case "Email":
+                    users = UserViewModelMapping.ToViewModel(_userService.GetNotAnonymous(CurrentUser.Id, false, "Email", searchField, pageNumber ?? 1, Helpers.Constants.PAGE_SIZE));
+
+                    break;
+                case "Email_desc":
+                    users = UserViewModelMapping.ToViewModel(_userService.GetNotAnonymous(CurrentUser.Id, true, "Email", searchField, pageNumber ?? 1, Helpers.Constants.PAGE_SIZE));
+
+                    break;
+                case "Username":
+                    users = UserViewModelMapping.ToViewModel(_userService.GetNotAnonymous(CurrentUser.Id, false, "UserName", searchField, pageNumber ?? 1, Helpers.Constants.PAGE_SIZE));
+
+                    break;
+                case "Username_desc":
+                    users = UserViewModelMapping.ToViewModel(_userService.GetNotAnonymous(CurrentUser.Id, true, "UserName", searchField, pageNumber ?? 1, Helpers.Constants.PAGE_SIZE));
+
+                    break;
+                default:
+                   users = UserViewModelMapping.ToViewModel(_userService.GetNotAnonymous(CurrentUser.Id, false, "FirstName", searchField, pageNumber ?? 1, Helpers.Constants.PAGE_SIZE));
+                    break;
+            }
+            
+            return View(new PaginatedList<UserViewModel>(users, pageNumber ?? 1, Helpers.Constants.PAGE_SIZE,count));
+
         }
-        [HttpPut]
+        [HttpGet]
         public ActionResult ResetPassword(int id)
         {
-            _emailService.SendAsync(SendPasswordToEmail(_userService.GetUserById(id)));
-            return Json("Index", JsonRequestBehavior.AllowGet);
+            UserModel user = _userService.GetUserById(id);
+            string password=GeneratePassword(user.Id);
+            _emailService.SendAsync(SendPasswordToEmail(UserViewModelMapping.ToEmailUserViewModel(user),password, "Ndryshimi i passwordit u krye me sukses!"));
+            return RedirectToAction("Index");
         }
         private string GeneratePassword(int id)
         {
@@ -56,13 +100,14 @@ namespace M19G1.Controllers
             return password;
         }
 
-        private IdentityMessage SendPasswordToEmail(UserModel user)
+        private IdentityMessage SendPasswordToEmail(EmailUserViewModel user,string password,string action)
         {
             string htmlContent = _userService.GetEmailTemplate(Paths.EMAIL_PATH);
 
             htmlContent = htmlContent.Replace("FIRSTNAME", user.FirstName);
-            htmlContent = htmlContent.Replace("USERNAME", user.Username);
-            htmlContent = htmlContent.Replace("PASSWORD", GeneratePassword(user.Id));
+            htmlContent = htmlContent.Replace("USERNAME", user.UserName);
+            htmlContent = htmlContent.Replace("PASSWORD", password);
+            htmlContent = htmlContent.Replace("ACTION", action);
             return new IdentityMessage
             {
                 Destination = user.Email,
@@ -70,43 +115,72 @@ namespace M19G1.Controllers
                 Subject = "Welcome to Hotel Managment!"
             };
         }
-        [HttpPut]
+        [HttpGet]
         public ActionResult UpdateUserActivity(int id)
         {
-            _userService.UpdateUserActivity(id);
-            return Json("Index", JsonRequestBehavior.AllowGet);
+            NotifficationModel _alertModel= _userService.UpdateUserActivity(id);
+            _notifficationModels.Add(_alertModel);
+            TempData["Alerts"] = _notifficationModels;
+            return RedirectToAction("Index");
         }
 
-        //[HttpGet]
-        //public JsonResult ListUsers()
-        //{
-        //    List<UserViewModel> users = UserViewModelMapping.ToViewModel(_userService.GetNotAnonymous(CurrentUser.Id));
-        //    int recordsTotal;
-        //    var start = Request.Form.GetValues("start").FirstOrDefault();
-        //    var length = Request.Form.GetValues("length").FirstOrDefault();
-        //    int pageSize = length != null ? Convert.ToInt32(length) : 0;
-        //    int skip = start != null ? Convert.ToInt32(start) : 0;
-        //    var sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
-        //    var searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
-        //    if (!string.IsNullOrEmpty(sortColumn) || !string.IsNullOrEmpty(searchValue))
-        //    {
-        //        users = UserViewModelMapping.ToViewModel(_userService.GetUsersOrderBy(sortColumn, searchValue, CurrentUser.Id)); //currentuser
-        //    }
-        //    recordsTotal = users.Count();
-        //    var data = users.Skip(skip).Take(pageSize).ToArray();
-        //    return Json(data, JsonRequestBehavior.AllowGet);
-
-        //    //return Json(new {  recordsFiltered = recordsTotal, recordsTotal = recordsTotal, draw=draw, data = data },JsonRequestBehavior.AllowGet);
-
-        //}
+      
         [HttpPost]
-        public ActionResult AddUser(UserViewModel user)
+        public ActionResult AddUpdateUser(AddUserViewModel user)
         {
-            string hashedPassword = passwordHasher.HashPassword(PasswordGenerator.RandomPassword());
-            _userService.CreateUser(UserViewModelMapping.ToCreateUserModel(user), hashedPassword, CurrentUser.Id);
-            SendPasswordToEmail(UserViewModelMapping.ToModel(user));
-            return Json("Index", JsonRequestBehavior.AllowGet);
+            List<RoleModel> roles = _roleService.GetAllRoles();
+            user.Roles = roles;
+
+            if (ModelState.IsValid)
+            {
+                if (user.Id != null)
+                {
+                    _alertModel= _userService.UpdateUser(UserViewModelMapping.ToCreateUserModel(user));
+                    _notifficationModels.Add(_alertModel);
+                    if (_alertModel.Type != AlertConstants.ALERT_TYPE.Danger.ToString("g"))
+                    {
+                        TempData["Alerts"] = _notifficationModels;
+                        return RedirectToAction("Index");
+                    }
+                }
+                else
+                {
+                    string password = PasswordGenerator.RandomPassword();
+                    string hashedPassword = passwordHasher.HashPassword(password);
+                    _alertModel = _userService.CreateUser(UserViewModelMapping.ToCreateUserModel(user), hashedPassword, CurrentUser.Id);
+                    _notifficationModels.Add(_alertModel);
+                    if (_alertModel.Type != AlertConstants.ALERT_TYPE.Danger.ToString("g"))
+                    {
+                        var response = _emailService.SendAsync(SendPasswordToEmail(UserViewModelMapping.ToEmailUserViewModel(user), password, " Regjistrimi i llogarisë tuaj u krye me sukses!"));
+                        if (!response.IsCompleted)
+                        {
+                            _notifficationModels.Add(new NotifficationModel { Type = AlertConstants.ALERT_TYPE.Danger.ToString("g"), Message = "Email error" });
+
+                        }
+                        TempData["Alerts"] = _notifficationModels;
+                        return RedirectToAction("Index");
+                    }
+                }
+
+            }
+            TempData["Alerts"] = _notifficationModels;
+            return View(user);
         }
+
+       
+        [HttpGet]
+        public ActionResult AddUpdateUser(int id)
+        {
+            List<RoleModel> roles = _roleService.GetAllRoles();
+            AddUserViewModel model = new AddUserViewModel();
+            if (id > 0)
+            {
+                model = UserViewModelMapping.ToModel(_userService.GetUserById(id));
+            }
+            model.Roles = roles;
+            return View(model);
+        }
+
 
         private IdentityMessage SendNewEmail(UserModel user)
         {
@@ -117,7 +191,7 @@ namespace M19G1.Controllers
             {
                 Destination = user.Email,
                 Body = htmlContent,
-                Subject = "Email CHanged"
+                Subject = "Email Changed"
             };
         }
 
@@ -133,79 +207,104 @@ namespace M19G1.Controllers
             return Json("Index", JsonRequestBehavior.AllowGet);
         }
 
-        [HttpGet]
-        public ActionResult GetUser(int id)
-        {
-            if (id == 0)
-            {
-                return Json("Index", JsonRequestBehavior.AllowGet);
-            }
-            return Json(_userService.GetUserById(id), JsonRequestBehavior.AllowGet);
-        }
 
-        [HttpPut]
+
+        [HttpGet]
         public ActionResult DeleteUser(int id)
         {
-            _userService.DeleteUser(id);
-            return Json("Index", JsonRequestBehavior.AllowGet);
+            _alertModel= _userService.DeleteUser(id);
+            _notifficationModels.Add(_alertModel);
+            TempData["Alerts"] = _notifficationModels;
+            return RedirectToAction("Index"); 
         }
 
         #endregion
-        #region
+        #region Requests
         [HttpGet]
-        public ActionResult GetRequests()
+        public ActionResult Requests(string sortOrder, string searchField, int? pageNumber)
         {
-            List<UserRequestViewModel> users = UserRequestViewModelMapping.ToViewModel(_userRequestService.GetAllRequests());
-            SelectList selectListRoles = new SelectList(_roleService.GetAllRoles().Select(s => s.RoleName));
-            ViewData["RoleName"] = selectListRoles;
-            return View();
+            List<UserRequestViewModel> users ;
+            int count = _userRequestService.CountAllRecords(CurrentUser.Id);
+            ViewBag.FirstNameSortParm = String.IsNullOrEmpty(sortOrder) ? "FirstName_desc" : "";
+            ViewBag.LastNameSortParm = sortOrder == "LastName" ? "LastName_desc" : "LastName";
+            ViewBag.EmailSortParm = sortOrder == "Email" ? "Email_desc" : "Email";
+            ViewBag.UsernameSortParm = sortOrder == "Username" ? "Username_desc" : "Username";
+            switch (sortOrder)
+            {
+                case "FirstName_desc":
+                    users = UserRequestViewModelMapping.ToViewModel(_userRequestService.GetAllRequests( true, "FirstName", searchField, pageNumber ?? 1, Helpers.Constants.PAGE_SIZE));
+                    break;
+                case "LastName":
+                    users = UserRequestViewModelMapping.ToViewModel(_userRequestService.GetAllRequests(false, "LastName", searchField, pageNumber ?? 1, Helpers.Constants.PAGE_SIZE));
+
+                    break;
+                case "LastName_desc":
+                    users = UserRequestViewModelMapping.ToViewModel(_userRequestService.GetAllRequests(true, "LastName", searchField, pageNumber ?? 1, Helpers.Constants.PAGE_SIZE));
+
+                    break;
+                case "Email":
+                    users = UserRequestViewModelMapping.ToViewModel(_userRequestService.GetAllRequests(false, "Email", searchField, pageNumber ?? 1, Helpers.Constants.PAGE_SIZE));
+
+                    break;
+                case "Email_desc":
+                    users = UserRequestViewModelMapping.ToViewModel(_userRequestService.GetAllRequests(true, "Email", searchField, pageNumber ?? 1, Helpers.Constants.PAGE_SIZE));
+
+                    break;
+                case "Username":
+                    users = UserRequestViewModelMapping.ToViewModel(_userRequestService.GetAllRequests(false, "UserName", searchField, pageNumber ?? 1, Helpers.Constants.PAGE_SIZE));
+
+                    break;
+                case "Username_desc":
+                    users = UserRequestViewModelMapping.ToViewModel(_userRequestService.GetAllRequests(true, "UserName", searchField, pageNumber ?? 1, Helpers.Constants.PAGE_SIZE));
+
+                    break;
+                default:
+                    users = UserRequestViewModelMapping.ToViewModel(_userRequestService.GetAllRequests(false, "FirstName", searchField, pageNumber ?? 1, Helpers.Constants.PAGE_SIZE));
+                    break;
+            }
+
+            return View(new PaginatedList<UserRequestViewModel>(users, pageNumber ?? 1, Helpers.Constants.PAGE_SIZE, count));
         }
 
-        //[HttpGet]
-        //public JsonResult ListRequests()
-        //{
-        //    List<UserRequestViewModel> users = UserRequestViewModelMapping.ToViewModel(_userRequestService.GetAllRequests());
-        //    int recordsTotal;
-        //    var start = Request.Form.GetValues("start").FirstOrDefault();
-        //    var length = Request.Form.GetValues("length").FirstOrDefault();
-        //    int pageSize = length != null ? Convert.ToInt32(length) : 0;
-        //    int skip = start != null ? Convert.ToInt32(start) : 0;
-        //    var draw = Request.Form.GetValues("draw").FirstOrDefault();
-        //    var sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
-        //    var sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
-        //    var searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
-        //    if (!string.IsNullOrEmpty(sortColumn) || !string.IsNullOrEmpty(searchValue))
-        //    {
-        //        users = UserRequestViewModelMapping.ToViewModel(_userRequestService.GetUsersOrderBy(sortColumn, searchValue)); //_controller.CurrentUser.Id kur te bej login
-        //    }
-        //    recordsTotal = users.Count();
-        //    var data = users.Skip(skip).Take(pageSize).ToArray();
-        //    return Json(data, JsonRequestBehavior.AllowGet);
-
-        //}
+  
         [HttpGet]
-        public ActionResult GetRequest(int id)
+        public ActionResult AcceptRequest(int id)
         {
-            return Json(_userRequestService.GetRequestById(id), JsonRequestBehavior.AllowGet);
+            try
+            {
+                UserRequestViewModel user = UserRequestViewModelMapping.ToViewModel( _userRequestService.GetRequestById(id));
+                string hashedPassword = passwordHasher.HashPassword(PasswordGenerator.RandomPassword());
+                _userService.CreateUser(UserRequestViewModelMapping.ToCreateViewModel(user), hashedPassword, CurrentUser.Id);
+                _userRequestService.DeleteRequest(user.Id);
+                _alertModel = new NotifficationModel { Type = AlertConstants.ALERT_TYPE.Success.ToString("g"), ClassType = AlertConstants.ALERT_TYPE.Success.ToString("g"), Message = "User request has been accpted successfuly!" };
+            }
+            catch(Exception ex)
+            {
+                _alertModel = new NotifficationModel { Type = AlertConstants.ALERT_TYPE.Danger.ToString("g"), ClassType = AlertConstants.ALERT_TYPE.Danger.ToString("g"), Message = "Unknown error has occured. Please try again!"+ex };
+            }
+            _notifficationModels.Add(_alertModel);
+            TempData["Alerts"] = _notifficationModels;
+            return RedirectToAction("Requests");
         }
-        [HttpPut]
-        public ActionResult AcceptRequest(UserRequestViewModel user)
-        {
-
-            string hashedPassword = passwordHasher.HashPassword(PasswordGenerator.RandomPassword());
-            _userService.CreateUser(UserRequestViewModelMapping.ToCreateViewModel(user), hashedPassword, CurrentUser.Id);
-            _userRequestService.DeleteRequest(user.Id);
-            return Json("Index", JsonRequestBehavior.AllowGet);
-        }
-        [HttpDelete]
+        [HttpGet]
         public ActionResult DeleteRequest(int id)
         {
+            try
+            { 
             _userRequestService.DeleteRequest(id);
-            return Json("Index", JsonRequestBehavior.AllowGet);
+            _alertModel = new NotifficationModel { Type = AlertConstants.ALERT_TYPE.Success.ToString("g"), ClassType = AlertConstants.ALERT_TYPE.Success.ToString("g"), Message = "User request has been deleted successfuly!" };
+            }
+            catch
+            {
+                _alertModel = new NotifficationModel { Type = AlertConstants.ALERT_TYPE.Danger.ToString("g"), ClassType = AlertConstants.ALERT_TYPE.Danger.ToString("g"), Message = "Unknown error has occured. Please try again!" };
+            }
+            _notifficationModels.Add(_alertModel);
+            TempData["Alerts"] = _notifficationModels;
+            return RedirectToAction("Requests");
         }
         #endregion
 
-        #region 
+        #region AnonymousRequest
         [HttpGet]
         public ActionResult GetAnonymousRequests()
         {
@@ -249,8 +348,9 @@ namespace M19G1.Controllers
             return Json("Index", JsonRequestBehavior.AllowGet);
         }
         #endregion
+ 
 
-        #region
+        #region Logs
         [HttpGet]
         public ActionResult Logs()
         {

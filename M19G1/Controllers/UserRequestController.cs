@@ -23,33 +23,33 @@ namespace M19G1.Controllers
         [HttpGet]
         public ActionResult Requests()
         {
-            List<UserRequestViewModel> users = UserRequestViewModelMapping.ToViewModel(_userRequestService.GetAllRequests());
-            SelectList selectListRoles = new SelectList(_roleService.GetAllRoles().Select(s => s.RoleName));
-            ViewData["RoleName"] = selectListRoles;
+            //List<UserRequestViewModel> users = UserRequestViewModelMapping.ToViewModel(_userRequestService.GetAllRequests());
+            //SelectList selectListRoles = new SelectList(_roleService.GetAllRoles().Select(s => s.RoleName));
+            //ViewData["RoleName"] = selectListRoles;
             return View();
         }
-        [HttpPost]
-        public JsonResult ListRequests()
-        {
-            List<UserRequestViewModel> users = UserRequestViewModelMapping.ToViewModel( _userRequestService.GetAllRequests());
-            int recordsTotal;
-            var start = Request.Form.GetValues("start").FirstOrDefault();
-            var length = Request.Form.GetValues("length").FirstOrDefault();
-            int pageSize = length != null ? Convert.ToInt32(length) : 0;
-            int skip = start != null ? Convert.ToInt32(start) : 0;
-            var draw = Request.Form.GetValues("draw").FirstOrDefault();
-            var sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
-            var sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
-            var searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
-            if (!string.IsNullOrEmpty(sortColumn) || !string.IsNullOrEmpty(searchValue))
-            {
-                users = UserRequestViewModelMapping.ToViewModel(_userRequestService.GetUsersOrderBy(sortColumn, searchValue)); //_controller.CurrentUser.Id kur te bej login
-            }
-            recordsTotal = users.Count();
-            var data = users.Skip(skip).Take(pageSize).ToArray();
-            return Json(data, JsonRequestBehavior.AllowGet);
+        //[HttpPost]
+        //public JsonResult ListRequests()
+        //{
+        //    //List<UserRequestViewModel> users = UserRequestViewModelMapping.ToViewModel( _userRequestService.GetAllRequests());
+        //    //int recordsTotal;
+        //    //var start = Request.Form.GetValues("start").FirstOrDefault();
+        //    //var length = Request.Form.GetValues("length").FirstOrDefault();
+        //    //int pageSize = length != null ? Convert.ToInt32(length) : 0;
+        //    //int skip = start != null ? Convert.ToInt32(start) : 0;
+        //    //var draw = Request.Form.GetValues("draw").FirstOrDefault();
+        //    //var sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
+        //    //var sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+        //    //var searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
+        //    //if (!string.IsNullOrEmpty(sortColumn) || !string.IsNullOrEmpty(searchValue))
+        //    //{
+        //    //    users = UserRequestViewModelMapping.ToViewModel(_userRequestService.GetUsersOrderBy(sortColumn, searchValue)); //_controller.CurrentUser.Id kur te bej login
+        //    //}
+        //    //recordsTotal = users.Count();
+        //    //var data = users.Skip(skip).Take(pageSize).ToArray();
+        //    return Json(data, JsonRequestBehavior.AllowGet);
 
-        }
+        //}
         [HttpGet]
         public ActionResult LoadRequest(int id)
         {

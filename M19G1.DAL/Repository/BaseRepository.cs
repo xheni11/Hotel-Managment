@@ -79,5 +79,21 @@ namespace M19G1.DAL
             _dbSet.Attach(entityToDelete);
             _dbContext.Entry(entityToDelete).State = EntityState.Modified;
         }
+        public  Expression<Func<T, object>> CreateExpression<T>(string propertyName)
+        {
+            var type = typeof(T);
+            var property = type.GetProperty(propertyName);
+            var parameter = Expression.Parameter(type);
+            var access = Expression.Property(parameter, property);
+            var function = Expression.Lambda<Func<T, object>>(access, parameter);
+
+            return function;
+        }
+
+        public int CountAllRecords(Expression<Func<TEntity, bool>> filter = null)
+        {
+
+                return filter!=null?_dbSet.Where(filter).Count():_dbSet.Count();
+        }
     }
 }
